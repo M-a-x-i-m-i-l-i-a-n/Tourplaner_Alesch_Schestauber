@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <TextField text="This is a text!" />
+      <HBox prefHeight="169.0" prefWidth="600.0">
+         <children>
+            <SplitPane orientation="VERTICAL" prefHeight="200.0" prefWidth="200.0">
+               <items>
+                  <Label text="Label 2" />
+               </items>
+            </SplitPane>
+            <Label text="Label 1" />
+         </children>
+      </HBox>
+   </children>
+</VBox>
