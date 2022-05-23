@@ -35,6 +35,9 @@ public class MyTourManager implements TourManager {
         return tourDao.findAll().stream().map(t -> t.getName()).collect(Collectors.toList());
     }
 */
+    public void deleteTour(String name){
+        tourHandler.deleteTour(name);
+    }
     public void addTourListener(TourListener listener) {
         listeners.add(listener);
     }

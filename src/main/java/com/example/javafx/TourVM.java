@@ -24,6 +24,9 @@ public class TourVM implements TourListener {
         manager.addTour(name, description, from, to, type);
     }
 
+    public void delete(String name){
+        manager.deleteTour(name);
+    }
     @Override
     public void listChanged() {
         //TODO wieder auskommentieren

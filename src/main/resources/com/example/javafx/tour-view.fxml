@@ -71,7 +71,7 @@
                                                 <Insets left="10.0" right="20.0" />
                                             </HBox.margin>
                                         </Button>
-                                        <Button fx:id="removeButton" mnemonicParsing="false" text="Delete Tour" />
+                                        <Button fx:id="removeButton" mnemonicParsing="false" onMouseClicked="#onDeleteButtonClick" text="Delete Tour" />
                                     </children>
                                 </HBox>
                                 <Label alignment="CENTER" contentDisplay="CENTER" text="List of all Tours" textAlignment="CENTER" underline="true">

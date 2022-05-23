@@ -9,6 +9,7 @@ public interface TourManager {
     void addTourListener(TourListener listener);
     void addTour(String name, String description, String from, String to, String type);
     Tour getTour(String name);
+    void deleteTour(String name);
     List<String> getTours();
 
 }

@@ -119,4 +119,10 @@ public class TourController implements Initializable {
         stage.setScene(scene);
         stage.show();
     }
+    @FXML
+    protected void onDeleteButtonClick() throws IOException{
+        String name = textField.getText();
+        tourVM.delete(name);
+        textField.setText("");
+    }
 }
