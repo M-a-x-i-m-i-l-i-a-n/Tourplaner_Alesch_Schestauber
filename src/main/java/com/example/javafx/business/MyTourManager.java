@@ -16,8 +16,9 @@ public class MyTourManager implements TourManager {
         this.tourHandler = TourHandler.getInstance();
     }
 
-    public void addTour(String name, String description, String from, String to, String type, int distance, int time, int id) {
-        tourHandler.createTour(new Tour(name, description, from, to, type, distance, time, id));
+    public void addTour(String name, String description, String from, String to, String type) {
+        //TODO hier müsste dann mittels mapquest die Map sowie die Distanz und Zeit abgefragt werden und in den Funktionsaufruf reingegeben werden
+        tourHandler.createTour(new Tour(name, description, from, to, type));
         fireToursChanged();
     }
 

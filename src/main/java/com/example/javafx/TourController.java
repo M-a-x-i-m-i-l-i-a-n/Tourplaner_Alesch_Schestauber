@@ -60,6 +60,13 @@ public class TourController implements Initializable {
     private BorderPane borderPane;
     //Hier müssen dann noch die Menü Items eingefügt werden
 
+    private TourVM tourVM;
+
+    public TourController() {
+        TourManager manager = new MyTourManager();
+        this.tourVM = new TourVM(manager);
+    }
+
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // textField.setText("Search");
     }

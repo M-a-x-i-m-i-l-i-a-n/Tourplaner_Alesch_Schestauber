@@ -20,12 +20,13 @@ public class TourVM implements TourListener {
         return listItems;
     }
 
-    public void add(String name, String description, String from, String to, String type, int distance, int time, int id) {
-        manager.addTour(name, description, from, to, type, distance, time, id);
+    public void add(String name, String description, String from, String to, String type) {
+        manager.addTour(name, description, from, to, type);
     }
 
     @Override
     public void listChanged() {
-        listItems.setAll(manager.getTours());
+        //TODO wieder auskommentieren
+        //listItems.setAll(manager.getTours());
     }
 }
