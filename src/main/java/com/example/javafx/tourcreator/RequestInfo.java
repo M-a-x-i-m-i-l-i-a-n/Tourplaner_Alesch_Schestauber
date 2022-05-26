@@ -4,7 +4,8 @@ public class RequestInfo {
     String start;
     String destination;
     Double distance;
-    String mapUrl;
+    String sessionID;
+
 
 
     public RequestInfo(){
@@ -17,7 +18,7 @@ public class RequestInfo {
         this.start = start;
         this.destination = destination;
         this.distance = distance;
-        this.mapUrl = mapUrl;
+        this.sessionID = mapUrl;
 
     }
 
@@ -45,11 +46,11 @@ public class RequestInfo {
         this.distance = distance;
     }
 
-    public String getMapUrl() {
-        return mapUrl;
+    public String getSessionID() {
+        return sessionID;
     }
 
-    public void setMapUrl(String mapUrl) {
-        this.mapUrl = mapUrl;
+    public void setSessionID(String sessionID) {
+        this.sessionID = sessionID;
     }
 }

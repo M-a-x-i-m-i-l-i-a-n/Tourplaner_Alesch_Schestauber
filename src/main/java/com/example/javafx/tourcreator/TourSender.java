@@ -1,5 +1,6 @@
 package com.example.javafx.tourcreator;
 
+import java.io.IOException;
 import java.net.URISyntaxException;
 import java.util.Scanner;
 
@@ -7,7 +8,7 @@ public class TourSender {
 
 
 
-    public static void main(String[] args) throws URISyntaxException {
+    public static void main(String[] args) throws URISyntaxException, IOException, InterruptedException {
         Scanner start = new Scanner(System.in);
         Scanner dest = new Scanner(System.in);
         Scanner dist = new Scanner(System.in);
@@ -26,8 +27,13 @@ public class TourSender {
         System.out.println("Your Destination: " + requestInfo.getDestination());
         System.out.println("Your Distance: " + requestInfo.getDistance());
 
-        SendRequest.wrapper(requestInfo);
+
+        SendRequest client = new SendRequest();
+        client.sendRequestAsync(requestInfo);
+
 
 
     }
+
+
 }
