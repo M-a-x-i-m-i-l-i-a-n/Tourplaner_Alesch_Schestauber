@@ -1,6 +1,9 @@
-package com.example.javafx;
+package com.example.javafx.Controller;
 
 
+import com.example.javafx.AboutDialog;
+import com.example.javafx.TourApplication;
+import com.example.javafx.ViewModle.TourVM;
 import com.example.javafx.business.MyTourManager;
 import com.example.javafx.business.TourManager;
 import javafx.event.ActionEvent;
@@ -9,7 +12,6 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -17,6 +19,7 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class TourController implements Initializable {
@@ -40,7 +43,7 @@ public class TourController implements Initializable {
     private Button removeButton;
 
     @FXML
-    private ListView tourList;
+    private ListView<String> tourList;
     @FXML
     private ImageView imageView;
 
@@ -69,6 +72,11 @@ public class TourController implements Initializable {
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         // textField.setText("Search");
+        List<String> items = tourVM.getTourNames();
+        System.out.println("TOURCONT::75:: List:" + items);
+        for(int i = 0; i < items.size(); i++){
+            tourList.getItems().add(items.get(i));
+        }
     }
 
     @FXML
@@ -118,11 +126,23 @@ public class TourController implements Initializable {
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
         stage.setScene(scene);
         stage.show();
+        updateList();
     }
     @FXML
     protected void onDeleteButtonClick() throws IOException{
-        String name = textField.getText();
+        String name = tourList.getSelectionModel().getSelectedItem();
         tourVM.delete(name);
         textField.setText("");
+        updateList();
+    }
+
+    @FXML
+    protected void updateList(){
+        List<String> items = tourVM.getTourNames();
+        tourList.getItems().clear();
+        for(int i = 0; i < items.size(); i++){
+            tourList.getItems().add(items.get(i));
+        }
+
     }
 }

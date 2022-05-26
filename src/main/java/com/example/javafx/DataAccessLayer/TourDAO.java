@@ -9,15 +9,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TourHandler {
+public class TourDAO {
 
-    public static TourHandler instance;
+    public static TourDAO instance;
 
-    public static TourHandler getInstance() {
-        if (TourHandler.instance == null) {
-            TourHandler.instance = new TourHandler();
+    public static TourDAO getInstance() {
+        if (TourDAO.instance == null) {
+            TourDAO.instance = new TourDAO();
         }
-        return TourHandler.instance;
+        return TourDAO.instance;
     }
     //TODO hier vielleicht noch logger hinzufügen
 
@@ -81,12 +81,11 @@ public class TourHandler {
             ResultSet resultSet = statement.executeQuery();
 
             //User(String username, String password, String token, int coins, boolean admin)
-            int i = 0;
-            while (resultSet.next()){
-                names.add(resultSet.getString(i));
-                i++;
-            }
 
+            while (resultSet.next()){
+                names.add(resultSet.getString(1));
+            }
+            return names;
         }catch (SQLException e){
             e.printStackTrace();
         }

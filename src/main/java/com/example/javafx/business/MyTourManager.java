@@ -1,19 +1,18 @@
 package com.example.javafx.business;
 
-import com.example.javafx.DataAccessLayer.TourHandler;
+import com.example.javafx.DataAccessLayer.TourDAO;
 import com.example.javafx.model.Tour;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 public class MyTourManager implements TourManager {
 
     private List<TourListener> listeners;
-    private TourHandler tourHandler;
+    private TourDAO tourHandler;
     public MyTourManager() {
         this.listeners = new ArrayList<>();
-        this.tourHandler = TourHandler.getInstance();
+        this.tourHandler = TourDAO.getInstance();
     }
 
     public void addTour(String name, String description, String from, String to, String type) {
