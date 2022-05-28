@@ -40,7 +40,7 @@ public class SendRequest {
                 .headers("routeType", requestInfo.getTravelMethod())
                 .GET()
                 .build();
-//TODO: Actually read Response Body, parse for distance and time(formatted/non formatted), save to requestInfo
+//TODO: Actually read Response Body, parse for distance and time(formatted/non formatted), save to requestInfo, also put routeType into map url
         requestInfo.setMapUrl(resourceUrl + "start=" + requestInfo.getStart() + "&amp;end=" + requestInfo.getDestination() + "&amp;size=" + requestInfo.getLength() + "," + requestInfo.getWidth() + "&amp;key=" + key + "&amp;unit=k");
 
         CompletableFuture<HttpResponse<byte[]>> future =
