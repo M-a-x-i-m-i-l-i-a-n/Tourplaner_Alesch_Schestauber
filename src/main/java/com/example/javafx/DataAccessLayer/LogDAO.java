@@ -6,7 +6,10 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class LogDAO {
     public static LogDAO instance;
@@ -17,27 +20,31 @@ public class LogDAO {
         return LogDAO.instance;
     }
     //Speichert ein Tourlog in der Datenbank
-    public void createTour(TourLog log){
+    public void createTourLog(String date, String time, String timeNeeded, String difficulty, String rating, String comment, String TourName) {
         //Die id gibt an die wievielte Tour das ist damit die Tours leichter ausgelesen und dann als Liste angezeigt werden können
         //Das + 1 ist weil über getTourCount() die Anzahl der gespeicherten Tours ausgelesen wird und die neu gespeicherte Tour ist dann um 1 mehr
         int id = getTourLogCount() + 1;
         try{
+            //TODO hier nochmal das scheiß Datum anschauen
+            Date date1 = new SimpleDateFormat("dd.MM.yyyy").parse(date);
+            java.sql.Date sqlDate = java.sql.Date.valueOf(date);
+
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO public.\"tourlogs\"(id, tourname, date, time, comment, difficulty, total-time,rating) VALUES(?,?,?,?,?,?,?,?);");
-            statement.setInt(1,id);
-            statement.setString(2, log.getTourname());
-            statement.setString(3, log.getDate());
-            statement.setString(4, log.getTime());
-            statement.setString(5, log.getComment());
-            statement.setInt(6, log.getDifficulty());
-            statement.setInt(7, log.getTotalTime());
-            statement.setInt(8, log.getRating());
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO public.\"tourlogs\"(tourname, date, time, comment, difficulty, totaltime,rating) VALUES(?,?,?,?,?,?,?);");
+            //statement.setInt(1,id);
+            statement.setString(1, TourName);
+            statement.setDate(2, sqlDate);
+            statement.setString(3, time);
+            statement.setString(4, comment);
+            statement.setInt(5, Integer.parseInt(difficulty));
+            statement.setInt(6, Integer.parseInt(timeNeeded));
+            statement.setInt(7, Integer.parseInt(rating));
 
             ResultSet resultSet = statement.executeQuery();
 
             statement.close();
             conn.close();
-        } catch (SQLException ex) {
+        } catch (Exception ex) {
             System.out.println(ex.getMessage());
         }
     }

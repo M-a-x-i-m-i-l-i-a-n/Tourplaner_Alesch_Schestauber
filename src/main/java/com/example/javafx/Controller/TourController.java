@@ -12,6 +12,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -20,6 +21,7 @@ import javafx.stage.Stage;
 import java.io.IOException;
 import java.net.URL;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class TourController implements Initializable {
@@ -61,6 +63,14 @@ public class TourController implements Initializable {
 
     @FXML
     private BorderPane borderPane;
+
+    @FXML
+    private Button addTourLog;
+
+    @FXML
+    private ImageView image;
+
+
     //Hier müssen dann noch die Menü Items eingefügt werden
 
     private TourVM tourVM;
@@ -136,6 +146,21 @@ public class TourController implements Initializable {
         updateList();
     }
 
+    @FXML
+    protected void onAddTourLogButtonClick() throws IOException {
+        String name = tourList.getSelectionModel().getSelectedItem();
+        System.out.println("Add Tour LOG!");
+        Stage stage = new Stage();
+        stage.setTitle("Add Tour-Log to:" + name);
+        stage.initOwner(borderPane.getScene().getWindow());
+        stage.initModality(Modality.WINDOW_MODAL);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(TourApplication.class.getResource("AddTourLog.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+        stage.setScene(scene);
+        stage.show();
+        updateList();
+    }
     @FXML
     protected void updateList(){
         List<String> items = tourVM.getTourNames();

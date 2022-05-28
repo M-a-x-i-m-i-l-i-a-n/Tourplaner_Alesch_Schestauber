@@ -9,24 +9,24 @@ import java.util.List;
 public class MyTourManager implements TourManager {
 
     private List<TourListener> listeners;
-    private TourDAO tourHandler;
+    private TourDAO tourDAO;
     public MyTourManager() {
         this.listeners = new ArrayList<>();
-        this.tourHandler = TourDAO.getInstance();
+        this.tourDAO = TourDAO.getInstance();
     }
 
     public void addTour(String name, String description, String from, String to, String type) {
         //TODO hier müsste dann mittels mapquest die Map sowie die Distanz und Zeit abgefragt werden und in den Funktionsaufruf reingegeben werden
-        tourHandler.createTour(new Tour(name, description, from, to, type));
+        tourDAO.createTour(new Tour(name, description, from, to, type));
         fireToursChanged();
     }
 
     public Tour getTour(String name){
-        return tourHandler.getTourByName(name);
+        return tourDAO.getTourByName(name);
     }
 
     public List<String> getTours(){
-        return tourHandler.getAllTourNames();
+        return tourDAO.getAllTourNames();
     }
     /*
     public List<String> getTours() {
@@ -35,7 +35,7 @@ public class MyTourManager implements TourManager {
     }
 */
     public void deleteTour(String name){
-        tourHandler.deleteTour(name);
+        tourDAO.deleteTour(name);
     }
     public void addTourListener(TourListener listener) {
         listeners.add(listener);
