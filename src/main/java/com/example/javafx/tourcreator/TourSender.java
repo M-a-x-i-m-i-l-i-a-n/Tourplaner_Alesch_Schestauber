@@ -33,8 +33,8 @@ public class TourSender {
         System.out.println("Your Start: " + requestInfo.getStart());
         System.out.println("Your Destination: " + requestInfo.getDestination());
         SendRequest client = new SendRequest();
-        //client.sendRequest();
-        client.sendRequestAsync(requestInfo);
+        client.sendRequest(requestInfo);
+        //client.sendRequestAsync(requestInfo);
         System.out.println("Your MapURL: " + requestInfo.getMapUrl());
 
 

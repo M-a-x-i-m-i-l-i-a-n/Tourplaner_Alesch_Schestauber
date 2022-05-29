@@ -12,12 +12,10 @@ public class RequestInfo {
     String travelMethod;
 
 
+
     public RequestInfo(){
 
     }
-
-
-
 
     public RequestInfo(String start, String destination, Double distance, String mapUrl, Integer width, Integer length, Integer travTime, String travelMethod){
         this.start = start;
