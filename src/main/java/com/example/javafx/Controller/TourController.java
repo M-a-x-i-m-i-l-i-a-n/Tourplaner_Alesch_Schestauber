@@ -119,10 +119,22 @@ public class TourController implements Initializable {
 
 
     @FXML
-    protected void onSearchButtonClick() {
+    protected void onSearchButtonClick() throws IOException {
         String text = textField.getText();
         //title.setText("Title: " + text);
         textField.setText("");
+
+        System.out.println("Show About!");
+        System.out.println("Add Tour LOG!");
+        Stage stage = new Stage();
+        stage.setTitle("Test");
+        stage.initOwner(borderPane.getScene().getWindow());
+        stage.initModality(Modality.WINDOW_MODAL);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(TourApplication.class.getResource("test.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+        stage.setScene(scene);
+        stage.show();
     }
     @FXML
     protected void onAddButtonClick() throws IOException {

@@ -94,7 +94,7 @@
                <children>
                   <ImageView fitHeight="341.0" fitWidth="824.0" layoutX="6.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                           <image>
-                              <Image url="https://www.mapquestapi.com/staticmap/v5/map?start=vienna&amp;end=stinatz&amp;size=1280,720&amp;key=LAe151WHQH1plIyp4JnV8P1kUrg0Ksid&amp;unit=k" />
+                              <Image url="http://www.mapquestapi.com/staticmap/v5/map?start=vienna&amp;end=linz&amp;size=1100,500&amp;key=cTGzOGnX1es4yVyz5vR6wuA1SxaT5tZ2&amp;unit=k" />
                           </image>
                   </ImageView>
                </children>

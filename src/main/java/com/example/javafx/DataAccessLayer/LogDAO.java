@@ -2,10 +2,7 @@ package com.example.javafx.DataAccessLayer;
 
 import com.example.javafx.model.TourLog;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -21,26 +18,21 @@ public class LogDAO {
     }
     //Speichert ein Tourlog in der Datenbank
     public void createTourLog(String date, String time, String timeNeeded, String difficulty, String rating, String comment, String TourName) {
-        //Die id gibt an die wievielte Tour das ist damit die Tours leichter ausgelesen und dann als Liste angezeigt werden können
-        //Das + 1 ist weil über getTourCount() die Anzahl der gespeicherten Tours ausgelesen wird und die neu gespeicherte Tour ist dann um 1 mehr
-        int id = getTourLogCount() + 1;
         try{
             //TODO hier nochmal das scheiß Datum anschauen
-            Date date1 = new SimpleDateFormat("dd.MM.yyyy").parse(date);
-            java.sql.Date sqlDate = java.sql.Date.valueOf(date);
 
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO public.\"tourlogs\"(tourname, date, time, comment, difficulty, totaltime,rating) VALUES(?,?,?,?,?,?,?);");
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO public.\"logs\"(tourname, date, time, comment, difficulty, totaltime,rating) VALUES(?,?,?,?,?,?,?);");
             //statement.setInt(1,id);
             statement.setString(1, TourName);
-            statement.setDate(2, sqlDate);
+            statement.setString(2, date);
             statement.setString(3, time);
             statement.setString(4, comment);
             statement.setInt(5, Integer.parseInt(difficulty));
             statement.setInt(6, Integer.parseInt(timeNeeded));
             statement.setInt(7, Integer.parseInt(rating));
 
-            ResultSet resultSet = statement.executeQuery();
+            statement.executeUpdate();
 
             statement.close();
             conn.close();
@@ -53,7 +45,7 @@ public class LogDAO {
     public void updateTourLog(TourLog log){
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("UPDATE public.\"tourlogs\" SET tourname = ?, date = ?, " +
+            PreparedStatement statement = conn.prepareStatement("UPDATE public.\"logs\" SET tourname = ?, date = ?, " +
                     " time = ?, comment = ?, difficulty = ?, total-time = ?, rating = ? WHERE id = ?;");
             statement.setString(1, log.getTourname());
             statement.setString(2, log.getDate());
@@ -77,7 +69,7 @@ public class LogDAO {
     public TourLog getTourById(int id){
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("SELECT  tourname, date, time, comment, difficulty, total-time,rating FROM public.\"tourlogs\" WHERE id = ?;");
+            PreparedStatement statement = conn.prepareStatement("SELECT  tourname, date, time, comment, difficulty, total-time,rating FROM public.\"logs\" WHERE id = ?;");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 
@@ -103,7 +95,7 @@ public class LogDAO {
         TourLog log;
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM public.\"tourlogs\" WHERE name = ?;");
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM public.\"logs\" WHERE name = ?;");
             statement.setString(1, tourname);
             ResultSet resultSet = statement.executeQuery();
 
@@ -130,7 +122,7 @@ public class LogDAO {
     public void deleteTourLog(int id){
         try {
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("DELETE FROM public.\"tourlogs\" WHERE id = ?;");
+            PreparedStatement statement = conn.prepareStatement("DELETE FROM public.\"logs\" WHERE id = ?;");
             statement.setInt(1, id);
 
             statement.executeUpdate();
@@ -149,7 +141,7 @@ public class LogDAO {
         int rowcount = 0;
         try {
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("SELECT count(*) FROM public.\"tourlogs\"");
+            PreparedStatement statement = conn.prepareStatement("SELECT count(*) FROM public.\"logs\"");
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {

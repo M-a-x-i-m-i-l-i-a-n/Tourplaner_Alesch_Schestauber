@@ -15,6 +15,7 @@ public class TourLog {
     //1 - sehr leicht -> 5 - sehr schwer
     int difficulty;
     int totalTime;
+    //1 - schlecht -> 5 - sehr gut
     int rating;
 
     public TourLog(int id, String tourname, String date, String time, String comment, int difficulty, int totalTime, int rating){

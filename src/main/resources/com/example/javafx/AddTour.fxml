@@ -15,80 +15,64 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx.Controller.AddTourController">
-   <top>
-      <MenuBar BorderPane.alignment="CENTER">
-        <menus>
-          <Menu mnemonicParsing="false" text="File">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Close" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
-            <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
-            </items>
-          </Menu>
-        </menus>
-      </MenuBar>
-   </top>
-   <center>
-      <VBox prefHeight="200.0" prefWidth="100.0" BorderPane.alignment="CENTER">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" text="Add Tour" textAlignment="CENTER">
-               <font>
-                  <Font name="System Bold" size="24.0" />
-               </font>
-               <VBox.margin>
-                  <Insets bottom="10.0" left="250.0" />
-               </VBox.margin>
-            </Label>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <TextField fx:id="name" promptText="Name">
-                     <HBox.margin>
-                        <Insets left="80.0" right="50.0" top="20.0" />
-                     </HBox.margin></TextField>
-                  <ChoiceBox fx:id="type" prefWidth="150.0">
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
-                     <HBox.margin>
-                        <Insets left="50.0" right="80.0" top="20.0" />
-                     </HBox.margin>
-                  </ChoiceBox>
-               </children>
-               <VBox.margin>
-                  <Insets top="25.0" />
-               </VBox.margin>
-            </HBox>
-            <HBox prefHeight="100.0" prefWidth="200.0">
-               <children>
-                  <TextField fx:id="from" promptText="From">
-                     <HBox.margin>
-                        <Insets left="80.0" right="50.0" top="20.0" />
-                     </HBox.margin></TextField>
-                  <TextField fx:id="to" promptText="To">
-                     <HBox.margin>
-                        <Insets left="50.0" right="80.0" top="20.0" />
-                     </HBox.margin>
-                  </TextField>
-               </children></HBox>
-            <TextArea fx:id="description" prefHeight="200.0" prefWidth="200.0" promptText="Description" />
-            <ToolBar nodeOrientation="RIGHT_TO_LEFT" prefHeight="40.0" prefWidth="200.0">
-              <items>
-                <Button fx:id="saveTour" mnemonicParsing="false" onMouseClicked="#onSaveButtonClicked" text="Save Tour" />
-              </items>
-            </ToolBar>
-         </children>
-         <BorderPane.margin>
-            <Insets />
-         </BorderPane.margin>
-      </VBox>
-   </center>
-</BorderPane>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.control.ButtonBar?>
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="550.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx.Controller.AddTourController">
+    <children>
+        <BorderPane layoutX="183.0" layoutY="48.0" prefHeight="550.0" prefWidth="500.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <top>
+                <Label text="Add Tour" BorderPane.alignment="CENTER">
+                    <font>
+                        <Font size="20.0" />
+                    </font>
+                    <padding>
+                        <Insets top="15.0" />
+                    </padding>
+                </Label>
+            </top>
+            <center>
+                <GridPane hgap="5.0" vgap="5.0" BorderPane.alignment="CENTER">
+                    <columnConstraints>
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="295.0" minWidth="10.0" prefWidth="83.0" />
+                        <ColumnConstraints hgrow="SOMETIMES" maxWidth="433.0" minWidth="10.0" prefWidth="382.0" />
+                    </columnConstraints>
+                    <rowConstraints>
+                        <RowConstraints maxHeight="148.0" minHeight="10.0" prefHeight="68.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="83.0" minHeight="0.0" prefHeight="71.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="93.0" minHeight="10.0" prefHeight="70.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="126.0" minHeight="10.0" prefHeight="105.0" vgrow="SOMETIMES" />
+                        <RowConstraints maxHeight="139.0" minHeight="0.0" prefHeight="92.0" vgrow="SOMETIMES" />
+                    </rowConstraints>
+                    <children>
+                        <Label text="From:" GridPane.halignment="CENTER" GridPane.rowIndex="2" />
+                        <Label text="To:" GridPane.halignment="CENTER" GridPane.rowIndex="3" />
+                        <Label text="Description:" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
+                        <Label text="Type" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
+                        <Label text="Name:" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
+                        <TextField fx:id="name" prefHeight="25.0" prefWidth="380.0" style="-fx-background-radius: 15;" GridPane.columnIndex="1" />
+                        <TextField fx:id="from" style="-fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+                        <TextField fx:id="to" style="-fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+                        <TextArea fx:id="description" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
+                        <ChoiceBox fx:id="type" prefWidth="150.0" style="-fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+                    </children>
+                    <padding>
+                        <Insets bottom="15.0" left="15.0" right="15.0" top="15.0" />
+                    </padding>
+                </GridPane>
+            </center>
+            <bottom>
+                <ButtonBar prefHeight="40.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+                    <buttons>
+                        <Button fx:id="saveTour" mnemonicParsing="false" onMouseClicked="#onSaveButtonClicked" text="Save" />
+                    </buttons>
+                    <padding>
+                        <Insets bottom="15.0" right="15.0" />
+                    </padding>
+                </ButtonBar>
+            </bottom>
+        </BorderPane>
+    </children>
+</AnchorPane>
