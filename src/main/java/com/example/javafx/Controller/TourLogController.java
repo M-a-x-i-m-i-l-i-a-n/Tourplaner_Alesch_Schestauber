@@ -49,7 +49,7 @@ public class TourLogController implements Initializable {
     private Button save;
 
     public TourLogController(){
-        TourLogManager manager = new MyTourLogManager();
+        TourLogManager manager = TourLogManager.getInstance();
         this.tourLogVM = new TourLogVM(manager);
     }
 
@@ -60,21 +60,22 @@ public class TourLogController implements Initializable {
 
         difficulty.setValue("");
         difficulty.setItems(difficulties);
+        date.textProperty().bindBidirectional(tourLogVM.date);
+        time.textProperty().bindBidirectional(tourLogVM.time);
+        timeNeeded.textProperty().bindBidirectional(tourLogVM.timeNeeded);
+        difficulty.valueProperty().bindBidirectional(tourLogVM.difficulty);
+        rating.valueProperty().bindBidirectional(tourLogVM.rating);
+        comment.textProperty().bindBidirectional(tourLogVM.comment);
+
     }
 
     @FXML
     protected void onSaveButtonClicked() {
         Stage stage = (Stage) save.getScene().getWindow();
-        String LogDate = date.getText();
-        String LogTime = time.getText();
-        String LogTimeNeeded   = timeNeeded.getText();
-        String LogDif = difficulty.getValue().toString();
-        String LogRating = rating.getValue().toString();
-        String LogComment = comment.getText();
         String[] stageName = stage.getTitle().split(":");
         String TourName = stageName[1];
         System.out.println(TourName);
-        tourLogVM.addTourLog(LogDate, LogTime, LogTimeNeeded, LogDif, LogRating, LogComment, TourName);
+        tourLogVM.addTourLog(TourName);
 
         stage.close();
     }

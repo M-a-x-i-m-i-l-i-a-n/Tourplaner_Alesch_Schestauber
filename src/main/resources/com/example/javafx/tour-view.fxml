@@ -84,7 +84,7 @@
                                         <Insets />
                                     </VBox.margin>
                                 </Label>
-                                <ListView fx:id="tourList" onMouseEntered="#updateList" prefHeight="200.0" prefWidth="200.0" />
+                                <ListView fx:id="tourList" prefHeight="200.0" prefWidth="200.0" />
                             </children>
                         </VBox>
                         <VBox prefHeight="200.0" prefWidth="100.0" />
@@ -94,7 +94,7 @@
                <children>
                   <ImageView fitHeight="341.0" fitWidth="824.0" layoutX="6.0" layoutY="4.0" pickOnBounds="true" preserveRatio="true">
                           <image>
-                              <Image url="http://www.mapquestapi.com/staticmap/v5/map?start=vienna&amp;end=linz&amp;size=1100,500&amp;key=cTGzOGnX1es4yVyz5vR6wuA1SxaT5tZ2&amp;unit=k" />
+                              <Image url="https://www.mapquestapi.com/staticmap/v5/map?key=cTGzOGnX1es4yVyz5vR6wuA1SxaT5tZ2&amp;size=1100,500&amp;defaultMarker=none&amp;zoom=11&amp;rand=737758036&amp;session=629893e0-0292-993a-02b4-37d3-0e23f7d16b19&amp;boundingBox=48.193035,15.284579,47.070637,16.371017" />
                           </image>
                   </ImageView>
                </children>

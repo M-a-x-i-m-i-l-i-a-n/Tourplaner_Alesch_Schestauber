@@ -1,19 +1,34 @@
 package com.example.javafx.business;
 
 import com.example.javafx.DataAccessLayer.LogDAO;
+import com.example.javafx.DataAccessLayer.TourDAO;
 import com.example.javafx.model.TourLog;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MyTourLogManager implements TourLogManager{
     private LogDAO logDAO;
+    private List<TourLogListener> tourLogListenerList;
 
-    public MyTourLogManager(){
+
+    public static MyTourLogManager instance;
+    public static MyTourLogManager getInstance() {
+        if (MyTourLogManager.instance == null) {
+            MyTourLogManager.instance = new MyTourLogManager();
+            instance.init();
+        }
+        return MyTourLogManager.instance;
+    }
+
+    private void init(){
         this.logDAO = LogDAO.getInstance();
     }
-    @Override
-    public void addTourListener(TourListener listener) {
 
+
+    @Override
+    public void addTourLogListener(TourLogListener listener) {
+        this.tourLogListenerList.add(listener);
     }
 
     @Override
@@ -28,6 +43,16 @@ public class MyTourLogManager implements TourLogManager{
 
     @Override
     public void deleteTourLog(String name) {
+
+    }
+
+    public void fireGetTourLogs(){
+        for(TourLogListener listener : tourLogListenerList){
+
+        }
+    }
+
+    public void onGetTours(){
 
     }
 

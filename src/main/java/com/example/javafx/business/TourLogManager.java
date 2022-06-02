@@ -6,7 +6,12 @@ import com.example.javafx.model.TourLog;
 import java.util.List;
 
 public interface TourLogManager {
-    void addTourListener(TourListener listener);
+    static TourLogManager getInstance() {
+        return null;
+    }
+
+    void addTourLogListener(TourLogListener listener);
+
     void addTourLog(String date, String time, String timeNeeded, String difficulty, String rating, String comment, String Tourname);
     TourLog getTourLog(String name);
     void deleteTourLog(String name);

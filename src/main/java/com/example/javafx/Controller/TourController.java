@@ -6,6 +6,7 @@ import com.example.javafx.TourApplication;
 import com.example.javafx.ViewModle.TourVM;
 import com.example.javafx.business.MyTourManager;
 import com.example.javafx.business.TourManager;
+import com.example.javafx.model.Tour;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -45,7 +46,19 @@ public class TourController implements Initializable {
     private Button removeButton;
 
     @FXML
-    private ListView<String> tourList;
+    private Button editTour;
+
+    @FXML
+    private Button addTourLog;
+
+    @FXML
+    private Button removeTourLog;
+
+    @FXML
+    private Button editTourLog;
+
+    @FXML
+    private ListView<Tour> tourList;
     @FXML
     private ImageView imageView;
 
@@ -65,9 +78,6 @@ public class TourController implements Initializable {
     private BorderPane borderPane;
 
     @FXML
-    private Button addTourLog;
-
-    @FXML
     private ImageView image;
 
 
@@ -76,17 +86,21 @@ public class TourController implements Initializable {
     private TourVM tourVM;
 
     public TourController() {
-        TourManager manager = new MyTourManager();
+        MyTourManager manager = MyTourManager.getInstance();
         this.tourVM = new TourVM(manager);
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        // textField.setText("Search");
-        List<String> items = tourVM.getTourNames();
+        tourList.setItems(tourVM.getTours());
+        System.out.println(tourVM.getTours());
+
+        /*List<String> items = tourVM.getTourNames();
         System.out.println("TOURCONT::75:: List:" + items);
         for(int i = 0; i < items.size(); i++){
             tourList.getItems().add(items.get(i));
         }
+
+         */
     }
 
     @FXML
@@ -145,22 +159,35 @@ public class TourController implements Initializable {
         stage.initModality(Modality.WINDOW_MODAL);
 
         FXMLLoader fxmlLoader = new FXMLLoader(TourApplication.class.getResource("AddTour.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+        Scene scene = new Scene(fxmlLoader.load(), 550, 500);
         stage.setScene(scene);
         stage.show();
-        updateList();
     }
     @FXML
     protected void onDeleteButtonClick() throws IOException{
-        String name = tourList.getSelectionModel().getSelectedItem();
+        String name = tourList.getSelectionModel().getSelectedItem().getName();
         tourVM.delete(name);
         textField.setText("");
-        updateList();
+    }
+
+    @FXML
+    protected void onEditTourButtonClick() throws IOException{
+        String name = tourList.getSelectionModel().getSelectedItem().getName();
+        System.out.println("Edit Tour!");
+        Stage stage = new Stage();
+        stage.setTitle("Edit Tour:" + name);
+        stage.initOwner(borderPane.getScene().getWindow());
+        stage.initModality(Modality.WINDOW_MODAL);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(TourApplication.class.getResource("EditTour.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 550, 500);
+        stage.setScene(scene);
+        stage.show();
     }
 
     @FXML
     protected void onAddTourLogButtonClick() throws IOException {
-        String name = tourList.getSelectionModel().getSelectedItem();
+        String name = tourList.getSelectionModel().getSelectedItem().getName();
         System.out.println("Add Tour LOG!");
         Stage stage = new Stage();
         stage.setTitle("Add Tour-Log to:" + name);
@@ -171,15 +198,7 @@ public class TourController implements Initializable {
         Scene scene = new Scene(fxmlLoader.load(), 700, 500);
         stage.setScene(scene);
         stage.show();
-        updateList();
-    }
-    @FXML
-    protected void updateList(){
-        List<String> items = tourVM.getTourNames();
-        tourList.getItems().clear();
-        for(int i = 0; i < items.size(); i++){
-            tourList.getItems().add(items.get(i));
-        }
 
     }
+
 }

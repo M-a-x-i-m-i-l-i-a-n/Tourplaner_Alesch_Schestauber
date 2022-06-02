@@ -34,6 +34,11 @@ public class Tour {
         this.id = id;
     }
 
+    @Override
+    public String toString(){
+        return getName();
+    }
+
     public int getDistance() {
         return distance;
     }

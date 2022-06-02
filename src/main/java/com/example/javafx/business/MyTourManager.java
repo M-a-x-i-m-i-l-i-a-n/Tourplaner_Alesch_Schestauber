@@ -2,6 +2,7 @@ package com.example.javafx.business;
 
 import com.example.javafx.DataAccessLayer.TourDAO;
 import com.example.javafx.model.Tour;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -10,7 +11,19 @@ public class MyTourManager implements TourManager {
 
     private List<TourListener> listeners;
     private TourDAO tourDAO;
-    public MyTourManager() {
+
+
+    public static MyTourManager instance;
+
+    public static MyTourManager getInstance() {
+        if (MyTourManager.instance == null) {
+            MyTourManager.instance = new MyTourManager();
+            instance.init();
+        }
+        return MyTourManager.instance;
+    }
+
+    private void init(){
         this.listeners = new ArrayList<>();
         this.tourDAO = TourDAO.getInstance();
     }
@@ -21,11 +34,16 @@ public class MyTourManager implements TourManager {
         fireToursChanged();
     }
 
+    public void editTour(Tour tour){
+        tourDAO.updateTour(tour);
+        fireToursChanged();
+    }
+
     public Tour getTour(String name){
         return tourDAO.getTourByName(name);
     }
 
-    public List<String> getTours(){
+    public ObservableList<String> getTours(){
         return tourDAO.getAllTourNames();
     }
     /*
@@ -42,6 +60,9 @@ public class MyTourManager implements TourManager {
     }
 
     private void fireToursChanged() {
-        listeners.forEach(l->l.listChanged());
+        //listeners.forEach(TourListener::listChanged);
+        for (TourListener listener : listeners) {
+            listener.listChanged();
+        }
     }
 }
