@@ -8,16 +8,19 @@ public class RequestInfo {
     Integer length;
     Integer width;
     String sessionID;
-    Integer travTime;
+    String travTime;
     String travelMethod;
-
+    String lrlng;
+    String lrlat;
+    String ullng;
+    String ullat;
 
 
     public RequestInfo(){
 
     }
 
-    public RequestInfo(String start, String destination, Double distance, String mapUrl, Integer width, Integer length, Integer travTime, String travelMethod){
+    public RequestInfo(String start, String destination, Double distance, String mapUrl, Integer width, Integer length, String travTime, String travelMethod, String lrlng, String lrlat, String ullat, String ullng){
         this.start = start;
         this.destination = destination;
         this.distance = distance;
@@ -26,7 +29,10 @@ public class RequestInfo {
         this.length = length;
         this.travTime = travTime;
         this.travelMethod = travelMethod;
-
+        this.lrlng = lrlng;
+        this.lrlat = lrlat;
+        this.ullng = ullng;
+        this.ullat = ullat;
 
     }
 
@@ -38,11 +44,11 @@ public class RequestInfo {
         this.travelMethod = travelMethod;
     }
 
-    public Integer getTravTime() {
+    public String getTravTime() {
         return travTime;
     }
 
-    public void setTravTime(Integer travTime) {
+    public void setTravTime(String travTime) {
         this.travTime = travTime;
     }
 
@@ -99,4 +105,20 @@ public class RequestInfo {
     public void setSessionID(String sessionID) {
         this.sessionID = sessionID;
     }
+
+    public String getLrlng() {return lrlng;}
+
+    public void setLrlng(String lrlng) {this.lrlng = lrlng;}
+
+    public String getLrlat() {return lrlat;}
+
+    public void setLrlat(String lrlat) {this.lrlat = lrlat;}
+
+    public String getUllng() {return ullng;}
+
+    public void setUllng(String ullng) {this.ullng = ullng;}
+
+    public String getUllat() {return ullat;}
+
+    public void setUllat(String ullat) {this.ullat = ullat;}
 }
