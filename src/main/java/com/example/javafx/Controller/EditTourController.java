@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class EditTourController implements Initializable{
 
-        ObservableList<String> transportTypes = FXCollections.observableArrayList("Bike", "Hike", "Running", "Vacation");
+        ObservableList<String> transportTypes = FXCollections.observableArrayList("Shortest", "Fastest", "Bicycle", "Pedestrian");
         @FXML
         private TextField name;
 
@@ -58,10 +58,11 @@ public class EditTourController implements Initializable{
             type.valueProperty().bindBidirectional(tourVM.type);
             description.textProperty().bindBidirectional(tourVM.description);
 
-            name.disableProperty();
+            name.setEditable(false);
         }
-        //TODO das übernehmen vom Name in das neue Fenster funktioniert noch nicht
-        public void fixName(){
+
+
+        public void onNameClicked(){
             Stage stage = (Stage) saveTour.getScene().getWindow();
             String[] stageName = stage.getTitle().split(":");
             tourName = stageName[1];

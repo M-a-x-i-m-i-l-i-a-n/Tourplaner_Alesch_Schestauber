@@ -46,7 +46,7 @@
                         <Label text="Description:" GridPane.halignment="CENTER" GridPane.rowIndex="4" />
                         <Label text="Type" GridPane.halignment="CENTER" GridPane.rowIndex="1" GridPane.valignment="CENTER" />
                         <Label text="Name:" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
-                        <TextField fx:id="name" prefHeight="25.0" prefWidth="380.0" style="-fx-background-radius: 15;" GridPane.columnIndex="1" />
+                        <TextField fx:id="name" onMouseClicked="#onNameClicked" prefHeight="25.0" prefWidth="380.0" style="-fx-background-radius: 15;" GridPane.columnIndex="1" />
                         <TextField fx:id="from" style="-fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="2" />
                         <TextField fx:id="to" style="-fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="3" />
                         <TextArea fx:id="description" prefHeight="200.0" prefWidth="200.0" style="-fx-background-radius: 15;" GridPane.columnIndex="1" GridPane.rowIndex="4" />
