@@ -2,6 +2,7 @@ package com.example.javafx.business;
 
 import com.example.javafx.DataAccessLayer.TourDAO;
 import com.example.javafx.model.Tour;
+import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -9,24 +10,41 @@ import java.util.List;
 public class MyTourManager implements TourManager {
 
     private List<TourListener> listeners;
-    private TourDAO tourHandler;
-    public MyTourManager() {
+    private TourDAO tourDAO;
+
+
+    public static MyTourManager instance;
+
+    public static MyTourManager getInstance() {
+        if (MyTourManager.instance == null) {
+            MyTourManager.instance = new MyTourManager();
+            instance.init();
+        }
+        return MyTourManager.instance;
+    }
+
+    private void init(){
         this.listeners = new ArrayList<>();
-        this.tourHandler = TourDAO.getInstance();
+        this.tourDAO = TourDAO.getInstance();
     }
 
     public void addTour(String name, String description, String from, String to, String type) {
         //TODO hier müsste dann mittels mapquest die Map sowie die Distanz und Zeit abgefragt werden und in den Funktionsaufruf reingegeben werden
-        tourHandler.createTour(new Tour(name, description, from, to, type));
+        tourDAO.createTour(new Tour(name, description, from, to, type));
+        fireToursChanged();
+    }
+
+    public void editTour(Tour tour){
+        tourDAO.updateTour(tour);
         fireToursChanged();
     }
 
     public Tour getTour(String name){
-        return tourHandler.getTourByName(name);
+        return tourDAO.getTourByName(name);
     }
 
-    public List<String> getTours(){
-        return tourHandler.getAllTourNames();
+    public ObservableList<String> getTours(){
+        return tourDAO.getAllTourNames();
     }
     /*
     public List<String> getTours() {
@@ -35,13 +53,16 @@ public class MyTourManager implements TourManager {
     }
 */
     public void deleteTour(String name){
-        tourHandler.deleteTour(name);
+        tourDAO.deleteTour(name);
     }
     public void addTourListener(TourListener listener) {
         listeners.add(listener);
     }
 
     private void fireToursChanged() {
-        listeners.forEach(l->l.listChanged());
+        //listeners.forEach(TourListener::listChanged);
+        for (TourListener listener : listeners) {
+            listener.listChanged();
+        }
     }
 }

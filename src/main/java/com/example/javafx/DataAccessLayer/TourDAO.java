@@ -1,6 +1,8 @@
 package com.example.javafx.DataAccessLayer;
 
 import com.example.javafx.model.Tour;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -73,8 +75,8 @@ public class TourDAO {
         return null;
     }
 
-    public List<String> getAllTourNames(){
-        List<String> names = new ArrayList<>();
+    public ObservableList<String> getAllTourNames(){
+        ObservableList<String> names = FXCollections.observableArrayList();
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
             PreparedStatement statement = conn.prepareStatement("SELECT name FROM public.\"tours\";");

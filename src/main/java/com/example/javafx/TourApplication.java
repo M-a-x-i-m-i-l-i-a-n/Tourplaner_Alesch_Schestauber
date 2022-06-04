@@ -12,7 +12,7 @@ public class TourApplication extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("tour-view.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("test.fxml"));
         Parent parent = fxmlLoader.load();
         Scene scene = new Scene(parent);
         stage.setTitle("Tour App");
