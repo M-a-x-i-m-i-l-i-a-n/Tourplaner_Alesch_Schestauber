@@ -5,33 +5,44 @@ import java.util.ArrayList;
 public class Tour {
     String name;
     String description;
-    String from;
-    String to;
+    String start;
+    String destin;
     String type;
-    int distance;
-    int time;
-    int id;
+    Double distance;
+    String time;
+    String sessionID;
+    String url;
+    String lrlng;
+    String lrlat;
+    String ullng;
+    String ullat;
+
     ArrayList<TourLog> logs;
 
 
-    public Tour(String name, String description, String from, String to, String type){
+    public Tour(String name, String description, String start, String destin, String type, String time, Double distance, String lrlng, String lrlat, String ullng, String ullat, String url, String sessionID){
         this.name = name;
         this.description = description;
-        this.from = from;
-        this.to = to;
-        this.type = type;
-        distance = 0;
-        time = 0;
-    }
-    public Tour(String name, String description, String from, String to, String type, int distance, int time, int id){
-        this.name = name;
-        this.description = description;
-        this.from = from;
-        this.to = to;
+        this.start = start;
+        this.destin = destin;
         this.type = type;
         this.distance = distance;
         this.time = time;
-        this.id = id;
+        this.lrlat = lrlat;
+        this.lrlng = lrlng;
+        this.ullat = ullat;
+        this.ullng = ullng;
+        this.url = url;
+        this.sessionID = sessionID;
+    }
+    public Tour(String name, String description, String start, String destin, String type){
+        this.name = name;
+        this.description = description;
+        this.start = start;
+        this.destin = destin;
+        this.type = type;
+
+
     }
 
     @Override
@@ -39,36 +50,56 @@ public class Tour {
         return getName();
     }
 
-    public int getDistance() {
+    public Double getDistance() {
         return distance;
     }
 
-    public int getTime() {
+    public String getTime() {
         return time;
     }
+
+    public String getSessionID() {return sessionID;}
+
+    public void setSessionID(String sessionID) {this.sessionID = sessionID;}
+
+    public String getUrl() {return url;}
+
+    public void setUrl(String mapUrl) {this.url = mapUrl;}
+
+    public String getLrlng() {return lrlng;}
+
+    public void setLrlng(String lrlng) {this.lrlng = lrlng;}
+
+    public String getLrlat() {return lrlat;}
+
+    public void setLrlat(String lrlat) {this.lrlat = lrlat;}
+
+    public String getUllng() {return ullng;}
+
+    public void setUllng(String ullng) {this.ullng = ullng;}
+
+    public String getUllat() {return ullat;}
+
+    public void setUllat(String ullat) {this.ullat = ullat;}
 
     public String getDescription() {
         return description;
     }
 
-    public String getFrom() {
-        return from;
+    public String getStart() {
+        return start;
     }
 
     public String getName() {
         return name;
     }
 
-    public String getTo() {
-        return to;
+    public String getDestin() {
+        return destin;
     }
 
     public String getType() {
         return type;
-    }
-
-    public int getId() {
-        return id;
     }
 
     public ArrayList<TourLog> getLogs() {
@@ -79,24 +110,24 @@ public class Tour {
         this.description = description;
     }
 
-    public void setDistance(int distance) {
+    public void setDistance(Double distance) {
         this.distance = distance;
     }
 
-    public void setFrom(String from) {
-        this.from = from;
+    public void setStart(String start) {
+        this.start = start;
     }
 
     public void setName(String name) {
         this.name = name;
     }
 
-    public void setTime(int time) {
+    public void setTime(String time) {
         this.time = time;
     }
 
-    public void setTo(String to) {
-        this.to = to;
+    public void setDestin(String destin) {
+        this.destin = destin;
     }
 
     public void setType(String type) {

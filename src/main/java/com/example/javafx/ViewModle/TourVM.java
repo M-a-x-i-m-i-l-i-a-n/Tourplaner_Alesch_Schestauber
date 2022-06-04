@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.util.List;
 
 public class TourVM implements TourListener {
@@ -33,7 +34,7 @@ public class TourVM implements TourListener {
         return listItems;
     }
 
-    public void add() {
+    public void add() throws IOException, InterruptedException {
         manager.addTour(name.getValue(), description.getValue(), from.getValue(), to.getValue(), type.getValue());
     }
 
@@ -70,7 +71,7 @@ public class TourVM implements TourListener {
         listItems.setAll(manager.getTours());
         tours.clear();
         getTourList();
-        tours.setAll(tours.stream().filter(tour -> tour.getName().contains("")).toList());
+        //tours.setAll(tours.stream().filter(tour -> tour.getName().contains("")).toList());
     }
 
     public void setListItems(ObservableList<String> listItems) {

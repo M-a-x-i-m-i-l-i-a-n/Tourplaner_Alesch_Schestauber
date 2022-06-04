@@ -4,6 +4,7 @@ import com.example.javafx.DataAccessLayer.TourDAO;
 import com.example.javafx.model.Tour;
 import javafx.collections.ObservableList;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -28,9 +29,12 @@ public class MyTourManager implements TourManager {
         this.tourDAO = TourDAO.getInstance();
     }
 
-    public void addTour(String name, String description, String from, String to, String type) {
+    public void addTour(String name, String description, String from, String to, String type) throws IOException, InterruptedException {
         //TODO hier müsste dann mittels mapquest die Map sowie die Distanz und Zeit abgefragt werden und in den Funktionsaufruf reingegeben werden
-        tourDAO.createTour(new Tour(name, description, from, to, type));
+        Tour tour = new Tour(name, description, from, to, type);
+        SendRequest client = new SendRequest();
+        client.sendRequest(tour);
+        tourDAO.createTour(tour);
         fireToursChanged();
     }
 

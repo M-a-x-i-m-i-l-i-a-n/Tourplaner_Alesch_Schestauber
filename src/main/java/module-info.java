@@ -6,6 +6,9 @@ module com.example.javafx {
     requires com.fasterxml.jackson.databind;
     requires jdk.jsobject;
     requires org.json;
+    requires layout;
+    requires kernel;
+    requires io;
 
     opens com.example.javafx to javafx.fxml;
     exports com.example.javafx;
