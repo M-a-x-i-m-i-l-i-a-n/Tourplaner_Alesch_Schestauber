@@ -14,14 +14,8 @@ public class Tour {
     ArrayList<TourLog> logs;
 
 
-    public Tour(String name, String description, String from, String to, String type){
-        this.name = name;
-        this.description = description;
-        this.from = from;
-        this.to = to;
-        this.type = type;
-        distance = 0;
-        time = 0;
+    public Tour(){
+
     }
     public Tour(String name, String description, String from, String to, String type, int distance, int time, int id){
         this.name = name;

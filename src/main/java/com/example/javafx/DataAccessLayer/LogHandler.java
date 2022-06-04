@@ -8,13 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
-public class LogDAO {
-    public static LogDAO instance;
-    public static LogDAO getInstance() {
-        if (LogDAO.instance == null) {
-            LogDAO.instance = new LogDAO();
+public class LogHandler {
+    public static LogHandler instance;
+    public static LogHandler getInstance() {
+        if (LogHandler.instance == null) {
+            LogHandler.instance = new LogHandler();
         }
-        return LogDAO.instance;
+        return LogHandler.instance;
     }
     //Speichert ein Tourlog in der Datenbank
     public void createTour(TourLog log){
