@@ -2,6 +2,9 @@ package com.example.javafx.ViewModle;
 
 import com.example.javafx.business.TourListener;
 import com.example.javafx.business.TourManager;
+import com.example.javafx.model.Tour;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
@@ -10,79 +13,64 @@ import java.util.List;
 public class TourVM implements TourListener {
 
     private final TourManager manager;
-    private ObservableList<String> listItems;
-    private String name;
-    private String description;
-    private String from;
-    private String to;
-    private String type;
+    public ObservableList<String> listItems;
+    public final StringProperty name = new SimpleStringProperty();
+    public final StringProperty description = new SimpleStringProperty();
+    public final StringProperty from = new SimpleStringProperty();
+    public final StringProperty to = new SimpleStringProperty();
+    public final StringProperty type = new SimpleStringProperty();
+
+    final ObservableList<Tour> tours = FXCollections.observableArrayList();
 
     public TourVM(TourManager manager) {
         this.manager = manager;
         this.listItems = FXCollections.observableArrayList();
         this.manager.addTourListener(this);
+
     }
 
     public ObservableList<String> getListItems() {
         return listItems;
     }
 
-    public void add(String name, String description, String from, String to, String type) {
-        manager.addTour(name, description, from, to, type);
+    public void add() {
+        manager.addTour(name.getValue(), description.getValue(), from.getValue(), to.getValue(), type.getValue());
+    }
+
+    public void edit(){
+        Tour tour = new Tour(name.getValue(), description.getValue(), from.getValue(), to.getValue(), type.getValue());
+        manager.editTour(tour);
     }
 
     public void delete(String name){
         manager.deleteTour(name);
     }
 
-    public List<String> getTourNames(){
+    public ObservableList<String> getTourNames(){
         return manager.getTours();
+    }
+
+    public ObservableList<Tour> getTours(){
+        listChanged();
+        return tours;
+    }
+
+    public void getTourList(){
+        List<String> tournames = manager.getTours();
+        Tour newTour;
+        for (String name: tournames) {
+            newTour = manager.getTour(name);
+            this.tours.add(newTour);
+        }
     }
 
     @Override
     public void listChanged() {
         //TODO wieder auskommentieren
         listItems.setAll(manager.getTours());
-    }
-
-    public String getType() {
-        return type;
-    }
-
-    public String getTo() {
-        return to;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public String getFrom() {
-        return from;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setType(String type) {
-        this.type = type;
-    }
-
-    public void setTo(String to) {
-        this.to = to;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setFrom(String from) {
-        this.from = from;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
+        tours.clear();
+        getTourList();
+        tours.setAll(tours.stream().filter(tour -> tour.getName().contains("")).toList());
     }
 
     public void setListItems(ObservableList<String> listItems) {

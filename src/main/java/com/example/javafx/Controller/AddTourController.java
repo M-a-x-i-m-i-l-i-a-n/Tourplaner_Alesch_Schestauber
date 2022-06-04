@@ -18,7 +18,7 @@ import javafx.beans.property.*;
 import javafx.stage.Stage;
 
 public class AddTourController implements Initializable {
-    ObservableList<String> transportTypes = FXCollections.observableArrayList("Bike", "Hike", "Running", "Vacation");
+    ObservableList<String> transportTypes = FXCollections.observableArrayList("Shortest", "Fastest", "Bicycle", "Pedestrian");
     @FXML
     private TextField name;
 
@@ -39,34 +39,27 @@ public class AddTourController implements Initializable {
 
     private TourVM tourVM;
 
-    private StringProperty tourName = new SimpleStringProperty();
-    private StringProperty tourFrom = new SimpleStringProperty();
-    private StringProperty tourTo = new SimpleStringProperty();
-    private StringProperty tourType = new SimpleStringProperty();
-    private StringProperty tourDescription = new SimpleStringProperty();
 
     public AddTourController() {
-        TourManager manager = new MyTourManager();
+        MyTourManager manager = MyTourManager.getInstance();
         this.tourVM = new TourVM(manager);
-        //TODO das Binding muss hier noch gemacht werden
-        //name.textProperty().bindBidirectional(tourVM.);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        type.setValue("Type");
         type.setItems(transportTypes);
+        type.setValue(transportTypes.get(1));
+        name.textProperty().bindBidirectional(tourVM.name);
+        from.textProperty().bindBidirectional(tourVM.from);
+        to.textProperty().bindBidirectional(tourVM.to);
+        type.valueProperty().bindBidirectional(tourVM.type);
+        description.textProperty().bindBidirectional(tourVM.description);
 
     }
 
     @FXML
     protected void onSaveButtonClicked() {
-        String tourName = name.getText();
-        String tourFrom = from.getText();
-        String tourTo   = to.getText();
-        String tourType = type.getValue().toString();
-        String tourDescription = description.getText();
-        tourVM.add(tourName, tourDescription, tourFrom, tourTo, tourType);
+        tourVM.add();
         Stage stage = (Stage) saveTour.getScene().getWindow();
         stage.close();
     }
