@@ -9,15 +9,15 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class TourHandler {
+public class TourDAO {
 
-    public static TourHandler instance;
+    public static TourDAO instance;
 
-    public static TourHandler getInstance() {
-        if (TourHandler.instance == null) {
-            TourHandler.instance = new TourHandler();
+    public static TourDAO getInstance() {
+        if (TourDAO.instance == null) {
+            TourDAO.instance = new TourDAO();
         }
-        return TourHandler.instance;
+        return TourDAO.instance;
     }
     //TODO hier vielleicht noch logger hinzufügen
 
@@ -25,22 +25,25 @@ public class TourHandler {
     public void createTour(Tour tour){
         //Die id gibt an die wievielte Tour das ist damit die Tours leichter ausgelesen und dann als Liste angezeigt werden können
         //Das + 1 ist weil über getTourCount() die Anzahl der gespeicherten Tours ausgelesen wird und die neu gespeicherte Tour ist dann um 1 mehr
+        System.out.println("TOURHANDLER:44:: AAAAAAAAAAAAAAAAAAA");
         int id = getTourCount() + 1;
+        System.out.println("TOURHANDLER:44:: AAAAAAAAAAAAAAAAAAA + id:" + id);
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO public.\"tour\"(name, description, from, to, type, distance, time, id) VALUES(?,?,?,?,?,?,?,?);");
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO public.\"tours\"(name, description, start, destin, type, distance, time, id) VALUES(?,?,?,?,?,?,?,?);");
             statement.setString(1, tour.getName());
             statement.setString(2, tour.getDescription());
             statement.setString(3, tour.getFrom());
             statement.setString(4, tour.getTo());
             statement.setString(5, tour.getType());
-            statement.setInt(4, tour.getDistance());
-            statement.setInt(5, tour.getTime());
-            statement.setInt(6,id);
-            ResultSet resultSet = statement.executeQuery();
+            statement.setInt(6, tour.getDistance());
+            statement.setInt(7, tour.getTime());
+            statement.setInt(8,id);
 
+            statement.executeUpdate();
             statement.close();
             conn.close();
+
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
@@ -49,7 +52,7 @@ public class TourHandler {
     public Tour getTourByName(String tourname){
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("SELECT  description, from, to, type, distance, time, id FROM public.\"tour\" WHERE name = ?;");
+            PreparedStatement statement = conn.prepareStatement("SELECT  description, start, destin, type, distance, time, id FROM public.\"tours\" WHERE name = ?;");
             statement.setString(1, tourname);
             ResultSet resultSet = statement.executeQuery();
 
@@ -74,16 +77,15 @@ public class TourHandler {
         List<String> names = new ArrayList<>();
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("SELECT  name FROM public.\"tour\";");
+            PreparedStatement statement = conn.prepareStatement("SELECT name FROM public.\"tours\";");
             ResultSet resultSet = statement.executeQuery();
 
             //User(String username, String password, String token, int coins, boolean admin)
-            int i = 0;
-            while (resultSet.next()){
-                names.add(resultSet.getString(i));
-                i++;
-            }
 
+            while (resultSet.next()){
+                names.add(resultSet.getString(1));
+            }
+            return names;
         }catch (SQLException e){
             e.printStackTrace();
         }
@@ -93,7 +95,7 @@ public class TourHandler {
     public Tour getTourById(int id){
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("SELECT  name, description, from, to, type, distance, time FROM public.\"tour\" WHERE id = ?;");
+            PreparedStatement statement = conn.prepareStatement("SELECT  name, description, start, destin, type, distance, time FROM public.\"tours\" WHERE id = ?;");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 
@@ -118,7 +120,7 @@ public class TourHandler {
     public void updateTour(Tour tour){
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("UPDATE public.\"tour\" SET description = ?, from = ?, " +
+            PreparedStatement statement = conn.prepareStatement("UPDATE public.\"tours\" SET description = ?, from = ?, " +
                     " to = ?, type = ?, distance = ?, time = ? WHERE name = ?;");
             statement.setString(1, tour.getDescription());
             statement.setString(1, tour.getFrom());
@@ -140,7 +142,7 @@ public class TourHandler {
     public void deleteTour(String tourname){
         try {
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("DELETE FROM public.\"tour\" WHERE name = ?;");
+            PreparedStatement statement = conn.prepareStatement("DELETE FROM public.\"tours\" WHERE name = ?;");
             statement.setString(1, tourname);
 
             statement.executeUpdate();
@@ -159,7 +161,7 @@ public class TourHandler {
         int rowcount = 0;
         try {
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("SELECT count(*) FROM public.\"tour\"");
+            PreparedStatement statement = conn.prepareStatement("SELECT count(*) FROM public.\"tours\"");
             ResultSet resultSet = statement.executeQuery();
 
             if (resultSet.next()) {
