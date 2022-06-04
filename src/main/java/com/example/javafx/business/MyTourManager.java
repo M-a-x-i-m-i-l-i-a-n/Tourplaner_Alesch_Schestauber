@@ -35,6 +35,7 @@ public class MyTourManager implements TourManager {
     }
 
     public void editTour(Tour tour){
+        //TODO hier müsste dann mittels mapquest die Map sowie die Distanz und Zeit abgefragt werden und in den Funktionsaufruf reingegeben werden
         tourDAO.updateTour(tour);
         fireToursChanged();
     }

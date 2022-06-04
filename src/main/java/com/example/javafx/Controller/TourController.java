@@ -3,16 +3,22 @@ package com.example.javafx.Controller;
 
 import com.example.javafx.AboutDialog;
 import com.example.javafx.TourApplication;
+import com.example.javafx.ViewModle.TourLogVM;
 import com.example.javafx.ViewModle.TourVM;
+import com.example.javafx.business.MyTourLogManager;
 import com.example.javafx.business.MyTourManager;
 import com.example.javafx.business.TourManager;
 import com.example.javafx.model.Tour;
+import com.example.javafx.model.TourLog;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
@@ -80,14 +86,36 @@ public class TourController implements Initializable {
     @FXML
     private ImageView image;
 
+    @FXML
+    private TableView<TourLog> logsTable;
+
+    @FXML
+    private TableColumn<TourLog, String> date;
+
+    @FXML
+    private TableColumn<TourLog, String> time;
+
+    @FXML
+    private TableColumn<TourLog, String> difficulty;
+
+    @FXML
+    private TableColumn<TourLog, String> totalTime;
+
+    @FXML
+    private TableColumn<TourLog, String> rating;
+
+    @FXML
+    private TableColumn<TourLog, String> comment;
 
     //Hier müssen dann noch die Menü Items eingefügt werden
 
     private TourVM tourVM;
-
+    private TourLogVM logVM;
     public TourController() {
         MyTourManager manager = MyTourManager.getInstance();
+        MyTourLogManager logManager = MyTourLogManager.getInstance();
         this.tourVM = new TourVM(manager);
+        this.logVM = new TourLogVM(logManager);
     }
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
@@ -101,6 +129,27 @@ public class TourController implements Initializable {
         }
 
          */
+        System.out.println(logVM.getTourLogs());
+       // createTable();
+    }
+
+
+    //TODO das funktioniert noch nicht
+    private void createTable(){
+        ObservableList<TourLog> logs1 = FXCollections.observableArrayList();
+                logs1 = logVM.getTourLogs();
+        date.setCellValueFactory(new PropertyValueFactory<TourLog, String>("Date"));
+        time.setCellValueFactory(new PropertyValueFactory<>("Time"));
+        difficulty.setCellValueFactory(new PropertyValueFactory<>("Difficulty"));
+        totalTime.setCellValueFactory(new PropertyValueFactory<>("TotalTime"));
+        rating.setCellValueFactory(new PropertyValueFactory<>("Rating"));
+        comment.setCellValueFactory(new PropertyValueFactory<>("Comment"));
+
+
+
+        date.setCellValueFactory(new PropertyValueFactory<>("Date"));
+        logsTable.setItems(logs1);
+        logsTable.getColumns().setAll(date);
     }
 
     @FXML
