@@ -15,4 +15,5 @@ module com.example.javafx {
     opens com.example.javafx.Controller to javafx.fxml;
     exports com.example.javafx.ViewModle;
     opens com.example.javafx.ViewModle to javafx.fxml;
+    opens com.example.javafx.model to javafx.base;
 }

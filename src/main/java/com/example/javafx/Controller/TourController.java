@@ -107,7 +107,11 @@ public class TourController implements Initializable {
     @FXML
     private TableColumn<TourLog, String> comment;
 
-    //Hier müssen dann noch die Menü Items eingefügt werden
+
+    @FXML
+    private Label from;
+
+
 
     private TourVM tourVM;
     private TourLogVM logVM;
@@ -130,14 +134,13 @@ public class TourController implements Initializable {
 
          */
         System.out.println(logVM.getTourLogs());
-       // createTable();
+        createTable();
     }
 
 
-    //TODO das funktioniert noch nicht
+
     private void createTable(){
-        ObservableList<TourLog> logs1 = FXCollections.observableArrayList();
-                logs1 = logVM.getTourLogs();
+
         date.setCellValueFactory(new PropertyValueFactory<TourLog, String>("Date"));
         time.setCellValueFactory(new PropertyValueFactory<>("Time"));
         difficulty.setCellValueFactory(new PropertyValueFactory<>("Difficulty"));
@@ -146,10 +149,8 @@ public class TourController implements Initializable {
         comment.setCellValueFactory(new PropertyValueFactory<>("Comment"));
 
 
-
-        date.setCellValueFactory(new PropertyValueFactory<>("Date"));
-        logsTable.setItems(logs1);
-        logsTable.getColumns().setAll(date);
+        logsTable.setItems(logVM.getTourLogs());
+        //logsTable.getColumns().setAll(date, time, difficulty, totalTime, rating, comment);
     }
 
     @FXML

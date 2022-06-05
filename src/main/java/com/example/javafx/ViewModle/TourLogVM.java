@@ -43,6 +43,7 @@ public class TourLogVM implements TourLogListener {
     public ObservableList<TourLog> getTourLogs(){
         List<Integer> ids = manager.getTourLogIds();
         TourLog log;
+        logs.clear();
         for (int id: ids) {
             log = manager.getTourLog(id);
             this.logs.add(log);
