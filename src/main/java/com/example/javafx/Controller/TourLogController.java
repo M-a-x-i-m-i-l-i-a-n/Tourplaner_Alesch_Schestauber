@@ -49,7 +49,7 @@ public class TourLogController implements Initializable {
     private Button save;
 
     public TourLogController(){
-        TourLogManager manager = TourLogManager.getInstance();
+        MyTourLogManager manager = MyTourLogManager.getInstance();
         this.tourLogVM = new TourLogVM(manager);
     }
 

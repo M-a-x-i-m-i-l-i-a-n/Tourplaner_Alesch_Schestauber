@@ -1,6 +1,8 @@
 package com.example.javafx.DataAccessLayer;
 
 import com.example.javafx.model.TourLog;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 
 import java.sql.*;
 import java.text.ParseException;
@@ -41,6 +43,25 @@ public class LogDAO {
         }
     }
 
+    public ObservableList<Integer> getLogIds(){
+        ObservableList<Integer> ids = FXCollections.observableArrayList();
+        try{
+            Connection conn = DatabaseHandler.getInstance().getConnection();
+            PreparedStatement statement = conn.prepareStatement("SELECT id FROM public.\"logs\";");
+            ResultSet resultSet = statement.executeQuery();
+
+
+
+            while (resultSet.next()){
+                ids.add(resultSet.getInt(1));
+            }
+            return ids;
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     //Updated ein Tourlog in der Datenabnk
     public void updateTourLog(TourLog log){
         try{
@@ -52,7 +73,7 @@ public class LogDAO {
             statement.setString(3, log.getTime());
             statement.setString(4, log.getComment());
             statement.setInt(5, log.getDifficulty());
-            statement.setInt(6, log.getTotalTime());
+            statement.setDouble(6, log.getTotalTime());
             statement.setInt(7, log.getRating());
             statement.setInt(8, log.getId());
 
@@ -69,15 +90,15 @@ public class LogDAO {
     public TourLog getTourById(int id){
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("SELECT  tourname, date, time, comment, difficulty, total-time,rating FROM public.\"logs\" WHERE id = ?;");
+            PreparedStatement statement = conn.prepareStatement("SELECT  tourname, date, time, comment, difficulty, totaltime,rating FROM public.\"logs\" WHERE id = ?;");
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 
-            //User(String username, String password, String token, int coins, boolean admin)
+
             if(resultSet.next()){
                 TourLog log = new TourLog(id,resultSet.getString(1),
                         resultSet.getString(2),
-                        resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5), resultSet.getInt(6), resultSet.getInt(7));
+                        resultSet.getString(3), resultSet.getString(4), resultSet.getInt(5), resultSet.getDouble(6), resultSet.getInt(7));
                 resultSet.close();
                 statement.close();
                 conn.close();
@@ -99,12 +120,12 @@ public class LogDAO {
             statement.setString(1, tourname);
             ResultSet resultSet = statement.executeQuery();
 
-            //User(String username, String password, String token, int coins, boolean admin)
+
 
             while (resultSet.next()) {
                 log = new TourLog(resultSet.getInt(1), resultSet.getString(2),
                         resultSet.getString(3),
-                        resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getInt(7), resultSet.getInt(8));
+                        resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getDouble(7), resultSet.getInt(8));
                 logs.add(log);
             }
                 resultSet.close();

@@ -58,7 +58,6 @@ public class TourDAO {
             statement.setString(1, tourname);
             ResultSet resultSet = statement.executeQuery();
 
-            //User(String username, String password, String token, int coins, boolean admin)
             if(resultSet.next()){
                 Tour tour = new Tour(tourname, resultSet.getString(1),resultSet.getString(2),
                         resultSet.getString(3),
@@ -82,7 +81,7 @@ public class TourDAO {
             PreparedStatement statement = conn.prepareStatement("SELECT name FROM public.\"tours\";");
             ResultSet resultSet = statement.executeQuery();
 
-            //User(String username, String password, String token, int coins, boolean admin)
+
 
             while (resultSet.next()){
                 names.add(resultSet.getString(1));
@@ -101,7 +100,7 @@ public class TourDAO {
             statement.setInt(1, id);
             ResultSet resultSet = statement.executeQuery();
 
-            //User(String username, String password, String token, int coins, boolean admin)
+
             if(resultSet.next()){
                 Tour tour = new Tour(resultSet.getString(1),resultSet.getString(2),
                         resultSet.getString(3),
@@ -122,15 +121,15 @@ public class TourDAO {
     public void updateTour(Tour tour){
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("UPDATE public.\"tours\" SET description = ?, from = ?, " +
-                    " to = ?, type = ?, distance = ?, time = ? WHERE name = ?;");
+            PreparedStatement statement = conn.prepareStatement("UPDATE public.\"tours\" SET description = ?, start = ?, " +
+                    " destin = ?, type = ?, distance = ?, time = ? WHERE name = ?;");
             statement.setString(1, tour.getDescription());
-            statement.setString(1, tour.getFrom());
-            statement.setString(1, tour.getTo());
-            statement.setString(1, tour.getType());
-            statement.setInt(1, tour.getDistance());
-            statement.setInt(1, tour.getTime());
-
+            statement.setString(2, tour.getFrom());
+            statement.setString(3, tour.getTo());
+            statement.setString(4, tour.getType());
+            statement.setInt(5, tour.getDistance());
+            statement.setInt(6, tour.getTime());
+            statement.setString(7, tour.getName());
             statement.executeUpdate();
             statement.close();
             conn.close();

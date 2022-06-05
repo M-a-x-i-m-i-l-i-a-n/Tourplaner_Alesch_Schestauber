@@ -19,7 +19,7 @@ import java.util.ResourceBundle;
 
 public class EditTourController implements Initializable{
 
-        ObservableList<String> transportTypes = FXCollections.observableArrayList("Shortest", "Fastest", "Bicycle", "Pedestrian");
+        ObservableList<String> transportTypes = FXCollections.observableArrayList("shortest", "fastest", "bicycle", "pedestrian");
         @FXML
         private TextField name;
 

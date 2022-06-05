@@ -14,11 +14,11 @@ public class TourLog {
     String comment;
     //1 - sehr leicht -> 5 - sehr schwer
     int difficulty;
-    int totalTime;
+    double totalTime;
     //1 - schlecht -> 5 - sehr gut
     int rating;
 
-    public TourLog(int id, String tourname, String date, String time, String comment, int difficulty, int totalTime, int rating){
+    public TourLog(int id, String tourname, String date, String time, String comment, int difficulty, double totalTime, int rating){
         this.id = id;
         this.tourname = tourname;
         this.date = date;
@@ -28,6 +28,7 @@ public class TourLog {
         this.totalTime = totalTime;
         this.rating = rating;
     }
+
 
     public int getId() {
         return id;
@@ -45,7 +46,7 @@ public class TourLog {
         return rating;
     }
 
-    public int getTotalTime() {
+    public double getTotalTime() {
         return totalTime;
     }
 
