@@ -41,8 +41,8 @@ public class TourVM implements TourListener {
     public void edit(){
         Tour tour = manager.getTour(name.getValue());
         tour.setDescription(description.getValue());
-        tour.setFrom(from.getValue());
-        tour.setTo(to.getValue());
+        tour.setStart(from.getValue());
+        tour.setDestin(to.getValue());
         tour.setType(type.getValue());
         manager.editTour(tour);
     }
