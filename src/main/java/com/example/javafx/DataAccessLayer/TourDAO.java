@@ -8,8 +8,6 @@ import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
 
 public class TourDAO {
 
@@ -28,19 +26,25 @@ public class TourDAO {
         //Die id gibt an die wievielte Tour das ist damit die Tours leichter ausgelesen und dann als Liste angezeigt werden können
         //Das + 1 ist weil über getTourCount() die Anzahl der gespeicherten Tours ausgelesen wird und die neu gespeicherte Tour ist dann um 1 mehr
         System.out.println("TOURHANDLER:44:: AAAAAAAAAAAAAAAAAAA");
-        int id = getTourCount() + 1;
-        System.out.println("TOURHANDLER:44:: AAAAAAAAAAAAAAAAAAA + id:" + id);
+
+
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("INSERT INTO public.\"tours\"(name, description, start, destin, type, distance, time, id) VALUES(?,?,?,?,?,?,?,?);");
+            PreparedStatement statement = conn.prepareStatement("INSERT INTO public.\"tours\"(name, description, start, destin, type, distance, \"time\", lrlng, lrlat, ullat, ullng, \"sessionID\", url) VALUES(?,?,?,?,?,?,?,?,?,?,?,?,?);");
             statement.setString(1, tour.getName());
             statement.setString(2, tour.getDescription());
-            statement.setString(3, tour.getFrom());
-            statement.setString(4, tour.getTo());
+            statement.setString(3, tour.getStart());
+            statement.setString(4, tour.getDestin());
             statement.setString(5, tour.getType());
-            statement.setInt(6, tour.getDistance());
-            statement.setInt(7, tour.getTime());
-            statement.setInt(8,id);
+            statement.setDouble(6, tour.getDistance());
+            statement.setString(7, tour.getTime());
+            statement.setString(8, tour.getLrlat());
+            statement.setString(9, tour.getLrlng());
+            statement.setString(10, tour.getUllat());
+            statement.setString(11, tour.getUllng());
+            statement.setString(12, tour.getUrl());
+            statement.setString(13, tour.getSessionID());
+
 
             statement.executeUpdate();
             statement.close();
@@ -54,18 +58,19 @@ public class TourDAO {
     public Tour getTourByName(String tourname){
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("SELECT  description, start, destin, type, distance, time, id FROM public.\"tours\" WHERE name = ?;");
+            PreparedStatement statement = conn.prepareStatement("SELECT  * FROM public.\"tours\" WHERE name = ?;");
             statement.setString(1, tourname);
             ResultSet resultSet = statement.executeQuery();
 
             if(resultSet.next()){
-                Tour tour = new Tour(tourname, resultSet.getString(1),resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4), resultSet.getInt(5), resultSet.getInt(6), resultSet.getInt(7));
+                Tour tour = new Tour(tourname, resultSet.getString(2),resultSet.getString(3), resultSet.getString(4),
+                        resultSet.getString(5), resultSet.getString(6), resultSet.getDouble(7), resultSet.getString(8), resultSet.getString(9), resultSet.getString(10),
+                        resultSet.getString(11), resultSet.getString(12), resultSet.getString(13));
                 resultSet.close();
                 statement.close();
                 conn.close();
                 return tour;
+
             }
 
         }catch (SQLException e){
@@ -93,29 +98,7 @@ public class TourDAO {
         return null;
     }
 
-    public Tour getTourById(int id){
-        try{
-            Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("SELECT  name, description, start, destin, type, distance, time FROM public.\"tours\" WHERE id = ?;");
-            statement.setInt(1, id);
-            ResultSet resultSet = statement.executeQuery();
 
-
-            if(resultSet.next()){
-                Tour tour = new Tour(resultSet.getString(1),resultSet.getString(2),
-                        resultSet.getString(3),
-                        resultSet.getString(4), resultSet.getString(5), resultSet.getInt(6), resultSet.getInt(7), id);
-                resultSet.close();
-                statement.close();
-                conn.close();
-                return tour;
-            }
-
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     //Mit dieser Funktion werden die Daten einer Tour in der Datenbank updated
     public void updateTour(Tour tour){
@@ -124,12 +107,14 @@ public class TourDAO {
             PreparedStatement statement = conn.prepareStatement("UPDATE public.\"tours\" SET description = ?, start = ?, " +
                     " destin = ?, type = ?, distance = ?, time = ? WHERE name = ?;");
             statement.setString(1, tour.getDescription());
-            statement.setString(2, tour.getFrom());
-            statement.setString(3, tour.getTo());
+
+            statement.setString(2, tour.getStart());
+            statement.setString(3, tour.getDestin());
             statement.setString(4, tour.getType());
-            statement.setInt(5, tour.getDistance());
-            statement.setInt(6, tour.getTime());
+            statement.setDouble(5, tour.getDistance());
+            statement.setString(6, tour.getTime());
             statement.setString(7, tour.getName());
+
             statement.executeUpdate();
             statement.close();
             conn.close();

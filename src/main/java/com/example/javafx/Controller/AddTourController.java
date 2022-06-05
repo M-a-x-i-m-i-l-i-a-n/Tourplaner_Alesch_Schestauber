@@ -12,6 +12,7 @@ import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
 import javafx.beans.property.*;
@@ -58,7 +59,7 @@ public class AddTourController implements Initializable {
     }
 
     @FXML
-    protected void onSaveButtonClicked() {
+    protected void onSaveButtonClicked() throws IOException, InterruptedException {
         tourVM.add();
         Stage stage = (Stage) saveTour.getScene().getWindow();
         stage.close();
