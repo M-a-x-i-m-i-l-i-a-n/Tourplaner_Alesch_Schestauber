@@ -17,5 +17,6 @@ public interface TourLogManager {
     TourLog getTourLog(int id);
     void deleteTourLog(String name);
     List<String> getTours();
+    ObservableList<TourLog> getTourLogsByName(String tourname);
     ObservableList<Integer> getTourLogIds();
 }

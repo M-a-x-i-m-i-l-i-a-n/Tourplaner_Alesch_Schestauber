@@ -1,8 +1,10 @@
 package com.example.javafx.ViewModle;
 
+import com.example.javafx.business.MyTourManager;
 import com.example.javafx.business.TourListener;
 import com.example.javafx.business.TourManager;
 import com.example.javafx.model.Tour;
+import com.example.javafx.model.TourLog;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
@@ -41,8 +43,8 @@ public class TourVM implements TourListener {
     public void edit(){
         Tour tour = manager.getTour(name.getValue());
         tour.setDescription(description.getValue());
-        tour.setFrom(from.getValue());
-        tour.setTo(to.getValue());
+        tour.setStart(from.getValue());
+        tour.setDestin(to.getValue());
         tour.setType(type.getValue());
         manager.editTour(tour);
     }
@@ -78,7 +80,17 @@ public class TourVM implements TourListener {
         //tours.setAll(tours.stream().filter(tour -> tour.getName().contains("")).toList());
     }
 
+    public void createTourReport(Tour tour, ObservableList<TourLog> logs) throws IOException {
+        manager.callPDFGenerator(tour, logs);
+    }
+
+
+
+
+
     public void setListItems(ObservableList<String> listItems) {
         this.listItems = listItems;
     }
+
+
 }
