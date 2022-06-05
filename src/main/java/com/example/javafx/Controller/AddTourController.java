@@ -19,7 +19,7 @@ import javafx.beans.property.*;
 import javafx.stage.Stage;
 
 public class AddTourController implements Initializable {
-    ObservableList<String> transportTypes = FXCollections.observableArrayList("Shortest", "Fastest", "Bicycle", "Pedestrian");
+    ObservableList<String> transportTypes = FXCollections.observableArrayList("shortest", "fastest", "bicycle", "pedestrian");
     @FXML
     private TextField name;
 

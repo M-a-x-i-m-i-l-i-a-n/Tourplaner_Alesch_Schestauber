@@ -62,7 +62,6 @@ public class TourDAO {
             statement.setString(1, tourname);
             ResultSet resultSet = statement.executeQuery();
 
-//public Tour(String name, String description, String from, String to, String type, String time, Double distance, String lrlng, String lrlat, String ullng, String ullat, String mapUrl, String sessionID)
             if(resultSet.next()){
                 Tour tour = new Tour(tourname, resultSet.getString(2),resultSet.getString(3), resultSet.getString(4),
                         resultSet.getString(5), resultSet.getString(6), resultSet.getDouble(7), resultSet.getString(8), resultSet.getString(9), resultSet.getString(10),
@@ -100,18 +99,21 @@ public class TourDAO {
     }
 
 
+
     //Mit dieser Funktion werden die Daten einer Tour in der Datenbank updated
     public void updateTour(Tour tour){
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("UPDATE public.\"tours\" SET description = ?, from = ?, " +
-                    " to = ?, type = ?, distance = ?, time = ? WHERE name = ?;");
+            PreparedStatement statement = conn.prepareStatement("UPDATE public.\"tours\" SET description = ?, start = ?, " +
+                    " destin = ?, type = ?, distance = ?, time = ? WHERE name = ?;");
             statement.setString(1, tour.getDescription());
-            statement.setString(1, tour.getStart());
-            statement.setString(1, tour.getDestin());
-            statement.setString(1, tour.getType());
-            statement.setDouble(1, tour.getDistance());
-            statement.setString(1, tour.getTime());
+
+            statement.setString(2, tour.getStart());
+            statement.setString(3, tour.getDestin());
+            statement.setString(4, tour.getType());
+            statement.setDouble(5, tour.getDistance());
+            statement.setString(6, tour.getTime());
+            statement.setString(7, tour.getName());
 
             statement.executeUpdate();
             statement.close();
