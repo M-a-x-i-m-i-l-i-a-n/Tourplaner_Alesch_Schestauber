@@ -35,6 +35,7 @@ public class MyTourLogManager implements TourLogManager{
     @Override
     public void addTourLog(String date, String time, String timeNeeded, String difficulty, String rating, String comment, String TourName) {
         logDAO.createTourLog(date, time, timeNeeded, difficulty, rating, comment, TourName);
+        fireGetTourLogs();
     }
 
     public ObservableList<Integer> getTourLogIds(){
@@ -46,14 +47,19 @@ public class MyTourLogManager implements TourLogManager{
     }
 
     @Override
-    public void deleteTourLog(String name) {
-
+    public void deleteTourLog(TourLog log) {
+        logDAO.deleteTourLog(log.getId());
+        fireGetTourLogs();
     }
 
     public void fireGetTourLogs(){
         for(TourLogListener listener : listeners){
-
+            listener.logsChanged();
         }
+
+    }
+    public ObservableList<TourLog> getTourLogsByName(String tourname){
+        return logDAO.getToursByTourname(tourname);
     }
 
     public void onGetTours(){

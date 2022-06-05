@@ -15,7 +15,8 @@ public interface TourLogManager {
 
     void addTourLog(String date, String time, String timeNeeded, String difficulty, String rating, String comment, String Tourname);
     TourLog getTourLog(int id);
-    void deleteTourLog(String name);
+    void deleteTourLog(TourLog log);
+    ObservableList<TourLog> getTourLogsByName(String tourname);
     List<String> getTours();
     ObservableList<Integer> getTourLogIds();
 }

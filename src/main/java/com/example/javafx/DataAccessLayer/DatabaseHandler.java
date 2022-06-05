@@ -7,7 +7,7 @@ import java.sql.SQLException;
 public class DatabaseHandler {
     private static final String URL = "jdbc:postgresql://localhost:5432/TourPlaner";
     private static final String USER = "postgres";
-    private static final String PASSWORD = "x2471997";
+    private static final String PASSWORD = "postgres";
     private static DatabaseHandler instance;
 
     private DatabaseHandler() {

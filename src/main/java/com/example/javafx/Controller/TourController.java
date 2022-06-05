@@ -133,14 +133,6 @@ public class TourController implements Initializable {
         }
 
          */
-        System.out.println(logVM.getTourLogs());
-        createTable();
-    }
-
-
-
-    private void createTable(){
-
         date.setCellValueFactory(new PropertyValueFactory<TourLog, String>("Date"));
         time.setCellValueFactory(new PropertyValueFactory<>("Time"));
         difficulty.setCellValueFactory(new PropertyValueFactory<>("Difficulty"));
@@ -150,6 +142,16 @@ public class TourController implements Initializable {
 
 
         logsTable.setItems(logVM.getTourLogs());
+        System.out.println(logVM.getTourLogs());
+
+        createTable();
+    }
+
+
+
+    private void createTable(){
+
+
         //logsTable.getColumns().setAll(date, time, difficulty, totalTime, rating, comment);
     }
 
@@ -162,6 +164,9 @@ public class TourController implements Initializable {
 
         if (e.getSource() == menuPdf) {
             System.out.println("Export to PDF File!");
+            Tour tour = tourList.getSelectionModel().getSelectedItem();
+            ObservableList<TourLog> logs = logVM.getLogsByTourname(tour.getName());
+
         }
 
         if (e.getSource() == menuFile) {
@@ -250,5 +255,16 @@ public class TourController implements Initializable {
         stage.show();
 
     }
+    @FXML
+    protected void onDeleteTourLog(){
+        TourLog log = logsTable.getSelectionModel().getSelectedItem();
+        logVM.deleteLog(log);
+    }
 
+    @FXML
+    protected void onTourSelected(){
+        Tour tour = tourList.getSelectionModel().getSelectedItem();
+        ObservableList<TourLog> logs = logVM.getLogsByTourname(tour.getName());
+        //TODO hier müssen jetzt dann noch die TourLogs nach dem Tourname gefilltert werden
+    }
 }

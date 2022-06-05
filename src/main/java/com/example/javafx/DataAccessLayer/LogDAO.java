@@ -111,8 +111,8 @@ public class LogDAO {
         return null;
     }
 
-    public ArrayList<TourLog> getToursByTourname(String tourname){
-        ArrayList<TourLog> logs = new ArrayList<>();
+    public ObservableList<TourLog> getToursByTourname(String tourname){
+        ObservableList<TourLog> logs = FXCollections.observableArrayList();
         TourLog log;
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();

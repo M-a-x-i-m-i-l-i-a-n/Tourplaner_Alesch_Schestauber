@@ -158,7 +158,7 @@
             <ButtonBar buttonMinWidth="1.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
                <buttons>
                   <Button fx:id="addTourLog" mnemonicParsing="false" onMouseClicked="#onAddTourLogButtonClick" text="+" />
-                  <Button fx:id="removeTourLog" mnemonicParsing="false" text="-" />
+                  <Button fx:id="removeTourLog" mnemonicParsing="false" onMouseClicked="#onDeleteTourLog" text="-" />
                   <Button fx:id="editTourLog" mnemonicParsing="false" text="Edit" />
                </buttons>
             </ButtonBar>
