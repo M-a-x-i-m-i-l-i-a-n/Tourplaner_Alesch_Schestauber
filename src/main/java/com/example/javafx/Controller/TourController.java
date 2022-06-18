@@ -165,6 +165,7 @@ public class TourController implements Initializable {
             System.out.println("Export to PDF File!");
             Tour tour = tourList.getSelectionModel().getSelectedItem();
             ObservableList<TourLog> logs = logVM.getLogsByTourname(tour.getName());
+            System.out.println("Calling createTourReport");
             tourVM.createTourReport(tour, logs);
 
 

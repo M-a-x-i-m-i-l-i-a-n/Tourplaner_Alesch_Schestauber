@@ -81,6 +81,7 @@ public class TourVM implements TourListener {
     }
 
     public void createTourReport(Tour tour, ObservableList<TourLog> logs) throws IOException {
+        System.out.println("PDF creator called here");
         manager.callPDFGenerator(tour, logs);
     }
 
