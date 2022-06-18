@@ -42,8 +42,8 @@ public class TourDAO {
             statement.setString(9, tour.getLrlng());
             statement.setString(10, tour.getUllat());
             statement.setString(11, tour.getUllng());
-            statement.setString(12, tour.getUrl());
-            statement.setString(13, tour.getSessionID());
+            statement.setString(12, tour.getSessionID());
+            statement.setString(13, tour.getUrl());
 
 
             statement.executeUpdate();

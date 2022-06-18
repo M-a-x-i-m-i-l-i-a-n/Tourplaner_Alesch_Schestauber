@@ -59,6 +59,7 @@ public class MyTourManager implements TourManager {
 */
     public void deleteTour(String name){
         tourDAO.deleteTour(name);
+        fireToursChanged();
     }
     public void addTourListener(TourListener listener) {
         listeners.add(listener);

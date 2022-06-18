@@ -53,10 +53,10 @@ public class SendRequest {
         //Create Url used for Scenebuilder to display Map
         tour.setUrl(resourceMapUrl + "key="
                 + apiKey.get("ApiKey")
-                + "&amp;size=1100,500"
-                + "&amp;defaultMarker=none&amp;zoom=11&amp;rand=737758036&amp;session="
+                + "&size=1920,1080"
+                + "&defaultMarker=none&zoom=9&rand=737758036&session="
                 + tour.getSessionID()
-                + "&amp;boundingBox="
+                + "&;boundingBox="
                 + tour.getUllat()
                 + "," + tour.getUllng()
                 + "," + tour.getLrlat()

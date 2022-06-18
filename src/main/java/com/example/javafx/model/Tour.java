@@ -20,7 +20,7 @@ public class Tour {
     ArrayList<TourLog> logs;
 
 
-    public Tour(String name, String description, String start, String destin, String type, String time, Double distance, String lrlng, String lrlat, String ullng, String ullat, String url, String sessionID){
+    public Tour(String name, String description, String start, String destin, String type, String time, Double distance, String lrlng, String lrlat, String ullng, String ullat, String sessionID,  String url){
         this.name = name;
         this.description = description;
         this.start = start;

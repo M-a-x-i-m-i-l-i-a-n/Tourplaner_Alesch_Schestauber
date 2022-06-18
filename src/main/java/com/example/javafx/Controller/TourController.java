@@ -25,7 +25,9 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
@@ -107,11 +109,23 @@ public class TourController implements Initializable {
     @FXML
     private TableColumn<TourLog, String> comment;
 
-
+    @FXML
+    private Label name;
     @FXML
     private Label from;
+    @FXML
+    private Label to;
+    @FXML
+    private Label transportType;
+    @FXML
+    private Label distance;
+    @FXML
+    private Label estimatedTime;
+    @FXML
+    private Label description;
 
-
+    @FXML
+    private ImageView routeImage;
 
     private TourVM tourVM;
     private TourLogVM logVM;
@@ -143,17 +157,8 @@ public class TourController implements Initializable {
 
         logsTable.setItems(logVM.getTourLogs());
         System.out.println(logVM.getTourLogs());
-
-        createTable();
     }
 
-
-
-    private void createTable(){
-
-
-        //logsTable.getColumns().setAll(date, time, difficulty, totalTime, rating, comment);
-    }
 
     @FXML
     public void onMenuClicked(ActionEvent e) throws IOException {
@@ -260,11 +265,25 @@ public class TourController implements Initializable {
         TourLog log = logsTable.getSelectionModel().getSelectedItem();
         logVM.deleteLog(log);
     }
-
+    //Todo es muss noch der Edit-button für die Tourlogs gemacht werden
     @FXML
     protected void onTourSelected(){
         Tour tour = tourList.getSelectionModel().getSelectedItem();
         ObservableList<TourLog> logs = logVM.getLogsByTourname(tour.getName());
-        //TODO hier müssen jetzt dann noch die TourLogs nach dem Tourname gefilltert werden
+        logsTable.setItems(logs);
+        System.out.println("AAAAAAAAAA::: " + tour.getUrl());
+        Image image = new Image(tour.getUrl());
+        System.out.println(image.getUrl());
+        routeImage.setImage(image);
+        //TODO das Bild vielleicht asynchron laden weil und während dessen einen Ladescreen/Ladesymbol reingeben
+        name.setText("Name of the Tour: " + tour.getName());
+        from.setText(tour.getStart());
+        to.setText(tour.getDestin());
+        transportType.setText(tour.getType());
+        distance.setText(tour.getDistance().toString());
+        estimatedTime.setText(tour.getTime());
+        description.setText(tour.getDescription());
     }
+
+
 }
