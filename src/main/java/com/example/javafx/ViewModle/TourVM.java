@@ -69,9 +69,15 @@ public class TourVM implements TourListener {
         }
     }
 
+    public void getTourbyName(String name){
+        tours.clear();
+        getTourList();
+        if(!name.equals("")) {
+            tours.setAll(tours.stream().filter(tour -> tour.getName().contains(name)).toList());
+        }
+    }
     @Override
     public void listChanged() {
-        //TODO wieder auskommentieren
         listItems.setAll(manager.getTours());
         tours.clear();
         getTourList();

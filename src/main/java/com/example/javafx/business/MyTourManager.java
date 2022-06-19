@@ -12,7 +12,7 @@ public class MyTourManager implements TourManager {
 
     private List<TourListener> listeners;
     private TourDAO tourDAO;
-
+    ComputedTourAtt calc;
 
     public static MyTourManager instance;
 
@@ -27,6 +27,7 @@ public class MyTourManager implements TourManager {
     private void init(){
         this.listeners = new ArrayList<>();
         this.tourDAO = TourDAO.getInstance();
+        this.calc = new ComputedTourAtt();
     }
 
     public void addTour(String name, String description, String from, String to, String type) throws IOException, InterruptedException {
@@ -45,7 +46,10 @@ public class MyTourManager implements TourManager {
     }
 
     public Tour getTour(String name){
-        return tourDAO.getTourByName(name);
+        Tour tour = tourDAO.getTourByName(name);
+        tour = calc.calcularePopularity(tour);
+
+        return tour;
     }
 
     public ObservableList<String> getTours(){

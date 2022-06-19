@@ -123,6 +123,10 @@ public class TourController implements Initializable {
     private Label estimatedTime;
     @FXML
     private Label description;
+    @FXML
+    private Label popularity;
+    @FXML
+    private Label childFriendliness;
 
     @FXML
     private ImageView routeImage;
@@ -197,18 +201,10 @@ public class TourController implements Initializable {
         String text = textField.getText();
         //title.setText("Title: " + text);
         textField.setText("");
+        tourVM.getTourbyName(text);
+        ObservableList<TourLog> logs = logVM.getLogsFromList(tourList.getItems());
+        logsTable.setItems(logs);
 
-        System.out.println("Show About!");
-        System.out.println("Add Tour LOG!");
-        Stage stage = new Stage();
-        stage.setTitle("Test");
-        stage.initOwner(borderPane.getScene().getWindow());
-        stage.initModality(Modality.WINDOW_MODAL);
-
-        FXMLLoader fxmlLoader = new FXMLLoader(TourApplication.class.getResource("test.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setScene(scene);
-        stage.show();
     }
     @FXML
     protected void onAddButtonClick() throws IOException {
@@ -283,6 +279,9 @@ public class TourController implements Initializable {
         distance.setText(tour.getDistance().toString());
         estimatedTime.setText(tour.getTime());
         description.setText(tour.getDescription());
+
+        popularity.setText(Integer.toString(tour.getPopularity()));
+        childFriendliness.setText(Integer.toString(tour.getChildFriendliness()));
     }
 
 

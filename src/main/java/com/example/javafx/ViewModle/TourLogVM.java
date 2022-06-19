@@ -51,6 +51,17 @@ public class TourLogVM implements TourLogListener {
         return logs;
     }
 
+    public ObservableList<TourLog> getLogsFromList(ObservableList<Tour> tours){
+        logs.clear();
+        ObservableList<TourLog> log = FXCollections.observableArrayList();
+        for(Tour tour : tours){
+            log = (manager.getTourLogsByName(tour.getName()));
+            for(int i = 0; i < log.size(); i++){
+                logs.add(log.get(i));
+            }
+        }
+        return logs;
+    }
     public void deleteLog(TourLog log){
         manager.deleteTourLog(log);
     }
