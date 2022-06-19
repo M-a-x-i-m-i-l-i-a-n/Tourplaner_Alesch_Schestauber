@@ -1,11 +1,7 @@
 package com.example.javafx.business.ReportGenerator;
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
+import java.net.URL;
 import com.example.javafx.model.Tour;
 import com.example.javafx.model.TourLog;
 import com.itextpdf.io.font.constants.StandardFonts;
@@ -16,15 +12,15 @@ import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
-import com.itextpdf.layout.element.Cell;
-import com.itextpdf.layout.element.Image;
-import com.itextpdf.layout.element.Paragraph;
-import com.itextpdf.layout.element.Table;
-import com.itextpdf.layout.properties.UnitValue;
+import com.itextpdf.layout.element.*;
 import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.IRenderer;
 import javafx.collections.ObservableList;
+import java.io.FileOutputStream;
+import java.io.InputStream;
+import java.io.OutputStream;
+
 
 public class PDFReport {
 
@@ -33,9 +29,8 @@ public class PDFReport {
     public static void pdfGenerator(Tour tour, ObservableList<TourLog> logs) throws IOException {
         PdfDocument pdfDocument = new PdfDocument(new PdfWriter(FileDest));
         Document report = new Document(pdfDocument);
-        Table table = new Table(2);
-        //public Tour(String name, String description, String from, String to, String type, String time, Double distance, String lrlng, String lrlat, String ullng, String ullat, String mapUrl, String sessionID)
-        System.out.println(tour.getUrl());
+
+        Table tourTable = new Table(2);
         PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
 
         Paragraph a = new Paragraph("Tourname")
@@ -46,7 +41,7 @@ public class PDFReport {
                 .setFont(font).setFontColor(DeviceGray.BLACK);
         Paragraph d = new Paragraph(tour.getDescription())
                 .setFont(font).setFontColor(DeviceGray.BLACK);
-        Paragraph e = new Paragraph("Start")
+        Paragraph q = new Paragraph("Start")
                 .setFont(font).setFontColor(DeviceGray.BLACK);
         Paragraph f = new Paragraph(tour.getStart())
                 .setFont(font).setFontColor(DeviceGray.BLACK);
@@ -67,29 +62,47 @@ public class PDFReport {
         Paragraph n = new Paragraph(String.valueOf(tour.getDistance()))
                 .setFont(font).setFontColor(DeviceGray.BLACK);
 
-
-
         Paragraph o = new Paragraph("Map")
                 .setFont(font).setFontColor(DeviceGray.BLACK);
-        Image p = new Image((ImageDataFactory.create(tour.getUrl())));
-        //.setNextRenderer(new ImageBackgroundCellRenderer(cell, p));
-        //.setHeight(600 * p.getImageHeight() / p.getImageWidth());;
-        //TODO: configure map image for table ffs work already u stoopid cont
 
-        paragraphing(table, a, b, c, d, e, f, g);
-        paragraphing(table, h, i, j, k, l, m, n);
+        String destinationFile = "mapPic.jpg";
 
-        table.addCell(new Cell().add(o));
-        table.addCell(new Cell().add(p));
+        paragraphing(tourTable, a, b, c, d, q, f, g);
+        paragraphing(tourTable, h, i, j, k, l, m, n);
 
-        report.add(table);
+        try{
+            URL url = new URL(tour.getUrl());
+            InputStream is = url.openStream();
+            OutputStream os = new FileOutputStream(destinationFile);
+
+            byte[] r = new byte[2048];
+            int length;
+
+            while ((length = is.read(r)) != -1) {
+                os.write(r, 0, length);
+            }
+
+            is.close();
+            os.close();
+            tourTable.addCell(new Cell().add(o));
+
+            Image img = new Image(ImageDataFactory.create(destinationFile));
+            Cell cell = new Cell();
+            cell.setNextRenderer(new ImageBackgroundCellRenderer(cell,img));
+            cell.setHeight(img.getImageHeight()/2);
+            cell.setWidth(img.getImageWidth()/2);
+            tourTable.addCell(cell);
+        }catch (IOException e)
+        {
+            e.printStackTrace();
+        }
+
+        Table logsTable = new Table(makeLogsTable(logs));
+
+        report.add(tourTable);
 
         report.close();
         System.out.println("Table created successfully...");
-
-
-
-
 
     }
 
@@ -104,5 +117,31 @@ public class PDFReport {
 
     }
 
+    private static class ImageBackgroundCellRenderer extends CellRenderer {
+        protected Image img;
 
+        public ImageBackgroundCellRenderer(Cell modelElement, Image img) {
+            super(modelElement);
+            this.img = img;
+        }
+
+        // If a renderer overflows on the next area, iText uses #getNextRenderer() method to create a new renderer for the overflow part.
+        // If #getNextRenderer() isn't overridden, the default method will be used and thus the default rather than the custom
+        // renderer will be created
+        @Override
+        public IRenderer getNextRenderer() {
+            return new ImageBackgroundCellRenderer((Cell) modelElement, img);
+        }
+
+        @Override
+        public void draw(DrawContext drawContext) {
+            img.scaleToFit(getOccupiedAreaBBox().getWidth(), getOccupiedAreaBBox().getHeight());
+            drawContext.getCanvas().addXObjectFittedIntoRectangle(img.getXObject(), getOccupiedAreaBBox());
+            super.draw(drawContext);
+        }
+    }
+
+    private static ObservableList<TourLog> makeLogsTable(ObservableList<TourLog> logs){
+        return logs;
+    }
 }

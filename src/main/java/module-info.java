@@ -9,6 +9,7 @@ module com.example.javafx {
     requires layout;
     requires kernel;
     requires io;
+    requires java.desktop;
 
     opens com.example.javafx to javafx.fxml;
     exports com.example.javafx;
