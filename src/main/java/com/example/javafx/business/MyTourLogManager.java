@@ -52,6 +52,10 @@ public class MyTourLogManager implements TourLogManager{
         fireGetTourLogs();
     }
 
+    public void editTourLog(TourLog log){
+        logDAO.updateTourLog(log);
+        fireGetTourLogs();
+    }
     public void fireGetTourLogs(){
         for(TourLogListener listener : listeners){
             listener.logsChanged();

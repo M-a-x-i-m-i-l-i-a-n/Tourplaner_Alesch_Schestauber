@@ -155,7 +155,6 @@ public class Tour {
         }
     }
     public void setChildFriendliness(double difficulty, double totalTimes){
-        System.out.println("AAAAAAAAAAAAAAAAAAAAAAA " + difficulty + "   " + totalTimes + "  " +  distance);
         //TODO die child- friendliness nochmal genauer anschauen (was überlegen das Sinn macht)
         childFriendliness = (int) ((totalTimes / difficulty * 25)/distance);
     }

@@ -70,6 +70,16 @@ public class TourLogVM implements TourLogListener {
         return manager.getTourLogsByName(tourname);
     }
 
+    public void editTourLog(int id){
+        TourLog log = manager.getTourLog(id);
+        log.setDate(date.getValue());
+        log.setComment(comment.getValue());
+        log.setDifficulty(Integer.parseInt(difficulty.getValue()));
+        log.setRating(Integer.parseInt(rating.getValue()));
+        log.setTime(time.getValue());
+        log.setTotalTime(Integer.parseInt(timeNeeded.getValue()));
+        manager.editTourLog(log);
+    }
 
     @Override
     public void logsChanged() {

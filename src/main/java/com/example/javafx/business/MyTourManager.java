@@ -4,6 +4,7 @@ import com.example.javafx.DataAccessLayer.TourDAO;
 import com.example.javafx.model.Tour;
 import javafx.collections.ObservableList;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,6 +13,7 @@ public class MyTourManager implements TourManager {
 
     private List<TourListener> listeners;
     private TourDAO tourDAO;
+    private TourImportExport export;
     ComputedTourAtt calc;
 
     public static MyTourManager instance;
@@ -28,6 +30,7 @@ public class MyTourManager implements TourManager {
         this.listeners = new ArrayList<>();
         this.tourDAO = TourDAO.getInstance();
         this.calc = new ComputedTourAtt();
+        this.export = new TourImportExport();
     }
 
     public void addTour(String name, String description, String from, String to, String type) throws IOException, InterruptedException {
@@ -64,6 +67,15 @@ public class MyTourManager implements TourManager {
     public void deleteTour(String name){
         tourDAO.deleteTour(name);
         fireToursChanged();
+    }
+
+    public void exportTour(Tour tour){
+        export.exportTour(tour);
+    }
+
+    public void importTour(File file){
+        Tour tour = export.importFile(file);
+        tourDAO.createTour(tour);
     }
     public void addTourListener(TourListener listener) {
         listeners.add(listener);

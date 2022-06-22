@@ -8,6 +8,7 @@ import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.List;
 
@@ -75,6 +76,14 @@ public class TourVM implements TourListener {
         if(!name.equals("")) {
             tours.setAll(tours.stream().filter(tour -> tour.getName().contains(name)).toList());
         }
+    }
+
+    public void exportTour(Tour tour){
+        manager.exportTour(tour);
+    }
+
+    public void importTour(File file){
+        manager.importTour(file);
     }
     @Override
     public void listChanged() {
