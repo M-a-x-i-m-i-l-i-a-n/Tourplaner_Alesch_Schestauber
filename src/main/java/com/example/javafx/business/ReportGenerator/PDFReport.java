@@ -1,7 +1,9 @@
 package com.example.javafx.business.ReportGenerator;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URL;
+import java.util.ArrayList;
+
 import com.example.javafx.model.Tour;
 import com.example.javafx.model.TourLog;
 import com.itextpdf.io.font.constants.StandardFonts;
@@ -17,21 +19,28 @@ import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.IRenderer;
 import javafx.collections.ObservableList;
-import java.io.FileOutputStream;
-import java.io.InputStream;
-import java.io.OutputStream;
 
 
 public class PDFReport {
 
     public static final String FileDest = "./src/main/resources/Logs/Tour-Report.pdf";
+    PdfFont font;
+    public PDFReport(){
+        try{
+            font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
 
-    public static void pdfGenerator(Tour tour, ObservableList<TourLog> logs) throws IOException {
+    }
+
+    public void pdfGenerator(Tour tour, ObservableList<TourLog> logs) throws IOException {
         PdfDocument pdfDocument = new PdfDocument(new PdfWriter(FileDest));
         Document report = new Document(pdfDocument);
 
         Table tourTable = new Table(2);
-        PdfFont font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
+        Table logsTable = new Table(2);
+
 
         Paragraph a = new Paragraph("Tourname")
                 .setFont(font).setFontColor(DeviceGray.BLACK);
@@ -67,8 +76,8 @@ public class PDFReport {
 
         String destinationFile = "mapPic.jpg";
 
-        paragraphing(tourTable, a, b, c, d, q, f, g);
-        paragraphing(tourTable, h, i, j, k, l, m, n);
+        paragraphingTour(tourTable, a, b, c, d, q, f, g);
+        paragraphingTour(tourTable, h, i, j, k, l, m, n);
 
         try{
             URL url = new URL(tour.getUrl());
@@ -97,7 +106,7 @@ public class PDFReport {
             e.printStackTrace();
         }
 
-        Table logsTable = new Table(makeLogsTable(logs));
+        makeLogsTable(logs, logsTable);
 
         report.add(tourTable);
 
@@ -106,7 +115,7 @@ public class PDFReport {
 
     }
 
-    private static void paragraphing(Table table, Paragraph a, Paragraph b, Paragraph c, Paragraph d, Paragraph e, Paragraph f, Paragraph g) {
+    private void paragraphingTour(Table table, Paragraph a, Paragraph b, Paragraph c, Paragraph d, Paragraph e, Paragraph f, Paragraph g) {
         table.addCell(new Cell().add(a));
         table.addCell(new Cell().add(b));
         table.addCell(new Cell().add(c));
@@ -141,7 +150,46 @@ public class PDFReport {
         }
     }
 
-    private static ObservableList<TourLog> makeLogsTable(ObservableList<TourLog> logs){
-        return logs;
+    private void makeLogsTable(ObservableList<TourLog> logs, Table logsTable){
+        for (TourLog log: logs) {
+            Paragraph a = new Paragraph("Date")
+                    .setFont(font).setFontColor(DeviceGray.BLACK);
+            Paragraph b = new Paragraph(log.getDate())
+                    .setFont(font).setFontColor(DeviceGray.BLACK);
+            Paragraph c = new Paragraph("Time")
+                    .setFont(font).setFontColor(DeviceGray.BLACK);
+            Paragraph d = new Paragraph(log.getTime())
+                    .setFont(font).setFontColor(DeviceGray.BLACK);
+            Paragraph e = new Paragraph("Total Time")
+                    .setFont(font).setFontColor(DeviceGray.BLACK);
+            Paragraph f = new Paragraph(String.valueOf(log.getTotalTime()))
+                    .setFont(font).setFontColor(DeviceGray.BLACK);
+            Paragraph g = new Paragraph("difficulty")
+                    .setFont(font).setFontColor(DeviceGray.BLACK);
+            Paragraph h = new Paragraph(String.valueOf(log.getDifficulty()))
+                    .setFont(font).setFontColor(DeviceGray.BLACK);
+            Paragraph i = new Paragraph("Rating")
+                    .setFont(font).setFontColor(DeviceGray.BLACK);
+            Paragraph j = new Paragraph(String.valueOf(log.getRating()))
+                    .setFont(font).setFontColor(DeviceGray.BLACK);
+            Paragraph k = new Paragraph("comment")
+                    .setFont(font).setFontColor(DeviceGray.BLACK);
+            Paragraph l = new Paragraph(log.getComment())
+                    .setFont(font).setFontColor(DeviceGray.BLACK);
+
+            paragraphingLogs(logsTable,a,b,c,d,e,f);
+            paragraphingLogs(logsTable,g,h,i,j,k,l);
+        }
+
+    }
+
+    private void paragraphingLogs(Table logsTable, Paragraph a, Paragraph b, Paragraph c, Paragraph d, Paragraph e, Paragraph f){
+        logsTable.addCell(new Cell().add(a));
+        logsTable.addCell(new Cell().add(b));
+        logsTable.addCell(new Cell().add(c));
+        logsTable.addCell(new Cell().add(d));
+        logsTable.addCell(new Cell().add(e));
+        logsTable.addCell(new Cell().add(f));
+
     }
 }

@@ -74,8 +74,8 @@ public class MyTourManager implements TourManager {
     }
 
     public void callPDFGenerator(Tour tour, ObservableList<TourLog> logs) throws IOException {
-        System.out.println("MyTourManager:AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-        PDFReport.pdfGenerator(tour, logs);
+        PDFReport pdfReport =  new PDFReport();
+        pdfReport.pdfGenerator(tour, logs);
 
 
     }
