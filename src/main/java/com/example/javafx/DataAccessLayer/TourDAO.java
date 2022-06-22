@@ -25,7 +25,7 @@ public class TourDAO {
     public void createTour(Tour tour){
         //Die id gibt an die wievielte Tour das ist damit die Tours leichter ausgelesen und dann als Liste angezeigt werden können
         //Das + 1 ist weil über getTourCount() die Anzahl der gespeicherten Tours ausgelesen wird und die neu gespeicherte Tour ist dann um 1 mehr
-        System.out.println("TOURHANDLER:44:: AAAAAAAAAAAAAAAAAAA");
+
 
 
         try{
@@ -42,8 +42,8 @@ public class TourDAO {
             statement.setString(9, tour.getLrlng());
             statement.setString(10, tour.getUllat());
             statement.setString(11, tour.getUllng());
-            statement.setString(12, tour.getUrl());
-            statement.setString(13, tour.getSessionID());
+            statement.setString(12, tour.getSessionID());
+            statement.setString(13, tour.getUrl());
 
 
             statement.executeUpdate();
@@ -63,9 +63,19 @@ public class TourDAO {
             ResultSet resultSet = statement.executeQuery();
 
             if(resultSet.next()){
-                Tour tour = new Tour(tourname, resultSet.getString(2),resultSet.getString(3), resultSet.getString(4),
-                        resultSet.getString(5), resultSet.getString(6), resultSet.getDouble(7), resultSet.getString(8), resultSet.getString(9), resultSet.getString(10),
-                        resultSet.getString(11), resultSet.getString(12), resultSet.getString(13));
+                Tour tour = new Tour(tourname,
+                        resultSet.getString(2),
+                        resultSet.getString(3),
+                        resultSet.getString(4),
+                        resultSet.getString(5),
+                        resultSet.getString(6),
+                        resultSet.getString(7),
+                        resultSet.getDouble(8),
+                        resultSet.getString(9),
+                        resultSet.getString(10),
+                        resultSet.getString(11),
+                        resultSet.getString(12),
+                        resultSet.getString(13));
                 resultSet.close();
                 statement.close();
                 conn.close();

@@ -51,6 +51,10 @@ public class TourLogVM implements TourLogListener {
         return logs;
     }
 
+    public ObservableList<TourLog> getLogsByTourname(String tourname){
+        return manager.getTourLogsByName(tourname);
+    }
+
     @Override
     public void logsChanged() {
 

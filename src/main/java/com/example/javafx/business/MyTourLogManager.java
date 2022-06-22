@@ -60,6 +60,10 @@ public class MyTourLogManager implements TourLogManager{
 
     }
 
+    public ObservableList<TourLog> getTourLogsByName(String tourname){
+        return logDAO.getToursByTourname(tourname);
+    }
+
     @Override
     public List<String> getTours() {
         return null;

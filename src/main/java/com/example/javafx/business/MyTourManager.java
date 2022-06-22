@@ -1,7 +1,9 @@
 package com.example.javafx.business;
 
 import com.example.javafx.DataAccessLayer.TourDAO;
+import com.example.javafx.business.ReportGenerator.PDFReport;
 import com.example.javafx.model.Tour;
+import com.example.javafx.model.TourLog;
 import javafx.collections.ObservableList;
 
 import java.io.IOException;
@@ -69,5 +71,12 @@ public class MyTourManager implements TourManager {
         for (TourListener listener : listeners) {
             listener.listChanged();
         }
+    }
+
+    public void callPDFGenerator(Tour tour, ObservableList<TourLog> logs) throws IOException {
+        PDFReport pdfReport =  new PDFReport();
+        pdfReport.pdfGenerator(tour, logs);
+
+
     }
 }

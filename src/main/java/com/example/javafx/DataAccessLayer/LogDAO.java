@@ -111,12 +111,12 @@ public class LogDAO {
         return null;
     }
 
-    public ArrayList<TourLog> getToursByTourname(String tourname){
-        ArrayList<TourLog> logs = new ArrayList<>();
+    public ObservableList<TourLog> getToursByTourname(String tourname){
+        ObservableList<TourLog> logs = FXCollections.observableArrayList();
         TourLog log;
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
-            PreparedStatement statement = conn.prepareStatement("SELECT * FROM public.\"logs\" WHERE name = ?;");
+            PreparedStatement statement = conn.prepareStatement("SELECT * FROM public.\"logs\" WHERE tourname = ?;");
             statement.setString(1, tourname);
             ResultSet resultSet = statement.executeQuery();
 
