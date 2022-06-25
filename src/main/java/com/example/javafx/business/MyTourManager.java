@@ -76,6 +76,7 @@ public class MyTourManager implements TourManager {
     public void importTour(File file){
         Tour tour = export.importFile(file);
         tourDAO.createTour(tour);
+        fireToursChanged();
     }
     public void addTourListener(TourListener listener) {
         listeners.add(listener);

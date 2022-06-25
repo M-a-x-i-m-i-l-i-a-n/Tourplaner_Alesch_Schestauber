@@ -181,8 +181,8 @@ public class TourController implements Initializable {
             Stage stage = new Stage();
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open File");
-            File file =  fileChooser.showSaveDialog(stage);
-
+            File file =  fileChooser.showOpenDialog(stage);
+            tourVM.importTour(file);
         }
     }
 
@@ -243,7 +243,7 @@ public class TourController implements Initializable {
         Tour tour = tourList.getSelectionModel().getSelectedItem();
         ObservableList<TourLog> logs = logVM.getLogsByTourname(tour.getName());
         logsTable.setItems(logs);
-        System.out.println("AAAAAAAAAA::: " + tour.getUrl());
+        System.out.println("AAAAAAAAAA::: " + tour.getUrl()+"AAAAAAAAAAAAAAAA");
         Image image = new Image(tour.getUrl());
         System.out.println(image.getUrl());
         routeImage.setImage(image);

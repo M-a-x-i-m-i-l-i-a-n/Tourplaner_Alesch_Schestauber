@@ -18,8 +18,9 @@ public class TourImportExport {
 
     public void exportTour(Tour tour){
         try {
+
             String[] data = new String[]{tour.getName(), tour.getDescription(), tour.getStart(), tour.getDestin(), tour.getType(), tour.getTime(),
-                    tour.getDistance().toString(), tour.getLrlng(), tour.getLrlat(), tour.getUllat(), tour.getUllng(), tour.getSessionID(), tour.getUrl()};
+                    tour.getDistance().toString(), tour.getLrlng(), tour.getLrlat(), tour.getUllng(), tour.getUllat(),  tour.getSessionID(), tour.getUrl()+ "'"};
 
 
             File csvOutputFile = new File(tour.getName() + ".csv");
@@ -36,8 +37,7 @@ public class TourImportExport {
 
     public String convertToCSV(String[] data) {
         return Stream.of(data)
-                .map(this::escapeSpecialCharacters)
-                .collect(Collectors.joining(","));
+                .collect(Collectors.joining("'"));
     }
 
     public String escapeSpecialCharacters(String data) {
@@ -52,12 +52,14 @@ public class TourImportExport {
     public Tour importFile(File file){
         try {
             Scanner scanner = new Scanner(file);
-            scanner.useDelimiter(",");
+            scanner.useDelimiter("'");
             List<String> input = new ArrayList<>();
             while(scanner.hasNext()){
                 input.add(scanner.next());
             }
-            //TODO hier muss wird das CSV file in die Liste gespeichert und jetzt muss ich hier eine Tour erstellen und diese dann zurückgeben
+
+            Tour tour = new Tour(input.get(0), input.get(1),input.get(2),input.get(3),input.get(4),input.get(5), Double.parseDouble(input.get(6)),input.get(7),input.get(8),input.get(9),input.get(10),input.get(11),input.get(12));
+            return tour;
         }catch (Exception e){
             //TODO loggen
         }

@@ -38,8 +38,8 @@ public class TourDAO {
             statement.setString(5, tour.getType());
             statement.setDouble(6, tour.getDistance());
             statement.setString(7, tour.getTime());
-            statement.setString(8, tour.getLrlat());
-            statement.setString(9, tour.getLrlng());
+            statement.setString(8, tour.getLrlng());
+            statement.setString(9, tour.getLrlat());
             statement.setString(10, tour.getUllat());
             statement.setString(11, tour.getUllng());
             statement.setString(12, tour.getSessionID());
@@ -63,9 +63,10 @@ public class TourDAO {
             ResultSet resultSet = statement.executeQuery();
 
             if(resultSet.next()){
+                //(String name, String description, String start, String destin, String type, String time, Double distance, String lrlng, String lrlat, String ullng, String ullat, String sessionID,  String url)
                 Tour tour = new Tour(tourname, resultSet.getString(2),resultSet.getString(3), resultSet.getString(4),
-                        resultSet.getString(5), resultSet.getString(6), resultSet.getDouble(7), resultSet.getString(8), resultSet.getString(9), resultSet.getString(10),
-                        resultSet.getString(11), resultSet.getString(12), resultSet.getString(13));
+                        resultSet.getString(5), resultSet.getString(6), resultSet.getDouble(8), resultSet.getString(7), resultSet.getString(9), resultSet.getString(11),
+                        resultSet.getString(10), resultSet.getString(12), resultSet.getString(13));
                 resultSet.close();
                 statement.close();
                 conn.close();
