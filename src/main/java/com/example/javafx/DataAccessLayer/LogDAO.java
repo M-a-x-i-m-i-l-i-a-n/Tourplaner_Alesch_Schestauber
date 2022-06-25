@@ -67,7 +67,7 @@ public class LogDAO {
         try{
             Connection conn = DatabaseHandler.getInstance().getConnection();
             PreparedStatement statement = conn.prepareStatement("UPDATE public.\"logs\" SET tourname = ?, date = ?, " +
-                    " time = ?, comment = ?, difficulty = ?, total-time = ?, rating = ? WHERE id = ?;");
+                    " time = ?, comment = ?, difficulty = ?, totaltime = ?, rating = ? WHERE id = ?;");
             statement.setString(1, log.getTourname());
             statement.setString(2, log.getDate());
             statement.setString(3, log.getTime());

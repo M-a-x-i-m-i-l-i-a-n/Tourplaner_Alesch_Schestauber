@@ -23,10 +23,14 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+
+import java.io.File;
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.List;
 import java.util.Objects;
@@ -70,7 +74,7 @@ public class TourController implements Initializable {
     private ImageView imageView;
 
     @FXML
-    private MenuItem menuClose;
+    private MenuItem exportFile;
 
     @FXML
     private MenuItem menuPdf;
@@ -79,7 +83,7 @@ public class TourController implements Initializable {
     private MenuItem menuFile;
 
     @FXML
-    private MenuItem menuAbout;
+    private MenuItem importFile;
 
     @FXML
     private BorderPane borderPane;
@@ -108,11 +112,30 @@ public class TourController implements Initializable {
     @FXML
     private TableColumn<TourLog, String> comment;
 
-
+    @FXML
+    private Label name;
     @FXML
     private Label from;
+    @FXML
+    private Label to;
+    @FXML
+    private Label transportType;
+    @FXML
+    private Label distance;
+    @FXML
+    private Label estimatedTime;
+    @FXML
+    private Label description;
+    @FXML
+    private Label popularity;
+    @FXML
+    private Label childFriendliness;
 
+    @FXML
+    private ImageView routeImage;
 
+    @FXML
+    private MenuBar menuBar;
 
     private TourVM tourVM;
     private TourLogVM logVM;
@@ -125,22 +148,6 @@ public class TourController implements Initializable {
 
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tourList.setItems(tourVM.getTours());
-        System.out.println(tourVM.getTours());
-
-        /*List<String> items = tourVM.getTourNames();
-        System.out.println("TOURCONT::75:: List:" + items);
-        for(int i = 0; i < items.size(); i++){
-            tourList.getItems().add(items.get(i));
-        }
-
-         */
-        System.out.println(logVM.getTourLogs());
-        createTable();
-    }
-
-
-
-    private void createTable(){
 
         date.setCellValueFactory(new PropertyValueFactory<TourLog, String>("Date"));
         time.setCellValueFactory(new PropertyValueFactory<>("Time"));
@@ -151,40 +158,36 @@ public class TourController implements Initializable {
 
 
         logsTable.setItems(logVM.getTourLogs());
-        //logsTable.getColumns().setAll(date, time, difficulty, totalTime, rating, comment);
     }
+
 
     @FXML
     public void onMenuClicked(ActionEvent e) throws IOException {
 
-        if (e.getSource() == menuClose) {
-            // ((Stage) borderPane.getScene().getWindow()).close();
-        }
+
 
         if (e.getSource() == menuPdf) {
             System.out.println("Export to PDF File!");
             Tour tour = tourList.getSelectionModel().getSelectedItem();
             ObservableList<TourLog> logs = logVM.getLogsByTourname(tour.getName());
+
             System.out.println("Calling createTourReport");
             tourVM.createTourReport(tour, logs);
 
 
         }
 
-        if (e.getSource() == menuFile) {
+        if (e.getSource() == exportFile) {
             System.out.println("Export to File!");
+            tourVM.exportTour(tourList.getSelectionModel().getSelectedItem());
         }
 
-        if (e.getSource() == menuAbout) {
-            System.out.println("Show About!");
+        if (e.getSource() == importFile) {
             Stage stage = new Stage();
-            stage.setTitle("About");
-            stage.initOwner(borderPane.getScene().getWindow());
-            stage.initModality(Modality.WINDOW_MODAL);
-
-            stage.setScene(new Scene(new AboutDialog()));
-
-            stage.show();
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("Open File");
+            File file =  fileChooser.showOpenDialog(stage);
+            tourVM.importTour(file);
         }
     }
 
@@ -194,18 +197,10 @@ public class TourController implements Initializable {
         String text = textField.getText();
         //title.setText("Title: " + text);
         textField.setText("");
+        tourVM.getTourbyName(text);
+        ObservableList<TourLog> logs = logVM.getLogsFromList(tourList.getItems());
+        logsTable.setItems(logs);
 
-        System.out.println("Show About!");
-        System.out.println("Add Tour LOG!");
-        Stage stage = new Stage();
-        stage.setTitle("Test");
-        stage.initOwner(borderPane.getScene().getWindow());
-        stage.initModality(Modality.WINDOW_MODAL);
-
-        FXMLLoader fxmlLoader = new FXMLLoader(TourApplication.class.getResource("test.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setScene(scene);
-        stage.show();
     }
     @FXML
     protected void onAddButtonClick() throws IOException {
@@ -243,6 +238,35 @@ public class TourController implements Initializable {
     }
 
     @FXML
+    protected void onDeleteTourLog(){
+        TourLog log = logsTable.getSelectionModel().getSelectedItem();
+        logVM.deleteLog(log);
+    }
+    //Todo es muss noch der Edit-button für die Tourlogs gemacht werden
+    @FXML
+    protected void onTourSelected(){
+        Tour tour = tourList.getSelectionModel().getSelectedItem();
+        ObservableList<TourLog> logs = logVM.getLogsByTourname(tour.getName());
+        logsTable.setItems(logs);
+        System.out.println("AAAAAAAAAA::: " + tour.getUrl()+"AAAAAAAAAAAAAAAA");
+        Image image = new Image(tour.getUrl());
+        System.out.println(image.getUrl());
+        routeImage.setImage(image);
+        //TODO das Bild vielleicht asynchron laden und während dessen einen Ladescreen/Ladesymbol reingeben
+        name.setText("Name of the Tour: " + tour.getName());
+        from.setText(tour.getStart());
+        to.setText(tour.getDestin());
+        transportType.setText(tour.getType());
+        distance.setText(tour.getDistance().toString());
+        estimatedTime.setText(tour.getTime());
+        description.setText(tour.getDescription());
+
+        popularity.setText(Integer.toString(tour.getPopularity()));
+        childFriendliness.setText(Integer.toString(tour.getChildFriendliness()));
+    }
+
+
+    @FXML
     protected void onAddTourLogButtonClick() throws IOException {
         String name = tourList.getSelectionModel().getSelectedItem().getName();
         System.out.println("Add Tour LOG!");
@@ -258,4 +282,19 @@ public class TourController implements Initializable {
 
     }
 
+    @FXML
+    protected void onEditTourLogButtonClick() throws IOException {
+        int id = logsTable.getSelectionModel().getSelectedItem().getId();
+        Stage stage = new Stage();
+        stage.setTitle("Edit Tour-Log");
+        stage.initOwner(borderPane.getScene().getWindow());
+        stage.initModality(Modality.WINDOW_MODAL);
+
+        FXMLLoader fxmlLoader = new FXMLLoader(TourApplication.class.getResource("EditTourLog.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+        EditTourLogController controller = fxmlLoader.getController();
+        controller.setID(id);
+        stage.setScene(scene);
+        stage.show();
+    }
 }

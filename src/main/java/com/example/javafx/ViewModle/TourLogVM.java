@@ -39,7 +39,7 @@ public class TourLogVM implements TourLogListener {
     public void addTourLog(String Tourname){
         manager.addTourLog(date.getValue(), time.getValue(), timeNeeded.getValue(), difficulty.getValue(), rating.getValue(), comment.getValue(), Tourname);
     }
-
+    //TODO bei den Logs auch nochmal die totaltime anschauen (es ging weder mit . oder , was einzugeben)
     public ObservableList<TourLog> getTourLogs(){
         List<Integer> ids = manager.getTourLogIds();
         TourLog log;
@@ -51,12 +51,43 @@ public class TourLogVM implements TourLogListener {
         return logs;
     }
 
+
+    public ObservableList<TourLog> getLogsFromList(ObservableList<Tour> tours){
+        logs.clear();
+        ObservableList<TourLog> log = FXCollections.observableArrayList();
+        for(Tour tour : tours){
+            log = (manager.getTourLogsByName(tour.getName()));
+            for(int i = 0; i < log.size(); i++){
+                logs.add(log.get(i));
+            }
+        }
+        return logs;
+    }
+    public void deleteLog(TourLog log){
+        manager.deleteTourLog(log);
+    }
+
+
     public ObservableList<TourLog> getLogsByTourname(String tourname){
         return manager.getTourLogsByName(tourname);
     }
 
+
+    public void editTourLog(int id){
+        TourLog log = manager.getTourLog(id);
+        log.setDate(date.getValue());
+        log.setComment(comment.getValue());
+        log.setDifficulty(Integer.parseInt(difficulty.getValue()));
+        log.setRating(Integer.parseInt(rating.getValue()));
+        log.setTime(time.getValue());
+        log.setTotalTime(Integer.parseInt(timeNeeded.getValue()));
+        manager.editTourLog(log);
+    }
+
+
     @Override
     public void logsChanged() {
-
+        listItems.setAll(manager.getTourLogIds().toString());
+        getTourLogs();
     }
 }

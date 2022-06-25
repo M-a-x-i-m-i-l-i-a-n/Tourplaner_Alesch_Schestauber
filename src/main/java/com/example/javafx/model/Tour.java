@@ -3,24 +3,29 @@ package com.example.javafx.model;
 import java.util.ArrayList;
 
 public class Tour {
-    String name;
-    String description;
-    String start;
-    String destin;
-    String type;
-    Double distance;
-    String time;
-    String sessionID;
-    String url;
-    String lrlng;
-    String lrlat;
-    String ullng;
-    String ullat;
-
+    private String name;
+    private String description;
+    private String start;
+    private String destin;
+    private String type;
+    private Double distance;
+    private String time;
+    private String sessionID;
+    private String url;
+    private String lrlng;
+    private String lrlat;
+    private String ullng;
+    private String ullat;
+    //1-5 -> 1 - not popular ; 5 - very popular
+    private int popularity;
+    //1-5 -> 1 - not child friendly ; 5 - very child friendly
+    private int childFriendliness;
     ArrayList<TourLog> logs;
 
 
+
     public Tour(String name, String description, String start, String destin, String type, String time, String lrlng, Double distance,  String lrlat, String ullng, String ullat, String sessionID, String url){
+
         this.name = name;
         this.description = description;
         this.start = start;
@@ -137,5 +142,30 @@ public class Tour {
     //Fügt ein Tourlog zu der Tour hinzu
     public void addTourLog(TourLog log){
         logs.add(log);
+    }
+
+    public void setPopularity(int logsCount){
+        if(logsCount > 5){
+            popularity = 5;
+        }else{
+            if(logsCount < 0){
+                popularity = 1;
+            }
+            else {
+                popularity = logsCount;
+            }
+        }
+    }
+    public void setChildFriendliness(double difficulty, double totalTimes){
+        //TODO die child- friendliness nochmal genauer anschauen (was überlegen das Sinn macht)
+        childFriendliness = (int) ((totalTimes / difficulty * 25)/distance);
+    }
+
+    public int getChildFriendliness() {
+        return childFriendliness;
+    }
+
+    public int getPopularity() {
+        return popularity;
     }
 }

@@ -38,8 +38,8 @@ public class TourDAO {
             statement.setString(5, tour.getType());
             statement.setDouble(6, tour.getDistance());
             statement.setString(7, tour.getTime());
-            statement.setString(8, tour.getLrlat());
-            statement.setString(9, tour.getLrlng());
+            statement.setString(8, tour.getLrlng());
+            statement.setString(9, tour.getLrlat());
             statement.setString(10, tour.getUllat());
             statement.setString(11, tour.getUllng());
             statement.setString(12, tour.getSessionID());
@@ -63,6 +63,7 @@ public class TourDAO {
             ResultSet resultSet = statement.executeQuery();
 
             if(resultSet.next()){
+
                 Tour tour = new Tour(tourname,
                         resultSet.getString(2),
                         resultSet.getString(3),
@@ -76,6 +77,7 @@ public class TourDAO {
                         resultSet.getString(11),
                         resultSet.getString(12),
                         resultSet.getString(13));
+
                 resultSet.close();
                 statement.close();
                 conn.close();
