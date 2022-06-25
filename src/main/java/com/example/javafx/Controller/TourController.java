@@ -7,6 +7,7 @@ import com.example.javafx.ViewModle.TourLogVM;
 import com.example.javafx.ViewModle.TourVM;
 import com.example.javafx.business.MyTourLogManager;
 import com.example.javafx.business.MyTourManager;
+import com.example.javafx.business.ReportGenerator.PDFReport;
 import com.example.javafx.business.TourManager;
 import com.example.javafx.model.Tour;
 import com.example.javafx.model.TourLog;
@@ -169,6 +170,10 @@ public class TourController implements Initializable {
             System.out.println("Export to PDF File!");
             Tour tour = tourList.getSelectionModel().getSelectedItem();
             ObservableList<TourLog> logs = logVM.getLogsByTourname(tour.getName());
+
+            System.out.println("Calling createTourReport");
+            tourVM.createTourReport(tour, logs);
+
 
         }
 

@@ -23,6 +23,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
+
 <BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx.Controller.TourController">
    <top>
       <MenuBar fx:id="menuBar" onMouseClicked="#onMenuClicked" BorderPane.alignment="CENTER">
@@ -31,6 +32,8 @@
             <items>
                   <MenuItem fx:id="importFile" mnemonicParsing="false" onAction="#onMenuClicked" text="Import" />
               <MenuItem fx:id="exportFile" mnemonicParsing="false" onAction="#onMenuClicked" text="Export" />
+              <MenuItem fx:id="menuPdf" mnemonicParsing="false" onAction="#onMenuClicked" text="Tour to PDF" />
+
             </items>
           </Menu>
           <Menu mnemonicParsing="false" text="Edit">

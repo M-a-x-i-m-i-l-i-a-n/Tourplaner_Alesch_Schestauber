@@ -51,6 +51,7 @@ public class TourLogVM implements TourLogListener {
         return logs;
     }
 
+
     public ObservableList<TourLog> getLogsFromList(ObservableList<Tour> tours){
         logs.clear();
         ObservableList<TourLog> log = FXCollections.observableArrayList();
@@ -66,9 +67,11 @@ public class TourLogVM implements TourLogListener {
         manager.deleteTourLog(log);
     }
 
+
     public ObservableList<TourLog> getLogsByTourname(String tourname){
         return manager.getTourLogsByName(tourname);
     }
+
 
     public void editTourLog(int id){
         TourLog log = manager.getTourLog(id);
@@ -80,6 +83,7 @@ public class TourLogVM implements TourLogListener {
         log.setTotalTime(Integer.parseInt(timeNeeded.getValue()));
         manager.editTourLog(log);
     }
+
 
     @Override
     public void logsChanged() {

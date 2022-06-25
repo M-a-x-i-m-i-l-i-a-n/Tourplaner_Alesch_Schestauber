@@ -18,6 +18,8 @@ public interface TourLogManager {
     void deleteTourLog(TourLog log);
     ObservableList<TourLog> getTourLogsByName(String tourname);
     List<String> getTours();
+
     void editTourLog(TourLog log);
+
     ObservableList<Integer> getTourLogIds();
 }
