@@ -10,6 +10,7 @@ module com.example.javafx {
     requires kernel;
     requires io;
     requires java.desktop;
+    requires org.apache.logging.log4j;
 
     opens com.example.javafx to javafx.fxml;
     exports com.example.javafx;

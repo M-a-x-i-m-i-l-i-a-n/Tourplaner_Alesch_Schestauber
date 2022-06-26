@@ -2,7 +2,7 @@ package com.example.javafx.business.ReportGenerator;
 
 import java.io.*;
 import java.net.URL;
-import java.util.ArrayList;
+
 
 import com.example.javafx.model.Tour;
 import com.example.javafx.model.TourLog;
@@ -12,6 +12,7 @@ import com.itextpdf.kernel.colors.DeviceGray;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
+import com.itextpdf.kernel.pdf.PdfName;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.*;
@@ -19,17 +20,21 @@ import com.itextpdf.layout.renderer.CellRenderer;
 import com.itextpdf.layout.renderer.DrawContext;
 import com.itextpdf.layout.renderer.IRenderer;
 import javafx.collections.ObservableList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class PDFReport {
 
     public static final String FileDest = "./src/main/resources/Logs/Tour-Report.pdf";
+    //private static Logger logger = LogManager.getLogger(LoggingTest.class);
     PdfFont font;
     public PDFReport(){
         try{
             font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
         } catch (IOException e) {
             e.printStackTrace();
+            //logger.debug("Could not create font in bisiness/ReportGenerator/PDFReport");
         }
 
     }
@@ -40,10 +45,13 @@ public class PDFReport {
 
         Table tourTable = new Table(2);
         Table logsTable = new Table(2);
+        tourTable.setMarginBottom(25);
+
 
 
         Paragraph a = new Paragraph("Tourname")
-                .setFont(font).setFontColor(DeviceGray.BLACK);
+                .setFont(font).setFontColor(DeviceGray.BLACK)
+                .setWidth(150);
         Paragraph b = new Paragraph(tour.getName())
                 .setFont(font).setFontColor(DeviceGray.BLACK);
         Paragraph c = new Paragraph("Description")
@@ -98,9 +106,11 @@ public class PDFReport {
             Image img = new Image(ImageDataFactory.create(destinationFile));
             Cell cell = new Cell();
             cell.setNextRenderer(new ImageBackgroundCellRenderer(cell,img));
-            cell.setHeight(img.getImageHeight()/2);
-            cell.setWidth(img.getImageWidth()/2);
+            cell.setHeight(img.getImageHeight()/4);
+            cell.setWidth(img.getImageWidth()/4);
             tourTable.addCell(cell);
+
+
         }catch (IOException e)
         {
             e.printStackTrace();
@@ -109,20 +119,21 @@ public class PDFReport {
         makeLogsTable(logs, logsTable);
 
         report.add(tourTable);
+        report.add(logsTable);
 
         report.close();
         System.out.println("Table created successfully...");
 
     }
 
-    private void paragraphingTour(Table table, Paragraph a, Paragraph b, Paragraph c, Paragraph d, Paragraph e, Paragraph f, Paragraph g) {
-        table.addCell(new Cell().add(a));
-        table.addCell(new Cell().add(b));
-        table.addCell(new Cell().add(c));
-        table.addCell(new Cell().add(d));
-        table.addCell(new Cell().add(e));
-        table.addCell(new Cell().add(f));
-        table.addCell(new Cell().add(g));
+    private void paragraphingTour(Table tourTable, Paragraph a, Paragraph b, Paragraph c, Paragraph d, Paragraph e, Paragraph f, Paragraph g) {
+        tourTable.addCell(new Cell().add(a));
+        tourTable.addCell(new Cell().add(b));
+        tourTable.addCell(new Cell().add(c));
+        tourTable.addCell(new Cell().add(d));
+        tourTable.addCell(new Cell().add(e));
+        tourTable.addCell(new Cell().add(f));
+        tourTable.addCell(new Cell().add(g));
 
     }
 
@@ -153,9 +164,11 @@ public class PDFReport {
     private void makeLogsTable(ObservableList<TourLog> logs, Table logsTable){
         for (TourLog log: logs) {
             Paragraph a = new Paragraph("Date")
-                    .setFont(font).setFontColor(DeviceGray.BLACK);
+                    .setFont(font).setFontColor(DeviceGray.BLACK)
+                    .setWidth(150);
             Paragraph b = new Paragraph(log.getDate())
-                    .setFont(font).setFontColor(DeviceGray.BLACK);
+                    .setFont(font).setFontColor(DeviceGray.BLACK)
+                    .setWidth(365);
             Paragraph c = new Paragraph("Time")
                     .setFont(font).setFontColor(DeviceGray.BLACK);
             Paragraph d = new Paragraph(log.getTime())
@@ -179,6 +192,10 @@ public class PDFReport {
 
             paragraphingLogs(logsTable,a,b,c,d,e,f);
             paragraphingLogs(logsTable,g,h,i,j,k,l);
+            logsTable.addCell(new Cell().setBackgroundColor(DeviceGray.BLACK).setHeight(2));
+            logsTable.addCell(new Cell().setBackgroundColor(DeviceGray.BLACK).setHeight(2));
+
+
         }
 
     }
@@ -190,6 +207,5 @@ public class PDFReport {
         logsTable.addCell(new Cell().add(d));
         logsTable.addCell(new Cell().add(e));
         logsTable.addCell(new Cell().add(f));
-
     }
 }
