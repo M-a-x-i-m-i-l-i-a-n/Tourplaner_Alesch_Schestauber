@@ -28,6 +28,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
+import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
 import java.net.MalformedURLException;
@@ -81,6 +82,9 @@ public class TourController implements Initializable {
 
     @FXML
     private MenuItem menuFile;
+
+    @FXML
+    private MenuItem TourCompare;
 
     @FXML
     private MenuItem importFile;
@@ -189,6 +193,23 @@ public class TourController implements Initializable {
             File file =  fileChooser.showOpenDialog(stage);
             tourVM.importTour(file);
         }
+
+        if (e.getSource() == TourCompare) {
+
+            ObservableList<Tour> tours = tourList.getItems();
+            if(tours.size() > 0) {
+                System.out.println("Compare Tour");
+                Stage stage = new Stage();
+                stage.setTitle("Tour-Compare");
+                stage.initOwner(borderPane.getScene().getWindow());
+                stage.initModality(Modality.WINDOW_MODAL);
+
+                FXMLLoader fxmlLoader = new FXMLLoader(TourApplication.class.getResource("TourCompare.fxml"));
+                Scene scene = new Scene(fxmlLoader.load(), 1200, 800);
+                stage.setScene(scene);
+                stage.show();
+            }
+        }
     }
 
 
@@ -242,17 +263,18 @@ public class TourController implements Initializable {
         TourLog log = logsTable.getSelectionModel().getSelectedItem();
         logVM.deleteLog(log);
     }
-    //Todo es muss noch der Edit-button für die Tourlogs gemacht werden
+
     @FXML
     protected void onTourSelected(){
         Tour tour = tourList.getSelectionModel().getSelectedItem();
         ObservableList<TourLog> logs = logVM.getLogsByTourname(tour.getName());
         logsTable.setItems(logs);
-        System.out.println("AAAAAAAAAA::: " + tour.getUrl()+"AAAAAAAAAAAAAAAA");
-        Image image = new Image(tour.getUrl());
-        System.out.println(image.getUrl());
-        routeImage.setImage(image);
-        //TODO das Bild vielleicht asynchron laden und während dessen einen Ladescreen/Ladesymbol reingeben
+
+        //Image image = new Image(tour.getUrl());
+
+        Image image2 = new Image("file:./Files/images/" + tour.getName() + ".jpg");
+        routeImage.setImage(image2);
+
         name.setText("Name of the Tour: " + tour.getName());
         from.setText(tour.getStart());
         to.setText(tour.getDestin());

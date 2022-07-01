@@ -5,10 +5,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 
 public class LogDAO {
     public static LogDAO instance;
@@ -21,7 +17,7 @@ public class LogDAO {
     //Speichert ein Tourlog in der Datenbank
     public void createTourLog(String date, String time, String timeNeeded, String difficulty, String rating, String comment, String TourName) {
         try{
-            //TODO hier nochmal das scheiß Datum anschauen
+
 
             Connection conn = DatabaseHandler.getInstance().getConnection();
             PreparedStatement statement = conn.prepareStatement("INSERT INTO public.\"logs\"(tourname, date, time, comment, difficulty, totaltime,rating) VALUES(?,?,?,?,?,?,?);");
@@ -111,7 +107,7 @@ public class LogDAO {
         return null;
     }
 
-    public ObservableList<TourLog> getToursByTourname(String tourname){
+    public ObservableList<TourLog> getTourLogsByTourname(String tourname){
         ObservableList<TourLog> logs = FXCollections.observableArrayList();
         TourLog log;
         try{

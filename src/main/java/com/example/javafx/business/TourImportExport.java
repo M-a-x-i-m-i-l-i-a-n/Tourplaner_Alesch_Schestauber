@@ -23,7 +23,7 @@ public class TourImportExport {
                     tour.getDistance().toString(), tour.getLrlng(), tour.getLrlat(), tour.getUllng(), tour.getUllat(),  tour.getSessionID(), tour.getUrl()+ "'"};
 
 
-            File csvOutputFile = new File(tour.getName() + ".csv");
+            File csvOutputFile = new File("./Files/PDFs/" + tour.getName() + ".csv");
             try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
                 String tourdata = convertToCSV(data);
                 pw.println(tourdata);
@@ -49,7 +49,7 @@ public class TourImportExport {
         return escapedData;
     }
 
-    public Tour importFile(File file){
+    public Tour importTour(File file){
         try {
             Scanner scanner = new Scanner(file);
             scanner.useDelimiter("'");
@@ -58,7 +58,7 @@ public class TourImportExport {
                 input.add(scanner.next());
             }
 
-            Tour tour = new Tour(input.get(0), input.get(1),input.get(2),input.get(3),input.get(4),input.get(5), Double.parseDouble(input.get(6)),input.get(7),input.get(8),input.get(9),input.get(10),input.get(11),input.get(12));
+            Tour tour = new Tour(input.get(0), input.get(1),input.get(2),input.get(3),input.get(4),input.get(5), input.get(6), Double.parseDouble(input.get(7)),input.get(8),input.get(9),input.get(10),input.get(11),input.get(12));
             return tour;
         }catch (Exception e){
             //TODO loggen

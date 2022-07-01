@@ -100,7 +100,9 @@ public class TourVM implements TourListener {
         manager.callPDFGenerator(tour, logs);
     }
 
-
+    public Tour getOneTourByName(String name){
+        return manager.getTour(name);
+    }
 
 
 

@@ -62,16 +62,14 @@ public class MyTourLogManager implements TourLogManager{
         }
 
     }
-    public ObservableList<TourLog> getTourLogsByName(String tourname){
-        return logDAO.getToursByTourname(tourname);
-    }
+
 
     public void onGetTours(){
 
     }
 
     public ObservableList<TourLog> getTourLogsByName(String tourname){
-        return logDAO.getToursByTourname(tourname);
+        return logDAO.getTourLogsByTourname(tourname);
     }
 
     @Override

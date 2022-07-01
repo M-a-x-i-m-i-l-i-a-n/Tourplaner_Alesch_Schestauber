@@ -36,7 +36,6 @@ public class MyTourManager implements TourManager {
     }
 
     public void addTour(String name, String description, String from, String to, String type) throws IOException, InterruptedException {
-        //TODO hier müsste dann mittels mapquest die Map sowie die Distanz und Zeit abgefragt werden und in den Funktionsaufruf reingegeben werden
         Tour tour = new Tour(name, description, from, to, type);
         SendRequest client = new SendRequest();
         client.sendRequest(tour);
@@ -60,12 +59,7 @@ public class MyTourManager implements TourManager {
     public ObservableList<String> getTours(){
         return tourDAO.getAllTourNames();
     }
-    /*
-    public List<String> getTours() {
-        //TODO das hier mit .stream und .map nochmal anschauen (kann sehr nützlich sein)
-        return tourDao.findAll().stream().map(t -> t.getName()).collect(Collectors.toList());
-    }
-*/
+
     public void deleteTour(String name){
         tourDAO.deleteTour(name);
         fireToursChanged();
@@ -76,7 +70,7 @@ public class MyTourManager implements TourManager {
     }
 
     public void importTour(File file){
-        Tour tour = export.importFile(file);
+        Tour tour = export.importTour(file);
         tourDAO.createTour(tour);
         fireToursChanged();
     }

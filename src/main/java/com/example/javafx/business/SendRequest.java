@@ -5,8 +5,9 @@ import com.example.javafx.config.Configuration;
 import com.example.javafx.model.Tour;
 import org.json.JSONObject;
 
-import java.io.IOException;
+import java.io.*;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
@@ -20,7 +21,7 @@ public class SendRequest {
     public void sendRequest(Tour tour) throws IOException, InterruptedException {
         //Create initial GET request for a route and to fill first few param of requestInfo object
         URI resourceUrl = URI.create("https://www.mapquestapi.com/directions/v2/route?"
-                + "key=cTGzOGnX1es4yVyz5vR6wuA1SxaT5tZ2"
+                + "key=" + apiKey.get("ApiKey")
                 + "&from="
                 + tour.getStart()
                 + "&to="
@@ -70,6 +71,22 @@ public class SendRequest {
         System.out.println(tour.getUllat());
         System.out.println(tour.getUrl());
         System.out.println(tour.getSessionID());
+
+        String destinationFile = "./Files/images/" + tour.getName() + ".jpg";
+
+        URL url = new URL(tour.getUrl());
+        InputStream is = url.openStream();
+        OutputStream os = new FileOutputStream(destinationFile);
+
+        byte[] r = new byte[2048];
+        int length;
+
+        while ((length = is.read(r)) != -1) {
+            os.write(r, 0, length);
+        }
+
+        is.close();
+        os.close();
     }
 
     }
