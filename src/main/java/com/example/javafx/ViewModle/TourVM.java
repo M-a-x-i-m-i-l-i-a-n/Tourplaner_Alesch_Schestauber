@@ -105,11 +105,17 @@ public class TourVM implements TourListener {
         manager.callPDFGenerator(tour, logs);
     }
 
+
+    public Tour getOneTourByName(String name){
+        return manager.getTour(name);
+    }
+    
     public void createStatReport(ObservableList<Tour> tour) throws FileNotFoundException {
         System.out.println("PDFstat creator called here");
         logger.info("PDFstat creator got called");
         manager.callPDFStatGenerator(tour);
     }
+
 
     public void setListItems(ObservableList<String> listItems) {
         this.listItems = listItems;

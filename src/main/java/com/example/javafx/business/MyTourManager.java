@@ -11,6 +11,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MyTourManager implements TourManager {
 
@@ -18,7 +20,7 @@ public class MyTourManager implements TourManager {
     private TourDAO tourDAO;
     private TourImportExport export;
     ComputedTourAtt calc;
-
+    private static Logger logger = LogManager.getLogger();
     public static MyTourManager instance;
 
     public static MyTourManager getInstance() {
@@ -36,13 +38,32 @@ public class MyTourManager implements TourManager {
         this.export = new TourImportExport();
     }
 
+    private boolean checkInput(String toCheck){
+        if (toCheck == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(toCheck);
+        } catch (NumberFormatException nfe) {
+            logger.debug("Invalid User-Input");
+            return false;
+        }
+        return true;
+    }
+
     public void addTour(String name, String description, String from, String to, String type) throws IOException, InterruptedException {
-        //TODO hier müsste dann mittels mapquest die Map sowie die Distanz und Zeit abgefragt werden und in den Funktionsaufruf reingegeben werden
-        Tour tour = new Tour(name, description, from, to, type);
-        SendRequest client = new SendRequest();
-        client.sendRequest(tour);
-        tourDAO.createTour(tour);
-        fireToursChanged();
+        boolean checkFrom = false, checkTo = false;
+        checkFrom = checkInput(from);
+        checkTo = checkInput(to);
+        if(checkFrom && checkTo) {
+            Tour tour = new Tour(name, description, from, to, type);
+            SendRequest client = new SendRequest();
+            client.sendRequest(tour);
+            tourDAO.createTour(tour);
+            fireToursChanged();
+        }else {
+            logger.debug("Do to an invalid user-input the tour could not be saved");
+        }
     }
 
     public void editTour(Tour tour){
@@ -61,12 +82,7 @@ public class MyTourManager implements TourManager {
     public ObservableList<String> getTours(){
         return tourDAO.getAllTourNames();
     }
-    /*
-    public List<String> getTours() {
-        //TODO das hier mit .stream und .map nochmal anschauen (kann sehr nützlich sein)
-        return tourDao.findAll().stream().map(t -> t.getName()).collect(Collectors.toList());
-    }
-*/
+
     public void deleteTour(String name){
         tourDAO.deleteTour(name);
         fireToursChanged();

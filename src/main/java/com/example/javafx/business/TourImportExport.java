@@ -25,7 +25,7 @@ public class TourImportExport {
             String[] data = new String[]{tour.getName(), tour.getDescription(), tour.getStart(), tour.getDestin(), tour.getType(), tour.getTime(),
                     tour.getLrlng(), tour.getDistance().toString(), tour.getLrlat(), tour.getUllat(), tour.getUllng(),  tour.getSessionID(), tour.getUrl()+ "'"};
 
-            File csvOutputFile = new File(tour.getName() + ".csv");
+            File csvOutputFile = new File("./Files/PDFs/" + tour.getName() + ".csv");
             try (PrintWriter pw = new PrintWriter(csvOutputFile)) {
                 String tourdata = convertToCSV(data);
                 pw.println(tourdata);

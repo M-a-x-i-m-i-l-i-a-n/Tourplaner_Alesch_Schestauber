@@ -23,7 +23,9 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx.Controller.TourController">
+
+<BorderPane fx:id="borderPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="800.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.javafx.Controller.TourController">
+
    <top>
       <MenuBar fx:id="menuBar" onMouseClicked="#onMenuClicked" BorderPane.alignment="CENTER">
         <menus>
@@ -32,18 +34,15 @@
                   <MenuItem fx:id="importFile" mnemonicParsing="false" onAction="#onMenuClicked" text="Import" />
               <MenuItem fx:id="exportFile" mnemonicParsing="false" onAction="#onMenuClicked" text="Export" />
               <MenuItem fx:id="menuPdf" mnemonicParsing="false" onAction="#onMenuClicked" text="Tour to PDF" />
-                  <MenuItem fx:id="statsPdf" mnemonicParsing="false" onAction="#onMenuClicked" text="Tour Statistics" />
+              <MenuItem fx:id="statsPdf" mnemonicParsing="false" onAction="#onMenuClicked" text="Tour Statistics" />
+
 
             </items>
           </Menu>
-          <Menu mnemonicParsing="false" text="Edit">
+          <Menu mnemonicParsing="false" text="Unique feature">
             <items>
-              <MenuItem mnemonicParsing="false" text="Delete" />
-            </items>
-          </Menu>
-          <Menu mnemonicParsing="false" text="Help">
-            <items>
-              <MenuItem mnemonicParsing="false" text="About" />
+              <MenuItem fx:id="TourCompare" mnemonicParsing="false" onAction="#onMenuClicked" text="TourCompare" />
+
             </items>
           </Menu>
         </menus>
@@ -102,9 +101,11 @@
               <tabs>
                 <Tab text="Route">
                   <content>
-                    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="180.0" prefWidth="200.0">
+
+                    <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="650.0">
                            <children>
-                              <ImageView fx:id="routeImage" pickOnBounds="true" preserveRatio="true">
+                              <ImageView fx:id="routeImage" fitHeight="450.0" fitWidth="650.0" pickOnBounds="true" preserveRatio="true">
+
                                   <image>
                                       <Image url="https://www.mapquestapi.com/staticmap/v5/map?key=cTGzOGnX1es4yVyz5vR6wuA1SxaT5tZ2&amp;size=1100,500&amp;defaultMarker=none&amp;zoom=11&amp;rand=737758036&amp;session=629893e0-0292-993a-02b4-37d3-0e23f7d16b19&amp;boundingBox=48.193035,15.284579,47.070637,16.371017" />
                                   </image>

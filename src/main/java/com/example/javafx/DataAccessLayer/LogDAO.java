@@ -5,12 +5,14 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
+
 
 
 public class LogDAO {
@@ -33,7 +35,7 @@ public class LogDAO {
             statement.setString(3, time);
             statement.setString(4, comment);
             statement.setInt(5, Integer.parseInt(difficulty));
-            statement.setInt(6, Integer.parseInt(timeNeeded));
+            statement.setDouble(6, Double.parseDouble(timeNeeded));
             statement.setInt(7, Integer.parseInt(rating));
 
             statement.executeUpdate();
