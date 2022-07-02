@@ -15,12 +15,17 @@ import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
 import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
+
+
+
 
 public class TourCompareController implements Initializable {
 
@@ -71,7 +76,7 @@ public class TourCompareController implements Initializable {
     private Label childFriendliness2;
     @FXML
     private ImageView routeImage2;
-
+    private static Logger logger = LogManager.getLogger();
 
     private TourVM tourVM;
 
@@ -214,7 +219,7 @@ public class TourCompareController implements Initializable {
                 }
                 }
             }catch (Exception e){
-                //TODO logger
+                logger.debug(e);
             }
         }
     }

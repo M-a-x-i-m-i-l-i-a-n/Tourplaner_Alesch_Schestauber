@@ -22,7 +22,7 @@ public class TourDAO {
         }
         return TourDAO.instance;
     }
-    //TODO hier vielleicht noch logger hinzufügen
+
 
     //Mit dieser Funktion wird eine neue Tour in der Datenbank gespeichert
     public void createTour(Tour tour){
