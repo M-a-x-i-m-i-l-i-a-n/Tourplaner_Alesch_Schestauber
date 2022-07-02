@@ -20,7 +20,7 @@ public class SendRequest {
     public void sendRequest(Tour tour) throws IOException, InterruptedException {
         //Create initial GET request for a route and to fill first few param of requestInfo object
         URI resourceUrl = URI.create("https://www.mapquestapi.com/directions/v2/route?"
-                + "key=cTGzOGnX1es4yVyz5vR6wuA1SxaT5tZ2"
+                + "key=" + apiKey.get("ApiKey")
                 + "&from="
                 + tour.getStart()
                 + "&to="
@@ -64,12 +64,6 @@ public class SendRequest {
                 + "," + tour.getLrlat()
                 + "," + tour.getLrlng());
 
-        System.out.println(tour.getLrlng());
-        System.out.println(tour.getLrlat());
-        System.out.println(tour.getUllng());
-        System.out.println(tour.getUllat());
-        System.out.println(tour.getUrl());
-        System.out.println(tour.getSessionID());
     }
 
     }

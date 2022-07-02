@@ -3,6 +3,8 @@ package com.example.javafx.DataAccessLayer;
 import com.example.javafx.model.Tour;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -12,6 +14,7 @@ import java.sql.SQLException;
 public class TourDAO {
 
     public static TourDAO instance;
+    private static Logger logger = LogManager.getLogger();
 
     public static TourDAO getInstance() {
         if (TourDAO.instance == null) {
@@ -51,7 +54,7 @@ public class TourDAO {
             conn.close();
 
         } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            logger.error(ex);
         }
     }
     //Hiermit wird eine Tour anhand des names der Tour aus der Datenbank ausgelesen
@@ -87,6 +90,7 @@ public class TourDAO {
 
         }catch (SQLException e){
             e.printStackTrace();
+            logger.error(e);
         }
         return null;
     }
@@ -106,6 +110,7 @@ public class TourDAO {
             return names;
         }catch (SQLException e){
             e.printStackTrace();
+            logger.error(e);
         }
         return null;
     }
@@ -132,7 +137,7 @@ public class TourDAO {
             conn.close();
 
         }catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            logger.error(ex);
         }
     }
 
@@ -151,6 +156,7 @@ public class TourDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.error(e);
         }
     }
 
@@ -170,6 +176,7 @@ public class TourDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.error(e);
         }
         return rowcount;
     }

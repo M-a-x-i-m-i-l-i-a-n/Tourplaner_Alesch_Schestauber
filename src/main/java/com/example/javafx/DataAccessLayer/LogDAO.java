@@ -9,8 +9,12 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
 
 public class LogDAO {
+    private static Logger logger = LogManager.getLogger();
     public static LogDAO instance;
     public static LogDAO getInstance() {
         if (LogDAO.instance == null) {
@@ -21,11 +25,9 @@ public class LogDAO {
     //Speichert ein Tourlog in der Datenbank
     public void createTourLog(String date, String time, String timeNeeded, String difficulty, String rating, String comment, String TourName) {
         try{
-            //TODO hier nochmal das scheiß Datum anschauen
 
             Connection conn = DatabaseHandler.getInstance().getConnection();
             PreparedStatement statement = conn.prepareStatement("INSERT INTO public.\"logs\"(tourname, date, time, comment, difficulty, totaltime,rating) VALUES(?,?,?,?,?,?,?);");
-            //statement.setInt(1,id);
             statement.setString(1, TourName);
             statement.setString(2, date);
             statement.setString(3, time);
@@ -39,7 +41,7 @@ public class LogDAO {
             statement.close();
             conn.close();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            logger.error(ex);
         }
     }
 
@@ -58,6 +60,7 @@ public class LogDAO {
             return ids;
         }catch (SQLException e){
             e.printStackTrace();
+            logger.error(e);
         }
         return null;
     }
@@ -82,7 +85,7 @@ public class LogDAO {
             conn.close();
 
         }catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            logger.error(ex);
         }
     }
 
@@ -107,11 +110,12 @@ public class LogDAO {
 
         }catch (SQLException e){
             e.printStackTrace();
+            logger.error(e);
         }
         return null;
     }
 
-    public ObservableList<TourLog> getToursByTourname(String tourname){
+    public ObservableList<TourLog> getTourLogsByTourname(String tourname){
         ObservableList<TourLog> logs = FXCollections.observableArrayList();
         TourLog log;
         try{
@@ -136,6 +140,7 @@ public class LogDAO {
 
         }catch (SQLException e){
             e.printStackTrace();
+            logger.error(e);
             return null;
         }
     }
@@ -154,6 +159,7 @@ public class LogDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.error(e);
         }
     }
 
@@ -173,6 +179,7 @@ public class LogDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.error(e);
         }
         return rowcount;
     }

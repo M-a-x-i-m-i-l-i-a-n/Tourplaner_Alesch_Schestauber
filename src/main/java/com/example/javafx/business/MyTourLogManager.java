@@ -63,7 +63,7 @@ public class MyTourLogManager implements TourLogManager{
 
     }
     public ObservableList<TourLog> getTourLogsByName(String tourname){
-        return logDAO.getToursByTourname(tourname);
+        return logDAO.getTourLogsByTourname(tourname);
     }
 
     public void onGetTours(){

@@ -80,6 +80,9 @@ public class TourController implements Initializable {
     private MenuItem menuPdf;
 
     @FXML
+    private MenuItem statsPdf;
+
+    @FXML
     private MenuItem menuFile;
 
     @FXML
@@ -174,6 +177,15 @@ public class TourController implements Initializable {
             System.out.println("Calling createTourReport");
             tourVM.createTourReport(tour, logs);
 
+
+        }
+
+        if(e.getSource() == statsPdf){
+            System.out.println("Create stat PDF!");
+            ObservableList<Tour> tours = tourList.getItems();
+
+            System.out.println("Calling createStatReport");
+            tourVM.createStatReport(tours);
 
         }
 

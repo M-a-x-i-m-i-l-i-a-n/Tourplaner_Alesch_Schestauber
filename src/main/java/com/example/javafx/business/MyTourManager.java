@@ -7,6 +7,7 @@ import com.example.javafx.model.TourLog;
 import javafx.collections.ObservableList;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -76,7 +77,7 @@ public class MyTourManager implements TourManager {
     }
 
     public void importTour(File file){
-        Tour tour = export.importFile(file);
+        Tour tour = export.importTour(file);
         tourDAO.createTour(tour);
         fireToursChanged();
     }
@@ -93,8 +94,11 @@ public class MyTourManager implements TourManager {
 
     public void callPDFGenerator(Tour tour, ObservableList<TourLog> logs) throws IOException {
         PDFReport pdfReport =  new PDFReport();
-        pdfReport.pdfGenerator(tour, logs);
+        pdfReport.pdfTourGenerator(tour, logs);
+    }
 
-
+    public void callPDFStatGenerator(ObservableList<Tour> tours) throws FileNotFoundException {
+        PDFReport pdfReport = new PDFReport();
+        pdfReport.pdfStatGenerator(tours);
     }
 }

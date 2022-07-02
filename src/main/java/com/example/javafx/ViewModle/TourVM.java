@@ -11,6 +11,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -98,6 +99,11 @@ public class TourVM implements TourListener {
     public void createTourReport(Tour tour, ObservableList<TourLog> logs) throws IOException {
         System.out.println("PDF creator called here");
         manager.callPDFGenerator(tour, logs);
+    }
+
+    public void createStatReport(ObservableList<Tour> tour) throws FileNotFoundException {
+        System.out.println("PDFstat creator called here");
+        manager.callPDFStatGenerator(tour);
     }
 
 
