@@ -6,11 +6,13 @@ import javafx.collections.ObservableList;
 
 import java.util.ArrayList;
 import java.util.List;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 public class MyTourLogManager implements TourLogManager{
     private LogDAO logDAO;
     private List<TourLogListener> listeners;
-
+    private static Logger logger = LogManager.getLogger();
 
     public static MyTourLogManager instance;
     public static MyTourLogManager getInstance() {
@@ -25,7 +27,18 @@ public class MyTourLogManager implements TourLogManager{
         this.logDAO = LogDAO.getInstance();
         this.listeners = new ArrayList<>();
     }
-
+    private boolean checkInput(String toCheck){
+        if (toCheck == null) {
+            return false;
+        }
+        try {
+            double d = Double.parseDouble(toCheck);
+        } catch (NumberFormatException nfe) {
+            logger.debug("Invalid User-Input");
+            return false;
+        }
+        return true;
+    }
 
     @Override
     public void addTourLogListener(TourLogListener listener) {
@@ -34,8 +47,15 @@ public class MyTourLogManager implements TourLogManager{
 
     @Override
     public void addTourLog(String date, String time, String timeNeeded, String difficulty, String rating, String comment, String TourName) {
-        logDAO.createTourLog(date, time, timeNeeded, difficulty, rating, comment, TourName);
-        fireGetTourLogs();
+        if(timeNeeded.contains(",")){
+            timeNeeded = timeNeeded.replace(",", ".");
+        }
+        if(checkInput(timeNeeded)) {
+            logDAO.createTourLog(date, time, timeNeeded, difficulty, rating, comment, TourName);
+            fireGetTourLogs();
+        }else{
+            logger.debug("Do to an invalid user-input the tour-log could not be saved");
+        }
     }
 
     public ObservableList<Integer> getTourLogIds(){

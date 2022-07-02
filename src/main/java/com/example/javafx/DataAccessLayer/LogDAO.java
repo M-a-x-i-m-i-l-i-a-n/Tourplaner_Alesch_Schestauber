@@ -27,7 +27,7 @@ public class LogDAO {
             statement.setString(3, time);
             statement.setString(4, comment);
             statement.setInt(5, Integer.parseInt(difficulty));
-            statement.setInt(6, Integer.parseInt(timeNeeded));
+            statement.setDouble(6, Double.parseDouble(timeNeeded));
             statement.setInt(7, Integer.parseInt(rating));
 
             statement.executeUpdate();
