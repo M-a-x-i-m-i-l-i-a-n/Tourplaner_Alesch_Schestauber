@@ -9,8 +9,11 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -23,6 +26,7 @@ public class TourVM implements TourListener {
     public final StringProperty from = new SimpleStringProperty();
     public final StringProperty to = new SimpleStringProperty();
     public final StringProperty type = new SimpleStringProperty();
+    private static Logger logger = LogManager.getLogger();
 
     final ObservableList<Tour> tours = FXCollections.observableArrayList();
 
@@ -97,13 +101,20 @@ public class TourVM implements TourListener {
 
     public void createTourReport(Tour tour, ObservableList<TourLog> logs) throws IOException {
         System.out.println("PDF creator called here");
+        logger.info("PDF creator got called");
         manager.callPDFGenerator(tour, logs);
     }
+
 
     public Tour getOneTourByName(String name){
         return manager.getTour(name);
     }
-
+    
+    public void createStatReport(ObservableList<Tour> tour) throws FileNotFoundException {
+        System.out.println("PDFstat creator called here");
+        logger.info("PDFstat creator got called");
+        manager.callPDFStatGenerator(tour);
+    }
 
 
     public void setListItems(ObservableList<String> listItems) {

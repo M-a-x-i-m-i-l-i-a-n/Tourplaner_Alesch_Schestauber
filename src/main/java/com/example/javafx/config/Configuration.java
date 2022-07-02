@@ -4,7 +4,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.Properties;
 
+
 public class Configuration {
+
     private static Configuration instance;
     private Properties properties = new Properties();
 

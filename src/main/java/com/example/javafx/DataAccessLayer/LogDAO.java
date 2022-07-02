@@ -6,7 +6,17 @@ import javafx.collections.ObservableList;
 
 import java.sql.*;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.Date;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
+
+
+
 public class LogDAO {
+    private static Logger logger = LogManager.getLogger();
     public static LogDAO instance;
     public static LogDAO getInstance() {
         if (LogDAO.instance == null) {
@@ -18,10 +28,8 @@ public class LogDAO {
     public void createTourLog(String date, String time, String timeNeeded, String difficulty, String rating, String comment, String TourName) {
         try{
 
-
             Connection conn = DatabaseHandler.getInstance().getConnection();
             PreparedStatement statement = conn.prepareStatement("INSERT INTO public.\"logs\"(tourname, date, time, comment, difficulty, totaltime,rating) VALUES(?,?,?,?,?,?,?);");
-            //statement.setInt(1,id);
             statement.setString(1, TourName);
             statement.setString(2, date);
             statement.setString(3, time);
@@ -35,7 +43,7 @@ public class LogDAO {
             statement.close();
             conn.close();
         } catch (Exception ex) {
-            System.out.println(ex.getMessage());
+            logger.debug(ex);
         }
     }
 
@@ -54,6 +62,7 @@ public class LogDAO {
             return ids;
         }catch (SQLException e){
             e.printStackTrace();
+            logger.debug(e);
         }
         return null;
     }
@@ -78,7 +87,7 @@ public class LogDAO {
             conn.close();
 
         }catch (SQLException ex) {
-            System.out.println(ex.getMessage());
+            logger.debug(ex);
         }
     }
 
@@ -103,6 +112,7 @@ public class LogDAO {
 
         }catch (SQLException e){
             e.printStackTrace();
+            logger.debug(e);
         }
         return null;
     }
@@ -132,6 +142,7 @@ public class LogDAO {
 
         }catch (SQLException e){
             e.printStackTrace();
+            logger.debug(e);
             return null;
         }
     }
@@ -150,6 +161,7 @@ public class LogDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.debug(e);
         }
     }
 
@@ -169,6 +181,7 @@ public class LogDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
+            logger.debug(e);
         }
         return rowcount;
     }

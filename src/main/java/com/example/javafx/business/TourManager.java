@@ -5,6 +5,7 @@ import com.example.javafx.model.TourLog;
 import javafx.collections.ObservableList;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.List;
 
@@ -24,6 +25,7 @@ public interface TourManager {
     void importTour(File file);
 
     void callPDFGenerator(Tour tour, ObservableList<TourLog> logs) throws IOException;
+    void callPDFStatGenerator(ObservableList<Tour> tours) throws FileNotFoundException;
 
     ObservableList<String> getTours();
 
