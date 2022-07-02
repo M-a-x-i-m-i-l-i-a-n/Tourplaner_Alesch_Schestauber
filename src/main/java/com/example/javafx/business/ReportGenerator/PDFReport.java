@@ -89,29 +89,16 @@ public class PDFReport {
         Paragraph o = new Paragraph("Map")
                 .setFont(font).setFontColor(DeviceGray.BLACK);
 
-        String destinationFile = "mapPic.jpg";
-        //TODO: Bilder richtig abspeichern und der Tour entsprechend benennen.
+
 
         paragraphingTour(tourTable, a, b, c, d, q, f, g);
         paragraphingTour(tourTable, h, i, j, k, l, m, n);
 
         try{
-            URL url = new URL(tour.getUrl());
-            InputStream is = url.openStream();
-            OutputStream os = new FileOutputStream(destinationFile);
 
-            byte[] r = new byte[2048];
-            int length;
+        tourTable.addCell(new Cell().add(o));
 
-            while ((length = is.read(r)) != -1) {
-                os.write(r, 0, length);
-            }
-
-            is.close();
-            os.close();
-            tourTable.addCell(new Cell().add(o));
-
-            Image img = new Image(ImageDataFactory.create(destinationFile));
+            Image img = new Image(ImageDataFactory.create("file:./Files/images/" + tour.getName() + ".jpg"));
             Cell cell = new Cell();
             cell.setNextRenderer(new ImageBackgroundCellRenderer(cell,img));
             cell.setHeight(img.getImageHeight()/4);
@@ -122,7 +109,7 @@ public class PDFReport {
         }catch (IOException e)
         {
             e.printStackTrace();
-            logger.error(e);
+            logger.debug(e);
         }
 
         makeLogsTable(logs, logsTable);
@@ -132,6 +119,7 @@ public class PDFReport {
 
         report.close();
         System.out.println("Table created successfully...");
+        logger.info("Table created successfully...");
 
     }
 

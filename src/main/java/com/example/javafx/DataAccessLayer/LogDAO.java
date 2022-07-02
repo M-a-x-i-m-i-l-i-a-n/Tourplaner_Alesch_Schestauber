@@ -41,7 +41,7 @@ public class LogDAO {
             statement.close();
             conn.close();
         } catch (Exception ex) {
-            logger.error(ex);
+            logger.debug(ex);
         }
     }
 
@@ -60,7 +60,7 @@ public class LogDAO {
             return ids;
         }catch (SQLException e){
             e.printStackTrace();
-            logger.error(e);
+            logger.debug(e);
         }
         return null;
     }
@@ -85,7 +85,7 @@ public class LogDAO {
             conn.close();
 
         }catch (SQLException ex) {
-            logger.error(ex);
+            logger.debug(ex);
         }
     }
 
@@ -110,7 +110,7 @@ public class LogDAO {
 
         }catch (SQLException e){
             e.printStackTrace();
-            logger.error(e);
+            logger.debug(e);
         }
         return null;
     }
@@ -140,7 +140,7 @@ public class LogDAO {
 
         }catch (SQLException e){
             e.printStackTrace();
-            logger.error(e);
+            logger.debug(e);
             return null;
         }
     }
@@ -159,7 +159,7 @@ public class LogDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.error(e);
+            logger.debug(e);
         }
     }
 
@@ -179,7 +179,7 @@ public class LogDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.error(e);
+            logger.debug(e);
         }
         return rowcount;
     }

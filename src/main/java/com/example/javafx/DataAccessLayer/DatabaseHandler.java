@@ -33,7 +33,7 @@ public class DatabaseHandler {
             return DriverManager.getConnection(URL, USER, PASSWORD);
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.error(e);
+            logger.debug(e);
         }
         return null;
     }

@@ -33,7 +33,8 @@ public class TourImportExport {
             csvOutputFile.exists();
 
         }catch (Exception e){
-            logger.error("Could not export Tour in business/TourImportExport/exportTour");
+            logger.info("Could not export Tour in business/TourImportExport/exportTour");
+            logger.debug(e);
         }
     }
 
@@ -63,7 +64,7 @@ public class TourImportExport {
             Tour tour = new Tour(input.get(0), input.get(1),input.get(2),input.get(3),input.get(4),input.get(5), input.get(6), Double.parseDouble(input.get(7)),input.get(8),input.get(9),input.get(10),input.get(11),input.get(12));
             return tour;
         }catch (Exception e){
-            logger.error(e);
+            logger.debug(e);
         }
         return null;
     }

@@ -54,7 +54,7 @@ public class TourDAO {
             conn.close();
 
         } catch (SQLException ex) {
-            logger.error(ex);
+            logger.debug(ex);
         }
     }
     //Hiermit wird eine Tour anhand des names der Tour aus der Datenbank ausgelesen
@@ -90,7 +90,7 @@ public class TourDAO {
 
         }catch (SQLException e){
             e.printStackTrace();
-            logger.error(e);
+            logger.debug(e);
         }
         return null;
     }
@@ -110,7 +110,7 @@ public class TourDAO {
             return names;
         }catch (SQLException e){
             e.printStackTrace();
-            logger.error(e);
+            logger.debug(e);
         }
         return null;
     }
@@ -137,7 +137,7 @@ public class TourDAO {
             conn.close();
 
         }catch (SQLException ex) {
-            logger.error(ex);
+            logger.debug(ex);
         }
     }
 
@@ -156,7 +156,7 @@ public class TourDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.error(e);
+            logger.debug(e);
         }
     }
 
@@ -176,7 +176,7 @@ public class TourDAO {
 
         } catch (SQLException e) {
             e.printStackTrace();
-            logger.error(e);
+            logger.debug(e);
         }
         return rowcount;
     }

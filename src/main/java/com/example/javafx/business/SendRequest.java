@@ -3,19 +3,27 @@ package com.example.javafx.business;
 
 import com.example.javafx.config.Configuration;
 import com.example.javafx.model.Tour;
+import org.apache.logging.log4j.spi.AbstractLogger;
 import org.json.JSONObject;
 
+import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.URI;
+import java.net.URL;
 import java.net.http.HttpClient;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 public class SendRequest {
 
 
     Configuration apiKey = Configuration.getInstance();
+    private static Logger logger = LogManager.getLogger();
 
     public void sendRequest(Tour tour) throws IOException, InterruptedException {
         //Create initial GET request for a route and to fill first few param of requestInfo object
@@ -64,6 +72,24 @@ public class SendRequest {
                 + "," + tour.getLrlat()
                 + "," + tour.getLrlng());
 
+
+        String destinationFile = "./Files/images/" + tour.getName() + ".jpg";
+
+        URL url = new URL(tour.getUrl());
+        InputStream is = url.openStream();
+        OutputStream os = new FileOutputStream(destinationFile);
+
+        byte[] r = new byte[2048];
+        int length;
+
+        while ((length = is.read(r)) != -1) {
+            os.write(r, 0, length);
+        }
+
+        is.close();
+        os.close();
+
+        logger.info("Picture successfully saved");
     }
 
     }
