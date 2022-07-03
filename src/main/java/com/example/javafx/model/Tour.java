@@ -20,7 +20,7 @@ public class Tour {
     private int popularity;
     //1-5 -> 1 - not child friendly ; 5 - very child friendly
     private int childFriendliness;
-    ArrayList<TourLog> logs;
+
 
 
 
@@ -107,10 +107,6 @@ public class Tour {
         return type;
     }
 
-    public ArrayList<TourLog> getLogs() {
-        return logs;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }
@@ -137,11 +133,6 @@ public class Tour {
 
     public void setType(String type) {
         this.type = type;
-    }
-
-    //Fügt ein Tourlog zu der Tour hinzu
-    public void addTourLog(TourLog log){
-        logs.add(log);
     }
 
     public void setPopularity(int logsCount){

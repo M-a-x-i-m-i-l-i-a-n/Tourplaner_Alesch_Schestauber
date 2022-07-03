@@ -82,7 +82,7 @@ public class TourLog {
         this.rating = rating;
     }
 
-    public void setTotalTime(int totalTime) {
+    public void setTotalTime(double totalTime) {
         this.totalTime = totalTime;
     }
 
