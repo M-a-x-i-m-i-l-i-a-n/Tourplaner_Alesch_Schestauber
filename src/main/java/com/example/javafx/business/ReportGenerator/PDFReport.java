@@ -40,7 +40,7 @@ public class PDFReport {
             font = PdfFontFactory.createFont(StandardFonts.HELVETICA);
         } catch (IOException e) {
             e.printStackTrace();
-            logger.error(e);
+            logger.debug(e);
         }
 
     }

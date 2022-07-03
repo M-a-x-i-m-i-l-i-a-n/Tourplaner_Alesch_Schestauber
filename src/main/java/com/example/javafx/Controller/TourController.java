@@ -26,6 +26,8 @@ import javafx.scene.layout.BorderPane;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 
 import javax.swing.*;
@@ -70,7 +72,7 @@ public class TourController implements Initializable {
     private Button editTourLog;
 
     @FXML
-    private ListView<Tour> tourList;
+    public ListView<Tour> tourList;
     @FXML
     private ImageView imageView;
 
@@ -144,8 +146,11 @@ public class TourController implements Initializable {
     @FXML
     private MenuBar menuBar;
 
+    private static Logger logger = LogManager.getLogger();
+
     private TourVM tourVM;
     private TourLogVM logVM;
+
     public TourController() {
         MyTourManager manager = MyTourManager.getInstance();
         MyTourLogManager logManager = MyTourLogManager.getInstance();
@@ -176,26 +181,36 @@ public class TourController implements Initializable {
         if (e.getSource() == menuPdf) {
             System.out.println("Export to PDF File!");
             Tour tour = tourList.getSelectionModel().getSelectedItem();
-            ObservableList<TourLog> logs = logVM.getLogsByTourname(tour.getName());
+            if(tour != null) {
+                ObservableList<TourLog> logs = logVM.getLogsByTourname(tour.getName());
 
-            System.out.println("Calling createTourReport");
-            tourVM.createTourReport(tour, logs);
-
+                System.out.println("Calling createTourReport");
+                tourVM.createTourReport(tour, logs);
+            }else{
+                logger.info("You have to select a tour to create a report.");
+            }
 
         }
 
         if(e.getSource() == statsPdf){
             System.out.println("Create stat PDF!");
             ObservableList<Tour> tours = tourList.getItems();
-
-            System.out.println("Calling createStatReport");
-            tourVM.createStatReport(tours);
-
+            if(tours != null) {
+                System.out.println("Calling createStatReport");
+                tourVM.createStatReport(tours);
+            }else{
+                logger.info("You have currently no tours saved, so you can not create a report.");
+            }
         }
 
         if (e.getSource() == exportFile) {
             System.out.println("Export to File!");
-            tourVM.exportTour(tourList.getSelectionModel().getSelectedItem());
+            Tour tour = tourList.getSelectionModel().getSelectedItem();
+            if(tour != null) {
+                tourVM.exportTour(tour);
+            }else{
+                logger.info("You have to select a tour to export it.");
+            }
         }
 
         if (e.getSource() == importFile) {
@@ -203,7 +218,15 @@ public class TourController implements Initializable {
             FileChooser fileChooser = new FileChooser();
             fileChooser.setTitle("Open File");
             File file =  fileChooser.showOpenDialog(stage);
-            tourVM.importTour(file);
+            String fileName = file.toString();
+
+            int index = fileName.lastIndexOf('.');
+            if(index > 0) {
+                String extension = fileName.substring(index + 1);
+                if(extension.equals("csv")){
+                    tourVM.importTour(file);
+                }
+            }
         }
 
         if (e.getSource() == TourCompare) {
@@ -257,17 +280,22 @@ public class TourController implements Initializable {
 
     @FXML
     protected void onEditTourButtonClick() throws IOException{
-        String name = tourList.getSelectionModel().getSelectedItem().getName();
-        System.out.println("Edit Tour!");
-        Stage stage = new Stage();
-        stage.setTitle("Edit Tour:" + name);
-        stage.initOwner(borderPane.getScene().getWindow());
-        stage.initModality(Modality.WINDOW_MODAL);
+        Tour tour = tourList.getSelectionModel().getSelectedItem();
+        if(tour != null) {
+            String name = tour.getName();
+            System.out.println("Edit Tour!");
+            Stage stage = new Stage();
+            stage.setTitle("Edit Tour:" + name);
+            stage.initOwner(borderPane.getScene().getWindow());
+            stage.initModality(Modality.WINDOW_MODAL);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(TourApplication.class.getResource("EditTour.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 550, 500);
-        stage.setScene(scene);
-        stage.show();
+            FXMLLoader fxmlLoader = new FXMLLoader(TourApplication.class.getResource("EditTour.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 550, 500);
+            stage.setScene(scene);
+            stage.show();
+        }else{
+            logger.info("You have to select a tour to edit tour data.");
+        }
     }
 
     @FXML
@@ -279,56 +307,67 @@ public class TourController implements Initializable {
     @FXML
     protected void onTourSelected(){
         Tour tour = tourList.getSelectionModel().getSelectedItem();
-        ObservableList<TourLog> logs = logVM.getLogsByTourname(tour.getName());
-        logsTable.setItems(logs);
+        if(tour != null) {
+            ObservableList<TourLog> logs = logVM.getLogsByTourname(tour.getName());
+            logsTable.setItems(logs);
 
-        //Image image = new Image(tour.getUrl());
+            //Image image = new Image(tour.getUrl());
 
-        Image image2 = new Image("file:./Files/images/" + tour.getName() + ".jpg");
-        routeImage.setImage(image2);
+            Image image2 = new Image("file:./Files/images/" + tour.getName() + ".jpg");
+            routeImage.setImage(image2);
 
-        name.setText("Name of the Tour: " + tour.getName());
-        from.setText(tour.getStart());
-        to.setText(tour.getDestin());
-        transportType.setText(tour.getType());
-        distance.setText(tour.getDistance().toString());
-        estimatedTime.setText(tour.getTime());
-        description.setText(tour.getDescription());
+            name.setText("Name of the Tour: " + tour.getName());
+            from.setText(tour.getStart());
+            to.setText(tour.getDestin());
+            transportType.setText(tour.getType());
+            distance.setText(tour.getDistance().toString());
+            estimatedTime.setText(tour.getTime());
+            description.setText(tour.getDescription());
 
-        popularity.setText(Integer.toString(tour.getPopularity()));
-        childFriendliness.setText(Integer.toString(tour.getChildFriendliness()));
+            popularity.setText(Integer.toString(tour.getPopularity()));
+            childFriendliness.setText(Integer.toString(tour.getChildFriendliness()));
+        }
     }
 
 
     @FXML
     protected void onAddTourLogButtonClick() throws IOException {
-        String name = tourList.getSelectionModel().getSelectedItem().getName();
-        System.out.println("Add Tour LOG!");
-        Stage stage = new Stage();
-        stage.setTitle("Add Tour-Log to:" + name);
-        stage.initOwner(borderPane.getScene().getWindow());
-        stage.initModality(Modality.WINDOW_MODAL);
+        Tour tour = tourList.getSelectionModel().getSelectedItem();
+        if(tour != null) {
+            String name = tour.getName();
+            System.out.println("Add Tour LOG!");
+            Stage stage = new Stage();
+            stage.setTitle("Add Tour-Log to:" + name);
+            stage.initOwner(borderPane.getScene().getWindow());
+            stage.initModality(Modality.WINDOW_MODAL);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(TourApplication.class.getResource("AddTourLog.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        stage.setScene(scene);
-        stage.show();
-
+            FXMLLoader fxmlLoader = new FXMLLoader(TourApplication.class.getResource("AddTourLog.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+            stage.setScene(scene);
+            stage.show();
+        }else{
+            logger.info("You have to select a tour to create a tourlog.");
+        }
     }
 
     @FXML
     protected void onEditTourLogButtonClick() throws IOException {
-        int id = logsTable.getSelectionModel().getSelectedItem().getId();
-        Stage stage = new Stage();
-        stage.setTitle("Edit Tour-Log");
-        stage.initOwner(borderPane.getScene().getWindow());
-        stage.initModality(Modality.WINDOW_MODAL);
+        TourLog log = logsTable.getSelectionModel().getSelectedItem();
+        if(log != null) {
+            int id = log.getId();
+            Stage stage = new Stage();
+            stage.setTitle("Edit Tour-Log");
+            stage.initOwner(borderPane.getScene().getWindow());
+            stage.initModality(Modality.WINDOW_MODAL);
 
-        FXMLLoader fxmlLoader = new FXMLLoader(TourApplication.class.getResource("EditTourLog.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), 700, 500);
-        EditTourLogController controller = fxmlLoader.getController();
-        controller.setID(id);
-        stage.setScene(scene);
-        stage.show();
+            FXMLLoader fxmlLoader = new FXMLLoader(TourApplication.class.getResource("EditTourLog.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), 700, 500);
+            EditTourLogController controller = fxmlLoader.getController();
+            controller.setID(id);
+            stage.setScene(scene);
+            stage.show();
+        }else{
+            logger.info("You have to select a tourlog to edit it.");
+        }
     }
 }

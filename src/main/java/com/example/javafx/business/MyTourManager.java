@@ -39,16 +39,18 @@ public class MyTourManager implements TourManager {
     }
 
     private boolean checkInput(String toCheck){
+        double d = 1;
         if (toCheck == null) {
             return false;
         }
         try {
-            double d = Double.parseDouble(toCheck);
+            d = Double.parseDouble(toCheck);
+            System.out.println("MyTourManager:: " + d);
         } catch (NumberFormatException nfe) {
-            logger.debug("Invalid User-Input");
-            return false;
+            logger.debug("Invalid User-Input :: " + d);
+            return true;
         }
-        return true;
+        return false;
     }
 
     public void addTour(String name, String description, String from, String to, String type) throws IOException, InterruptedException {
@@ -62,7 +64,7 @@ public class MyTourManager implements TourManager {
             tourDAO.createTour(tour);
             fireToursChanged();
         }else {
-            logger.debug("Do to an invalid user-input the tour could not be saved");
+            logger.debug("Do to an invalid user-input the tour could not be saved::: From:" + from + " " + checkFrom + " TO: " + to + " " + checkTo);
         }
     }
 
@@ -94,8 +96,13 @@ public class MyTourManager implements TourManager {
 
     public void importTour(File file){
         Tour tour = export.importTour(file);
-        tourDAO.createTour(tour);
-        fireToursChanged();
+        Tour controll = tourDAO.getTourByName(tour.getName());
+        if(controll == null) {
+            tourDAO.createTour(tour);
+            fireToursChanged();
+        }else{
+            logger.info("A tour with this name already exists.");
+        }
     }
     public void addTourListener(TourListener listener) {
         listeners.add(listener);
