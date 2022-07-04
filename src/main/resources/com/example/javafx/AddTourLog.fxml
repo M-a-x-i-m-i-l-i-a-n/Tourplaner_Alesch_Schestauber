@@ -51,7 +51,7 @@
             </GridPane>
          </center>
          <top>
-            <Label text="Add Tour-Log to " BorderPane.alignment="CENTER">
+            <Label text="Add Tour-Log " BorderPane.alignment="CENTER">
                <font>
                   <Font size="20.0" />
                </font>
