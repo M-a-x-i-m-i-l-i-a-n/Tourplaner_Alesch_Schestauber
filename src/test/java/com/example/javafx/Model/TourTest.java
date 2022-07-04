@@ -1,10 +1,8 @@
-package com.example.javafx.model;
+package com.example.javafx.Model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
-
-import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -39,13 +37,13 @@ class TourTest {
 
     @Test
     void testGetDescription(){
-        assertEquals("Tour for Testing", tour.getDescription());
+        assertEquals("Tour for testing", tour.getDescription());
     }
 
     @Test
     void testsetDescription() {
         tour.setDescription("Testing for Tour");
-        assertEquals("Testing for Tour", tour.getSessionID());
+        assertEquals("Testing for Tour", tour.getDescription());
 
     }
 
@@ -58,14 +56,14 @@ class TourTest {
     @Test
     void testsetStart() {
         tour.setStart("TestStartLocation");
-        assertEquals("TestStartLocation", tour.getSessionID());
+        assertEquals("TestStartLocation", tour.getStart());
 
     }
 
     @Test
     void testsetDestin() {
         tour.setDestin("DestinationTest");
-        assertEquals("DestinationStart", tour.getSessionID());
+        assertEquals("DestinationTest", tour.getDestin());
 
     }
 

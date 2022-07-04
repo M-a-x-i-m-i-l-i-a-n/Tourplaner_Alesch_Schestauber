@@ -1,6 +1,6 @@
 package com.example.javafx.DataAccessLayer;
 
-import com.example.javafx.model.Tour;
+import com.example.javafx.Model.Tour;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import org.apache.logging.log4j.LogManager;

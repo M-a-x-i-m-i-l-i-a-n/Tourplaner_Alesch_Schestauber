@@ -1,22 +1,18 @@
-package com.example.javafx.business.ReportGenerator;
+package com.example.javafx.Business.ReportGenerator;
 
 import java.io.*;
-import java.net.URL;
 
 
 import com.example.javafx.DataAccessLayer.LogDAO;
-import com.example.javafx.DataAccessLayer.TourDAO;
-import com.example.javafx.model.Tour;
-import com.example.javafx.model.TourLog;
+import com.example.javafx.Model.Tour;
+import com.example.javafx.Model.TourLog;
 import com.itextpdf.io.font.constants.StandardFonts;
 import com.itextpdf.io.image.ImageDataFactory;
-import com.itextpdf.kernel.colors.Color;
 import com.itextpdf.kernel.colors.DeviceGray;
 import com.itextpdf.kernel.colors.DeviceRgb;
 import com.itextpdf.kernel.font.PdfFont;
 import com.itextpdf.kernel.font.PdfFontFactory;
 import com.itextpdf.kernel.pdf.PdfDocument;
-import com.itextpdf.kernel.pdf.PdfName;
 import com.itextpdf.kernel.pdf.PdfWriter;
 import com.itextpdf.layout.Document;
 import com.itextpdf.layout.element.*;

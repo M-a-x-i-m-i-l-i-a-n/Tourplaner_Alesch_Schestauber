@@ -1,7 +1,7 @@
-package com.example.javafx.business;
+package com.example.javafx.Business;
 
-import com.example.javafx.model.Tour;
-import com.example.javafx.model.TourLog;
+import com.example.javafx.Model.Tour;
+import com.example.javafx.Model.TourLog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 

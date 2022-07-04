@@ -1,15 +1,11 @@
 package com.example.javafx.DataAccessLayer;
 
-import com.example.javafx.model.TourLog;
+import com.example.javafx.Model.TourLog;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 
 import java.sql.*;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Date;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

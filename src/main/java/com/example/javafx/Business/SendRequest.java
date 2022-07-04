@@ -1,9 +1,8 @@
-package com.example.javafx.business;
+package com.example.javafx.Business;
 
 
-import com.example.javafx.config.Configuration;
-import com.example.javafx.model.Tour;
-import org.apache.logging.log4j.spi.AbstractLogger;
+import com.example.javafx.Config.Configuration;
+import com.example.javafx.Model.Tour;
 import org.json.JSONObject;
 
 

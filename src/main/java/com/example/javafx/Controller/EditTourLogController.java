@@ -1,8 +1,7 @@
 package com.example.javafx.Controller;
 
-import com.example.javafx.DataAccessLayer.DatabaseHandler;
 import com.example.javafx.ViewModle.TourLogVM;
-import com.example.javafx.business.MyTourLogManager;
+import com.example.javafx.Business.MyTourLogManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

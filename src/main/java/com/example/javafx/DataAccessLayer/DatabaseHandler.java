@@ -3,7 +3,7 @@ package com.example.javafx.DataAccessLayer;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
-import com.example.javafx.config.Configuration;
+import com.example.javafx.Config.Configuration;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

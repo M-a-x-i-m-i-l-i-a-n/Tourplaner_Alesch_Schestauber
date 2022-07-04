@@ -1,4 +1,4 @@
-package com.example.javafx.model;
+package com.example.javafx.Model;
 
 public class TourLog {
    /*

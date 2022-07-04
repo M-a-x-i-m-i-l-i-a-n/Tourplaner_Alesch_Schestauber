@@ -1,7 +1,7 @@
-package com.example.javafx.business;
+package com.example.javafx.Business;
 
 import com.example.javafx.DataAccessLayer.LogDAO;
-import com.example.javafx.model.TourLog;
+import com.example.javafx.Model.TourLog;
 import javafx.collections.ObservableList;
 
 import java.util.ArrayList;

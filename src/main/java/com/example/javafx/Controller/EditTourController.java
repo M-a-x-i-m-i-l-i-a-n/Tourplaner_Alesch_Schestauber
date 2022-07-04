@@ -1,9 +1,7 @@
 package com.example.javafx.Controller;
 
 import com.example.javafx.ViewModle.TourVM;
-import com.example.javafx.business.MyTourManager;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.property.StringProperty;
+import com.example.javafx.Business.MyTourManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;

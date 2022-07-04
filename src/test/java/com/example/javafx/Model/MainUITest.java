@@ -1,9 +1,8 @@
-package com.example.javafx.model;
+package com.example.javafx.Model;
 
 import com.example.javafx.Controller.TourController;
 import com.example.javafx.TourApplication;
 import javafx.collections.ObservableList;
-import javafx.collections.ObservableSet;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

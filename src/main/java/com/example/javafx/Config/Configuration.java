@@ -1,4 +1,4 @@
-package com.example.javafx.config;
+package com.example.javafx.Config;
 
 import java.io.IOException;
 import java.io.InputStream;

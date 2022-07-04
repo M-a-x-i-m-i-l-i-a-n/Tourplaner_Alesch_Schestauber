@@ -1,11 +1,9 @@
 package com.example.javafx.ViewModle;
 
-import com.example.javafx.business.TourListener;
-import com.example.javafx.business.TourLogListener;
-import com.example.javafx.business.TourLogManager;
-import com.example.javafx.business.TourManager;
-import com.example.javafx.model.Tour;
-import com.example.javafx.model.TourLog;
+import com.example.javafx.Business.TourLogListener;
+import com.example.javafx.Business.TourLogManager;
+import com.example.javafx.Model.Tour;
+import com.example.javafx.Model.TourLog;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 import javafx.collections.FXCollections;

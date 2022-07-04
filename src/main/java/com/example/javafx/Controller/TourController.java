@@ -1,17 +1,13 @@
 package com.example.javafx.Controller;
 
 
-import com.example.javafx.AboutDialog;
 import com.example.javafx.TourApplication;
 import com.example.javafx.ViewModle.TourLogVM;
 import com.example.javafx.ViewModle.TourVM;
-import com.example.javafx.business.MyTourLogManager;
-import com.example.javafx.business.MyTourManager;
-import com.example.javafx.business.ReportGenerator.PDFReport;
-import com.example.javafx.business.TourManager;
-import com.example.javafx.model.Tour;
-import com.example.javafx.model.TourLog;
-import javafx.collections.FXCollections;
+import com.example.javafx.Business.MyTourLogManager;
+import com.example.javafx.Business.MyTourManager;
+import com.example.javafx.Model.Tour;
+import com.example.javafx.Model.TourLog;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -30,13 +26,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 
-import javax.swing.*;
 import java.io.File;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
-import java.util.List;
-import java.util.Objects;
 import java.util.ResourceBundle;
 
 public class TourController implements Initializable {

@@ -1,6 +1,4 @@
-package com.example.javafx.model;
-
-import java.util.ArrayList;
+package com.example.javafx.Model;
 
 public class Tour {
     private String name;

@@ -1,8 +1,7 @@
 package com.example.javafx.Controller;
 
 import com.example.javafx.ViewModle.TourVM;
-import com.example.javafx.business.MyTourManager;
-import com.example.javafx.business.TourManager;
+import com.example.javafx.Business.MyTourManager;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -15,7 +14,7 @@ import javafx.scene.control.TextField;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
-import javafx.beans.property.*;
+
 import javafx.stage.Stage;
 
 public class AddTourController implements Initializable {

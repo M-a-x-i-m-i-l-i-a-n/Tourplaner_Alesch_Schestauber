@@ -1,4 +1,4 @@
-package com.example.javafx.model;
+package com.example.javafx.Model;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;

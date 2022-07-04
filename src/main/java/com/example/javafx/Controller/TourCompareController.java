@@ -1,25 +1,20 @@
 package com.example.javafx.Controller;
 
 import com.example.javafx.ViewModle.TourVM;
-import com.example.javafx.business.MyTourManager;
-import com.example.javafx.model.Tour;
+import com.example.javafx.Business.MyTourManager;
+import com.example.javafx.Model.Tour;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Insets;
 import javafx.scene.control.ChoiceBox;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.CornerRadii;
 import javafx.scene.paint.Color;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.net.URL;
-import java.sql.Time;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.ResourceBundle;
@@ -120,7 +115,6 @@ public class TourCompareController implements Initializable {
     public void onTour1Changed(){
         String name = tour1CB.getSelectionModel().getSelectedItem().toString();
         if(!name.equals(check1)) {
-            System.out.println("TOURCOMPARE:" + name);
             tour1 = tourVM.getOneTourByName(name);
 
             from1.setText(tour1.getStart());
@@ -143,7 +137,6 @@ public class TourCompareController implements Initializable {
     public void onTour2Changed(){
         String name = tour2CB.getSelectionModel().getSelectedItem().toString();
         if(!name.equals(check2)) {
-            System.out.println("TOURCOMPARE:" + name);
             tour2 = tourVM.getOneTourByName(name);
 
             from2.setText(tour2.getStart());
