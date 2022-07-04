@@ -136,7 +136,6 @@ public class Tour {
     }
 
 
-
     public void setPopularity(int logsCount){
         if(logsCount > 5){
             popularity = 5;
