@@ -150,7 +150,6 @@ public class Tour {
         }
     }
     public void setChildFriendliness(double difficulty, double totalTimes){
-        //TODO die child- friendliness nochmal genauer anschauen (was überlegen das Sinn macht)
         childFriendliness = (int) ((totalTimes / difficulty * 25)/distance);
     }
 

@@ -204,8 +204,6 @@ public class TourCompareController implements Initializable {
                 SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
                 Date time1 = format.parse(tour1.getTime());
                 Date time2 = format.parse(tour2.getTime());
-                System.out.println("Time1::: " + time1.getTime());
-                System.out.println("Time2::: " + time2.getTime());
                 if(time1.getTime() > time2.getTime()){
                     estimatedTime1.setTextFill(Color.web("#e30202"));
                     estimatedTime2.setTextFill(Color.web("#02de18"));

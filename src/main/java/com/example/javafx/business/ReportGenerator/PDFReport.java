@@ -32,7 +32,7 @@ import org.apache.logging.log4j.Logger;
 public class PDFReport {
 
 
-    public static final String StatDest = "file:./Files/Reports/Tours-Stats-Report.pdf";
+    public static final String StatDest = "./Files/Reports/Tours-Stats-Report.pdf";
     private static Logger logger = LogManager.getLogger();
     PdfFont font;
     public PDFReport(){

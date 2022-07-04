@@ -69,9 +69,14 @@ public class MyTourManager implements TourManager {
     }
 
     public void editTour(Tour tour){
-        //TODO hier müsste dann mittels mapquest die Map sowie die Distanz und Zeit abgefragt werden und in den Funktionsaufruf reingegeben werden
-        tourDAO.updateTour(tour);
-        fireToursChanged();
+       try {
+           SendRequest client = new SendRequest();
+           client.sendRequest(tour);
+           tourDAO.updateTour(tour);
+           fireToursChanged();
+       }catch (Exception e){
+           logger.debug(e);
+       }
     }
 
     public Tour getTour(String name){
@@ -87,6 +92,16 @@ public class MyTourManager implements TourManager {
 
     public void deleteTour(String name){
         tourDAO.deleteTour(name);
+        File file = new File("./Files/images/" + name + ".jpg");
+        if(file != null) {
+            if (file.delete()) {
+                logger.debug("Image of " + name + " deleted");
+            }else {
+                logger.debug("The Image of " + name + "could not be deleted");
+            }
+        }else {
+            logger.debug("There is no file with that name.");
+        }
         fireToursChanged();
     }
 
@@ -98,8 +113,14 @@ public class MyTourManager implements TourManager {
         Tour tour = export.importTour(file);
         Tour controll = tourDAO.getTourByName(tour.getName());
         if(controll == null) {
-            tourDAO.createTour(tour);
-            fireToursChanged();
+            try {
+                SendRequest client = new SendRequest();
+                client.sendRequest(tour);
+                tourDAO.createTour(tour);
+                fireToursChanged();
+            }catch (Exception e){
+                logger.debug(e);
+            }
         }else{
             logger.info("A tour with this name already exists.");
         }

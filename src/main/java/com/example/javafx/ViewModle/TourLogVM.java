@@ -80,7 +80,12 @@ public class TourLogVM implements TourLogListener {
         log.setDifficulty(Integer.parseInt(difficulty.getValue()));
         log.setRating(Integer.parseInt(rating.getValue()));
         log.setTime(time.getValue());
-        log.setTotalTime(Integer.parseInt(timeNeeded.getValue()));
+
+        String totaltime = timeNeeded.getValue();
+        if(totaltime.contains(",")){
+            totaltime = totaltime.replace(",", ".");
+        }
+        log.setTotalTime(Double.parseDouble(totaltime));
         manager.editTourLog(log);
     }
 

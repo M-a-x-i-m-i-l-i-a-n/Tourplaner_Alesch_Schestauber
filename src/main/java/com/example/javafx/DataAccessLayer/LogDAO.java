@@ -13,7 +13,7 @@ import java.util.Date;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-//TODO Datenbank-Erstellungsskript muss hier noch als Funktion rein
+
 
 public class LogDAO {
     private static Logger logger = LogManager.getLogger();
