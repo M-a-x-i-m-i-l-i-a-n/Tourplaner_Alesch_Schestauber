@@ -3,6 +3,7 @@ package com.example.javafx.model;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+
 import java.util.ArrayList;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -11,10 +12,10 @@ class TourTest {
     private Tour tour;
 
 
+
     @BeforeEach
     void setUp() {
         tour = new Tour("TestTour","Tour for testing","Teststart","Testdestination","fastest","123.32","52.21314",11284.12,"32.23424","32.234224","43.234","q342978fhq34g7hq34g7h347g798herg","www.yourtest.com");
-
 
     }
 
@@ -73,6 +74,7 @@ class TourTest {
         tour.setDistance(2342.197);
         assertEquals(2342.197, tour.getDistance());
     }
+
 
 
 

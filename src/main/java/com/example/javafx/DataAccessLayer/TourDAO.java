@@ -6,23 +6,60 @@ import javafx.collections.ObservableList;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 
 public class TourDAO {
 
     public static TourDAO instance;
     private static Logger logger = LogManager.getLogger();
 
+    public static void checkIfTableExists(){
+        try {
+            Statement st = null;
+            ResultSet rs = null;
+            Connection conn = DatabaseHandler.getInstance().getConnection();
+            DatabaseMetaData data = conn.getMetaData();
+            ResultSet tables = data.getTables(null, null, "tours", null);
+            if(!tables.next()){
+                st = conn.createStatement();
+                String qs ="CREATE TABLE IF NOT EXISTS public.tours\n" +
+                        "(\n" +
+                        "    name text COLLATE pg_catalog.\"default\" NOT NULL,\n" +
+                        "    description text COLLATE pg_catalog.\"default\",\n" +
+                        "    start text COLLATE pg_catalog.\"default\",\n" +
+                        "    destin text COLLATE pg_catalog.\"default\",\n" +
+                        "    type text COLLATE pg_catalog.\"default\",\n" +
+                        "    \"time\" text COLLATE pg_catalog.\"default\",\n" +
+                        "    lrlng text COLLATE pg_catalog.\"default\",\n" +
+                        "    distance double precision,\n" +
+                        "    lrlat text COLLATE pg_catalog.\"default\",\n" +
+                        "    ullat text COLLATE pg_catalog.\"default\",\n" +
+                        "    ullng text COLLATE pg_catalog.\"default\",\n" +
+                        "    \"sessionID\" text COLLATE pg_catalog.\"default\",\n" +
+                        "    url text COLLATE pg_catalog.\"default\",\n" +
+                        "    CONSTRAINT tours_pkey PRIMARY KEY (name)\n" +
+                        ")\n" +
+                        "\n" +
+                        "TABLESPACE pg_default;\n" +
+                        "\n" +
+                        "ALTER TABLE IF EXISTS public.tours\n" +
+                        "    OWNER to postgres;";
+                rs = st.executeQuery(qs);
+                conn.close();
+            }
+        }catch (Exception e){
+            logger.debug(e);
+        }
+    }
+
     public static TourDAO getInstance() {
         if (TourDAO.instance == null) {
             TourDAO.instance = new TourDAO();
+            checkIfTableExists();
         }
         return TourDAO.instance;
     }
-    //TODO hier vielleicht noch logger hinzufügen
+
 
     //Mit dieser Funktion wird eine neue Tour in der Datenbank gespeichert
     public void createTour(Tour tour){

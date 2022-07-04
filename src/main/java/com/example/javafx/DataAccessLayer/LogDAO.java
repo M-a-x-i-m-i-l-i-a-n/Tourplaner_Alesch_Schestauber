@@ -18,12 +18,50 @@ import org.apache.logging.log4j.Logger;
 public class LogDAO {
     private static Logger logger = LogManager.getLogger();
     public static LogDAO instance;
+
+    public static void checkIfTableExists(){
+        try {
+            Statement st = null;
+            ResultSet rs = null;
+            Connection conn = DatabaseHandler.getInstance().getConnection();
+            DatabaseMetaData data = conn.getMetaData();
+            ResultSet tables = data.getTables(null, null, "logs", null);
+            if(!tables.next()){
+                st = conn.createStatement();
+                String qs ="CREATE TABLE IF NOT EXISTS public.logs\n" +
+                        "(\n" +
+                        "    id integer NOT NULL GENERATED ALWAYS AS IDENTITY ( INCREMENT 1 START 1 MINVALUE 1 MAXVALUE 10000 CACHE 1 ),\n" +
+                        "    tourname text COLLATE pg_catalog.\"default\",\n" +
+                        "    date text COLLATE pg_catalog.\"default\",\n" +
+                        "    \"time\" text COLLATE pg_catalog.\"default\",\n" +
+                        "    comment text COLLATE pg_catalog.\"default\",\n" +
+                        "    difficulty integer,\n" +
+                        "    totaltime double precision,\n" +
+                        "    rating integer,\n" +
+                        "    CONSTRAINT logs_pkey PRIMARY KEY (id)\n" +
+                        ")\n" +
+                        "\n" +
+                        "TABLESPACE pg_default;\n" +
+                        "\n" +
+                        "ALTER TABLE IF EXISTS public.logs\n" +
+                        "    OWNER to postgres;";
+                rs = st.executeQuery(qs);
+                conn.close();
+            }
+        }catch (Exception e){
+            logger.debug(e);
+        }
+    }
+
     public static LogDAO getInstance() {
         if (LogDAO.instance == null) {
             LogDAO.instance = new LogDAO();
+            checkIfTableExists();
         }
         return LogDAO.instance;
     }
+
+
     //Speichert ein Tourlog in der Datenbank
     public void createTourLog(String date, String time, String timeNeeded, String difficulty, String rating, String comment, String TourName) {
         try{

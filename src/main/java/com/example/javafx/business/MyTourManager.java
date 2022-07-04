@@ -39,16 +39,18 @@ public class MyTourManager implements TourManager {
     }
 
     private boolean checkInput(String toCheck){
+        double d = 1;
         if (toCheck == null) {
             return false;
         }
         try {
-            double d = Double.parseDouble(toCheck);
+            d = Double.parseDouble(toCheck);
+            System.out.println("MyTourManager:: " + d);
         } catch (NumberFormatException nfe) {
-            logger.debug("Invalid User-Input");
-            return false;
+            logger.debug("Invalid User-Input :: " + d);
+            return true;
         }
-        return true;
+        return false;
     }
 
     public void addTour(String name, String description, String from, String to, String type) throws IOException, InterruptedException {
@@ -62,14 +64,19 @@ public class MyTourManager implements TourManager {
             tourDAO.createTour(tour);
             fireToursChanged();
         }else {
-            logger.debug("Do to an invalid user-input the tour could not be saved");
+            logger.debug("Do to an invalid user-input the tour could not be saved::: From:" + from + " " + checkFrom + " TO: " + to + " " + checkTo);
         }
     }
 
     public void editTour(Tour tour){
-        //TODO hier müsste dann mittels mapquest die Map sowie die Distanz und Zeit abgefragt werden und in den Funktionsaufruf reingegeben werden
-        tourDAO.updateTour(tour);
-        fireToursChanged();
+       try {
+           SendRequest client = new SendRequest();
+           client.sendRequest(tour);
+           tourDAO.updateTour(tour);
+           fireToursChanged();
+       }catch (Exception e){
+           logger.debug(e);
+       }
     }
 
     public Tour getTour(String name){
@@ -85,6 +92,16 @@ public class MyTourManager implements TourManager {
 
     public void deleteTour(String name){
         tourDAO.deleteTour(name);
+        File file = new File("./Files/images/" + name + ".jpg");
+        if(file != null) {
+            if (file.delete()) {
+                logger.debug("Image of " + name + " deleted");
+            }else {
+                logger.debug("The Image of " + name + "could not be deleted");
+            }
+        }else {
+            logger.debug("There is no file with that name.");
+        }
         fireToursChanged();
     }
 
@@ -94,8 +111,19 @@ public class MyTourManager implements TourManager {
 
     public void importTour(File file){
         Tour tour = export.importTour(file);
-        tourDAO.createTour(tour);
-        fireToursChanged();
+        Tour controll = tourDAO.getTourByName(tour.getName());
+        if(controll == null) {
+            try {
+                SendRequest client = new SendRequest();
+                client.sendRequest(tour);
+                tourDAO.createTour(tour);
+                fireToursChanged();
+            }catch (Exception e){
+                logger.debug(e);
+            }
+        }else{
+            logger.info("A tour with this name already exists.");
+        }
     }
     public void addTourListener(TourListener listener) {
         listeners.add(listener);

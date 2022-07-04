@@ -39,7 +39,7 @@ public class TourLogVM implements TourLogListener {
     public void addTourLog(String Tourname){
         manager.addTourLog(date.getValue(), time.getValue(), timeNeeded.getValue(), difficulty.getValue(), rating.getValue(), comment.getValue(), Tourname);
     }
-    //TODO bei den Logs auch nochmal die totaltime anschauen (es ging weder mit . oder , was einzugeben)
+
     public ObservableList<TourLog> getTourLogs(){
         List<Integer> ids = manager.getTourLogIds();
         TourLog log;
@@ -80,7 +80,12 @@ public class TourLogVM implements TourLogListener {
         log.setDifficulty(Integer.parseInt(difficulty.getValue()));
         log.setRating(Integer.parseInt(rating.getValue()));
         log.setTime(time.getValue());
-        log.setTotalTime(Integer.parseInt(timeNeeded.getValue()));
+
+        String totaltime = timeNeeded.getValue();
+        if(totaltime.contains(",")){
+            totaltime = totaltime.replace(",", ".");
+        }
+        log.setTotalTime(Double.parseDouble(totaltime));
         manager.editTourLog(log);
     }
 

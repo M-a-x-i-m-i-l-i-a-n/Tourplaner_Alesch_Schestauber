@@ -135,6 +135,7 @@ public class Tour {
         this.type = type;
     }
 
+
     public void setPopularity(int logsCount){
         if(logsCount > 5){
             popularity = 5;
@@ -148,7 +149,6 @@ public class Tour {
         }
     }
     public void setChildFriendliness(double difficulty, double totalTimes){
-        //TODO die child- friendliness nochmal genauer anschauen (was überlegen das Sinn macht)
         childFriendliness = (int) ((totalTimes / difficulty * 25)/distance);
     }
 

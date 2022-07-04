@@ -11,6 +11,7 @@ module com.example.javafx {
     requires io;
     requires java.desktop;
     requires org.apache.logging.log4j;
+    requires javafx.graphics;
 
     opens com.example.javafx to javafx.fxml;
     exports com.example.javafx;
@@ -21,4 +22,5 @@ module com.example.javafx {
     exports com.example.javafx.ViewModle;
     opens com.example.javafx.ViewModle to javafx.fxml;
     opens com.example.javafx.model to javafx.base;
+
 }
