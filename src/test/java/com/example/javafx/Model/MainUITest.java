@@ -77,18 +77,18 @@ public class MainUITest {
     void test_EditTourButton(){
         robot.sleep(1000);
         robot.clickOn("#tourList");
-        robot.type(KeyCode.UP);
-        robot.type(KeyCode.UP);
-        robot.type(KeyCode.UP);
-        robot.type(KeyCode.UP);
-        robot.type(KeyCode.UP);
-        robot.type(KeyCode.UP);
-        robot.type(KeyCode.UP);
-        robot.type(KeyCode.UP);
-        robot.type(KeyCode.UP);
-        robot.type(KeyCode.UP);
-        robot.type(KeyCode.UP);
-        robot.type(KeyCode.UP);
+        robot.type(KeyCode.DOWN);
+        robot.type(KeyCode.DOWN);
+        robot.type(KeyCode.DOWN);
+        robot.type(KeyCode.DOWN);
+        robot.type(KeyCode.DOWN);
+        robot.type(KeyCode.DOWN);
+        robot.type(KeyCode.DOWN);
+        robot.type(KeyCode.DOWN);
+        robot.type(KeyCode.DOWN);
+        robot.type(KeyCode.DOWN);
+        robot.type(KeyCode.DOWN);
+        robot.type(KeyCode.DOWN);
         robot.sleep(100);
 
         String name = controller.tourList.getSelectionModel().getSelectedItem().getName();
