@@ -169,12 +169,12 @@ public class TourCompareController implements Initializable {
             }
             }
             if(tour1.getChildFriendliness() > tour2.getChildFriendliness()){
-                childFriendliness1.setTextFill(Color.web("#02de18"));
-                childFriendliness2.setTextFill(Color.web("#e30202"));
-            }else{
-            if(tour1.getChildFriendliness() < tour2.getChildFriendliness()){
                 childFriendliness1.setTextFill(Color.web("#e30202"));
                 childFriendliness2.setTextFill(Color.web("#02de18"));
+            }else{
+            if(tour1.getChildFriendliness() < tour2.getChildFriendliness()){
+                childFriendliness1.setTextFill(Color.web("#02de18"));
+                childFriendliness2.setTextFill(Color.web("#e30202"));
             }else {
                 childFriendliness1.setTextFill(Color.web("#0075a3"));
                 childFriendliness2.setTextFill(Color.web("#0075a3"));
@@ -197,6 +197,7 @@ public class TourCompareController implements Initializable {
                 SimpleDateFormat format = new SimpleDateFormat("hh:mm:ss");
                 Date time1 = format.parse(tour1.getTime());
                 Date time2 = format.parse(tour2.getTime());
+
                 if(time1.getTime() > time2.getTime()){
                     estimatedTime1.setTextFill(Color.web("#e30202"));
                     estimatedTime2.setTextFill(Color.web("#02de18"));

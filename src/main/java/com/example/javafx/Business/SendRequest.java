@@ -59,24 +59,26 @@ public class SendRequest {
 
         int imageZoom = 0;
 
-        if(tour.getDistance() < 200){
-            imageZoom = 9;
-        }else{
-            if(tour.getDistance() < 600){
-                imageZoom = 8;
-            }else {
-                if(tour.getDistance() < 800) {
-                    imageZoom = 7;
-                }else {
-                    if(tour.getDistance() < 1300){
-                        imageZoom = 6;
-                    }
-                    else{
-                        if(tour.getDistance() < 2500) {
-                            imageZoom = 4;
-                        }
-                        else{
-                            imageZoom = 3;
+        if(tour.getDistance() < 100){
+            imageZoom = 11;
+        }else {
+            if (tour.getDistance() < 200) {
+                imageZoom = 9;
+            } else {
+                if (tour.getDistance() < 600) {
+                    imageZoom = 8;
+                } else {
+                    if (tour.getDistance() < 800) {
+                        imageZoom = 7;
+                    } else {
+                        if (tour.getDistance() < 1300) {
+                            imageZoom = 6;
+                        } else {
+                            if (tour.getDistance() < 2500) {
+                                imageZoom = 4;
+                            } else {
+                                imageZoom = 3;
+                            }
                         }
                     }
                 }

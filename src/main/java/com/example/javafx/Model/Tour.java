@@ -16,7 +16,7 @@ public class Tour {
     private String ullat;
     //1-5 -> 1 - not popular ; 5 - very popular
     private int popularity;
-    //1-5 -> 1 - not child friendly ; 5 - very child friendly
+    //1-5 -> 5 - not child friendly ; 1 - very child friendly
     private int childFriendliness;
 
 
@@ -147,7 +147,7 @@ public class Tour {
         }
     }
     public void setChildFriendliness(double difficulty, double totalTimes){
-        childFriendliness = (int) ((totalTimes / difficulty * 25)/distance);
+        childFriendliness = (int) ((totalTimes / difficulty * 25)/(distance/15));
     }
 
     public int getChildFriendliness() {
